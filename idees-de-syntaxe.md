@@ -3,7 +3,7 @@
 
 Idée qu'on avait depuis le départ:
 
-Chaque commande se fait dans le cadre d'un fichier CSV. C'est le "store"
+Chaque commande se fait dans le cadre d'un fichier CSV. C'est le "load"
 auquel on fait référence dans l'énoncé du projet. On aurait donc quelque chose
 comme:
 
