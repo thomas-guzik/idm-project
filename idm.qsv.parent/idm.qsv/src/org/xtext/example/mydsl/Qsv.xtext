@@ -1,0 +1,9 @@
+grammar org.xtext.example.mydsl.Qsv with org.eclipse.xtext.common.Terminals
+
+generate qsv "http://www.xtext.org/example/mydsl/Qsv"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';
