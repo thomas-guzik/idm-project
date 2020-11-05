@@ -3,55 +3,57 @@
  */
 package idm.qsv.impl;
 
-import idm.qsv.Greeting;
-import idm.qsv.Model;
+import idm.qsv.Print;
 import idm.qsv.QsvPackage;
 
-import java.util.Collection;
-
-import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Model</b></em>'.
+ * An implementation of the model object '<em><b>Print</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link idm.qsv.impl.ModelImpl#getGreetings <em>Greetings</em>}</li>
+ *   <li>{@link idm.qsv.impl.PrintImpl#getPrint <em>Print</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ModelImpl extends MinimalEObjectImpl.Container implements Model
+public class PrintImpl extends MinimalEObjectImpl.Container implements Print
 {
   /**
-   * The cached value of the '{@link #getGreetings() <em>Greetings</em>}' containment reference list.
+   * The default value of the '{@link #getPrint() <em>Print</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getGreetings()
+   * @see #getPrint()
    * @generated
    * @ordered
    */
-  protected EList<Greeting> greetings;
+  protected static final String PRINT_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getPrint() <em>Print</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPrint()
+   * @generated
+   * @ordered
+   */
+  protected String print = PRINT_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ModelImpl()
+  protected PrintImpl()
   {
     super();
   }
@@ -64,7 +66,7 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   @Override
   protected EClass eStaticClass()
   {
-    return QsvPackage.Literals.MODEL;
+    return QsvPackage.Literals.PRINT;
   }
 
   /**
@@ -73,13 +75,9 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * @generated
    */
   @Override
-  public EList<Greeting> getGreetings()
+  public String getPrint()
   {
-    if (greetings == null)
-    {
-      greetings = new EObjectContainmentEList<Greeting>(Greeting.class, this, QsvPackage.MODEL__GREETINGS);
-    }
-    return greetings;
+    return print;
   }
 
   /**
@@ -88,14 +86,12 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * @generated
    */
   @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  public void setPrint(String newPrint)
   {
-    switch (featureID)
-    {
-      case QsvPackage.MODEL__GREETINGS:
-        return ((InternalEList<?>)getGreetings()).basicRemove(otherEnd, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
+    String oldPrint = print;
+    print = newPrint;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, QsvPackage.PRINT__PRINT, oldPrint, print));
   }
 
   /**
@@ -108,8 +104,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case QsvPackage.MODEL__GREETINGS:
-        return getGreetings();
+      case QsvPackage.PRINT__PRINT:
+        return getPrint();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -119,15 +115,13 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case QsvPackage.MODEL__GREETINGS:
-        getGreetings().clear();
-        getGreetings().addAll((Collection<? extends Greeting>)newValue);
+      case QsvPackage.PRINT__PRINT:
+        setPrint((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -143,8 +137,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case QsvPackage.MODEL__GREETINGS:
-        getGreetings().clear();
+      case QsvPackage.PRINT__PRINT:
+        setPrint(PRINT_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -160,10 +154,27 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case QsvPackage.MODEL__GREETINGS:
-        return greetings != null && !greetings.isEmpty();
+      case QsvPackage.PRINT__PRINT:
+        return PRINT_EDEFAULT == null ? print != null : !PRINT_EDEFAULT.equals(print);
     }
     return super.eIsSet(featureID);
   }
 
-} //ModelImpl
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuilder result = new StringBuilder(super.toString());
+    result.append(" (print: ");
+    result.append(print);
+    result.append(')');
+    return result.toString();
+  }
+
+} //PrintImpl

@@ -24,22 +24,40 @@ public interface QsvFactory extends EFactory
   QsvFactory eINSTANCE = idm.qsv.impl.QsvFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Model</em>'.
+   * Returns a new object of class '<em>Query Separted Value</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Model</em>'.
+   * @return a new object of class '<em>Query Separted Value</em>'.
    * @generated
    */
-  Model createModel();
+  QuerySepartedValue createQuerySepartedValue();
 
   /**
-   * Returns a new object of class '<em>Greeting</em>'.
+   * Returns a new object of class '<em>Header</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Greeting</em>'.
+   * @return a new object of class '<em>Header</em>'.
    * @generated
    */
-  Greeting createGreeting();
+  Header createHeader();
+
+  /**
+   * Returns a new object of class '<em>Statement</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Statement</em>'.
+   * @generated
+   */
+  Statement createStatement();
+
+  /**
+   * Returns a new object of class '<em>Print</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Print</em>'.
+   * @generated
+   */
+  Print createPrint();
 
   /**
    * Returns the package supported by this factory.

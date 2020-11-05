@@ -4,9 +4,11 @@
 package idm.serializer;
 
 import com.google.inject.Inject;
-import idm.qsv.Greeting;
-import idm.qsv.Model;
+import idm.qsv.Header;
+import idm.qsv.Print;
 import idm.qsv.QsvPackage;
+import idm.qsv.QuerySepartedValue;
+import idm.qsv.Statement;
 import idm.services.QsvGrammarAccess;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
@@ -33,11 +35,17 @@ public class QsvSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == QsvPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
-			case QsvPackage.GREETING:
-				sequence_Greeting(context, (Greeting) semanticObject); 
+			case QsvPackage.HEADER:
+				sequence_Header(context, (Header) semanticObject); 
 				return; 
-			case QsvPackage.MODEL:
-				sequence_Model(context, (Model) semanticObject); 
+			case QsvPackage.PRINT:
+				sequence_Print(context, (Print) semanticObject); 
+				return; 
+			case QsvPackage.QUERY_SEPARTED_VALUE:
+				sequence_QuerySepartedValue(context, (QuerySepartedValue) semanticObject); 
+				return; 
+			case QsvPackage.STATEMENT:
+				sequence_Statement(context, (Statement) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null)
@@ -46,31 +54,61 @@ public class QsvSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     Greeting returns Greeting
+	 *     Header returns Header
 	 *
 	 * Constraint:
-	 *     name=ID
+	 *     (nameFile=STRING hasColumnName?='yes'?)
 	 */
-	protected void sequence_Greeting(ISerializationContext context, Greeting semanticObject) {
+	protected void sequence_Header(ISerializationContext context, Header semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Print returns Print
+	 *
+	 * Constraint:
+	 *     print='print'
+	 */
+	protected void sequence_Print(ISerializationContext context, Print semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, QsvPackage.Literals.GREETING__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, QsvPackage.Literals.GREETING__NAME));
+			if (transientValues.isValueTransient(semanticObject, QsvPackage.Literals.PRINT__PRINT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, QsvPackage.Literals.PRINT__PRINT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getGreetingAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getPrintAccess().getPrintPrintKeyword_0(), semanticObject.getPrint());
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Model returns Model
+	 *     QuerySepartedValue returns QuerySepartedValue
 	 *
 	 * Constraint:
-	 *     greetings+=Greeting+
+	 *     (header=Header statements+=Statement*)
 	 */
-	protected void sequence_Model(ISerializationContext context, Model semanticObject) {
+	protected void sequence_QuerySepartedValue(ISerializationContext context, QuerySepartedValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Statement returns Statement
+	 *
+	 * Constraint:
+	 *     statement=Print
+	 */
+	protected void sequence_Statement(ISerializationContext context, Statement semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, QsvPackage.Literals.STATEMENT__STATEMENT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, QsvPackage.Literals.STATEMENT__STATEMENT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getStatementAccess().getStatementPrintParserRuleCall_0(), semanticObject.getStatement());
+		feeder.finish();
 	}
 	
 	

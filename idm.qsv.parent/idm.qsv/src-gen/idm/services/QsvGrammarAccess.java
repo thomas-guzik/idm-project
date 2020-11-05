@@ -6,6 +6,7 @@ package idm.services;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import java.util.List;
+import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.GrammarUtil;
@@ -21,52 +22,145 @@ import org.eclipse.xtext.service.GrammarProvider;
 @Singleton
 public class QsvGrammarAccess extends AbstractElementFinder.AbstractGrammarElementFinder {
 	
-	public class ModelElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "idm.Qsv.Model");
-		private final Assignment cGreetingsAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cGreetingsGreetingParserRuleCall_0 = (RuleCall)cGreetingsAssignment.eContents().get(0);
-		
-		//Model:
-		//	greetings+=Greeting*;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//greetings+=Greeting*
-		public Assignment getGreetingsAssignment() { return cGreetingsAssignment; }
-		
-		//Greeting
-		public RuleCall getGreetingsGreetingParserRuleCall_0() { return cGreetingsGreetingParserRuleCall_0; }
-	}
-	public class GreetingElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "idm.Qsv.Greeting");
+	public class QuerySepartedValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "idm.Qsv.QuerySepartedValue");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cHelloKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Keyword cExclamationMarkKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cHeaderAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cHeaderHeaderParserRuleCall_0_0 = (RuleCall)cHeaderAssignment_0.eContents().get(0);
+		private final Assignment cStatementsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cStatementsStatementParserRuleCall_1_0 = (RuleCall)cStatementsAssignment_1.eContents().get(0);
 		
-		//Greeting:
-		//	'Hello' name=ID '!';
+		//QuerySepartedValue:
+		//	header=Header
+		//	statements+=Statement*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'Hello' name=ID '!'
+		//header=Header statements+=Statement*
 		public Group getGroup() { return cGroup; }
 		
-		//'Hello'
-		public Keyword getHelloKeyword_0() { return cHelloKeyword_0; }
+		//header=Header
+		public Assignment getHeaderAssignment_0() { return cHeaderAssignment_0; }
 		
-		//name=ID
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		//Header
+		public RuleCall getHeaderHeaderParserRuleCall_0_0() { return cHeaderHeaderParserRuleCall_0_0; }
 		
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+		//statements+=Statement*
+		public Assignment getStatementsAssignment_1() { return cStatementsAssignment_1; }
 		
-		//'!'
-		public Keyword getExclamationMarkKeyword_2() { return cExclamationMarkKeyword_2; }
+		//Statement
+		public RuleCall getStatementsStatementParserRuleCall_1_0() { return cStatementsStatementParserRuleCall_1_0; }
+	}
+	public class HeaderElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "idm.Qsv.Header");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cUsingKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameFileAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameFileSTRINGTerminalRuleCall_1_0 = (RuleCall)cNameFileAssignment_1.eContents().get(0);
+		private final Keyword cWithKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Keyword cColumnKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Keyword cNamesKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Alternatives cAlternatives_5 = (Alternatives)cGroup.eContents().get(5);
+		private final Assignment cHasColumnNameAssignment_5_0 = (Assignment)cAlternatives_5.eContents().get(0);
+		private final Keyword cHasColumnNameYesKeyword_5_0_0 = (Keyword)cHasColumnNameAssignment_5_0.eContents().get(0);
+		private final Keyword cNoKeyword_5_1 = (Keyword)cAlternatives_5.eContents().get(1);
+		
+		//Header:
+		//	'using' nameFile=STRING 'with' 'column' 'names:' (hasColumnName?='yes' | 'no');
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'using' nameFile=STRING 'with' 'column' 'names:' (hasColumnName?='yes' | 'no')
+		public Group getGroup() { return cGroup; }
+		
+		//'using'
+		public Keyword getUsingKeyword_0() { return cUsingKeyword_0; }
+		
+		//nameFile=STRING
+		public Assignment getNameFileAssignment_1() { return cNameFileAssignment_1; }
+		
+		//STRING
+		public RuleCall getNameFileSTRINGTerminalRuleCall_1_0() { return cNameFileSTRINGTerminalRuleCall_1_0; }
+		
+		//'with'
+		public Keyword getWithKeyword_2() { return cWithKeyword_2; }
+		
+		//'column'
+		public Keyword getColumnKeyword_3() { return cColumnKeyword_3; }
+		
+		//'names:'
+		public Keyword getNamesKeyword_4() { return cNamesKeyword_4; }
+		
+		//(hasColumnName?='yes' | 'no')
+		public Alternatives getAlternatives_5() { return cAlternatives_5; }
+		
+		//hasColumnName?='yes'
+		public Assignment getHasColumnNameAssignment_5_0() { return cHasColumnNameAssignment_5_0; }
+		
+		//'yes'
+		public Keyword getHasColumnNameYesKeyword_5_0_0() { return cHasColumnNameYesKeyword_5_0_0; }
+		
+		//'no'
+		public Keyword getNoKeyword_5_1() { return cNoKeyword_5_1; }
+	}
+	public class StatementElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "idm.Qsv.Statement");
+		private final Assignment cStatementAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cStatementPrintParserRuleCall_0 = (RuleCall)cStatementAssignment.eContents().get(0);
+		
+		//Statement:
+		//	statement=Print;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//statement=Print
+		public Assignment getStatementAssignment() { return cStatementAssignment; }
+		
+		//Print
+		public RuleCall getStatementPrintParserRuleCall_0() { return cStatementPrintParserRuleCall_0; }
+	}
+	public class PrintElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "idm.Qsv.Print");
+		private final Assignment cPrintAssignment = (Assignment)rule.eContents().get(1);
+		private final Keyword cPrintPrintKeyword_0 = (Keyword)cPrintAssignment.eContents().get(0);
+		
+		//Print:
+		//	print='print';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//print='print'
+		public Assignment getPrintAssignment() { return cPrintAssignment; }
+		
+		//'print'
+		public Keyword getPrintPrintKeyword_0() { return cPrintPrintKeyword_0; }
+	}
+	public class DeleteElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "idm.Qsv.Delete");
+		private final Keyword cDeleteKeyword = (Keyword)rule.eContents().get(1);
+		
+		//Delete:
+		//	'delete';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'delete'
+		public Keyword getDeleteKeyword() { return cDeleteKeyword; }
+	}
+	public class InsertElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "idm.Qsv.Insert");
+		private final Keyword cInsertKeyword = (Keyword)rule.eContents().get(1);
+		
+		//Insert:
+		//	'insert';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'insert'
+		public Keyword getInsertKeyword() { return cInsertKeyword; }
 	}
 	
 	
-	private final ModelElements pModel;
-	private final GreetingElements pGreeting;
+	private final QuerySepartedValueElements pQuerySepartedValue;
+	private final HeaderElements pHeader;
+	private final StatementElements pStatement;
+	private final PrintElements pPrint;
+	private final DeleteElements pDelete;
+	private final InsertElements pInsert;
 	
 	private final Grammar grammar;
 	
@@ -77,8 +171,12 @@ public class QsvGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 			TerminalsGrammarAccess gaTerminals) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaTerminals = gaTerminals;
-		this.pModel = new ModelElements();
-		this.pGreeting = new GreetingElements();
+		this.pQuerySepartedValue = new QuerySepartedValueElements();
+		this.pHeader = new HeaderElements();
+		this.pStatement = new StatementElements();
+		this.pPrint = new PrintElements();
+		this.pDelete = new DeleteElements();
+		this.pInsert = new InsertElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -108,24 +206,65 @@ public class QsvGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 
 	
-	//Model:
-	//	greetings+=Greeting*;
-	public ModelElements getModelAccess() {
-		return pModel;
+	//QuerySepartedValue:
+	//	header=Header
+	//	statements+=Statement*;
+	public QuerySepartedValueElements getQuerySepartedValueAccess() {
+		return pQuerySepartedValue;
 	}
 	
-	public ParserRule getModelRule() {
-		return getModelAccess().getRule();
+	public ParserRule getQuerySepartedValueRule() {
+		return getQuerySepartedValueAccess().getRule();
 	}
 	
-	//Greeting:
-	//	'Hello' name=ID '!';
-	public GreetingElements getGreetingAccess() {
-		return pGreeting;
+	//Header:
+	//	'using' nameFile=STRING 'with' 'column' 'names:' (hasColumnName?='yes' | 'no');
+	public HeaderElements getHeaderAccess() {
+		return pHeader;
 	}
 	
-	public ParserRule getGreetingRule() {
-		return getGreetingAccess().getRule();
+	public ParserRule getHeaderRule() {
+		return getHeaderAccess().getRule();
+	}
+	
+	//Statement:
+	//	statement=Print;
+	public StatementElements getStatementAccess() {
+		return pStatement;
+	}
+	
+	public ParserRule getStatementRule() {
+		return getStatementAccess().getRule();
+	}
+	
+	//Print:
+	//	print='print';
+	public PrintElements getPrintAccess() {
+		return pPrint;
+	}
+	
+	public ParserRule getPrintRule() {
+		return getPrintAccess().getRule();
+	}
+	
+	//Delete:
+	//	'delete';
+	public DeleteElements getDeleteAccess() {
+		return pDelete;
+	}
+	
+	public ParserRule getDeleteRule() {
+		return getDeleteAccess().getRule();
+	}
+	
+	//Insert:
+	//	'insert';
+	public InsertElements getInsertAccess() {
+		return pInsert;
+	}
+	
+	public ParserRule getInsertRule() {
+		return getInsertAccess().getRule();
 	}
 	
 	//terminal ID:

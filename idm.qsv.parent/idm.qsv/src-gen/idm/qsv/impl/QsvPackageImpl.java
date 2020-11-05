@@ -3,10 +3,12 @@
  */
 package idm.qsv.impl;
 
-import idm.qsv.Greeting;
-import idm.qsv.Model;
+import idm.qsv.Header;
+import idm.qsv.Print;
 import idm.qsv.QsvFactory;
 import idm.qsv.QsvPackage;
+import idm.qsv.QuerySepartedValue;
+import idm.qsv.Statement;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -28,14 +30,28 @@ public class QsvPackageImpl extends EPackageImpl implements QsvPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass modelEClass = null;
+  private EClass querySepartedValueEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass greetingEClass = null;
+  private EClass headerEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass statementEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass printEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -106,9 +122,9 @@ public class QsvPackageImpl extends EPackageImpl implements QsvPackage
    * @generated
    */
   @Override
-  public EClass getModel()
+  public EClass getQuerySepartedValue()
   {
-    return modelEClass;
+    return querySepartedValueEClass;
   }
 
   /**
@@ -117,9 +133,9 @@ public class QsvPackageImpl extends EPackageImpl implements QsvPackage
    * @generated
    */
   @Override
-  public EReference getModel_Greetings()
+  public EReference getQuerySepartedValue_Header()
   {
-    return (EReference)modelEClass.getEStructuralFeatures().get(0);
+    return (EReference)querySepartedValueEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -128,9 +144,9 @@ public class QsvPackageImpl extends EPackageImpl implements QsvPackage
    * @generated
    */
   @Override
-  public EClass getGreeting()
+  public EReference getQuerySepartedValue_Statements()
   {
-    return greetingEClass;
+    return (EReference)querySepartedValueEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -139,9 +155,75 @@ public class QsvPackageImpl extends EPackageImpl implements QsvPackage
    * @generated
    */
   @Override
-  public EAttribute getGreeting_Name()
+  public EClass getHeader()
   {
-    return (EAttribute)greetingEClass.getEStructuralFeatures().get(0);
+    return headerEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getHeader_NameFile()
+  {
+    return (EAttribute)headerEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getHeader_HasColumnName()
+  {
+    return (EAttribute)headerEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getStatement()
+  {
+    return statementEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getStatement_Statement()
+  {
+    return (EReference)statementEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getPrint()
+  {
+    return printEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getPrint_Print()
+  {
+    return (EAttribute)printEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -175,11 +257,19 @@ public class QsvPackageImpl extends EPackageImpl implements QsvPackage
     isCreated = true;
 
     // Create classes and their features
-    modelEClass = createEClass(MODEL);
-    createEReference(modelEClass, MODEL__GREETINGS);
+    querySepartedValueEClass = createEClass(QUERY_SEPARTED_VALUE);
+    createEReference(querySepartedValueEClass, QUERY_SEPARTED_VALUE__HEADER);
+    createEReference(querySepartedValueEClass, QUERY_SEPARTED_VALUE__STATEMENTS);
 
-    greetingEClass = createEClass(GREETING);
-    createEAttribute(greetingEClass, GREETING__NAME);
+    headerEClass = createEClass(HEADER);
+    createEAttribute(headerEClass, HEADER__NAME_FILE);
+    createEAttribute(headerEClass, HEADER__HAS_COLUMN_NAME);
+
+    statementEClass = createEClass(STATEMENT);
+    createEReference(statementEClass, STATEMENT__STATEMENT);
+
+    printEClass = createEClass(PRINT);
+    createEAttribute(printEClass, PRINT__PRINT);
   }
 
   /**
@@ -213,11 +303,19 @@ public class QsvPackageImpl extends EPackageImpl implements QsvPackage
     // Add supertypes to classes
 
     // Initialize classes and features; add operations and parameters
-    initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getModel_Greetings(), this.getGreeting(), null, "greetings", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(querySepartedValueEClass, QuerySepartedValue.class, "QuerySepartedValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getQuerySepartedValue_Header(), this.getHeader(), null, "header", null, 0, 1, QuerySepartedValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getQuerySepartedValue_Statements(), this.getStatement(), null, "statements", null, 0, -1, QuerySepartedValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(greetingEClass, Greeting.class, "Greeting", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getGreeting_Name(), ecorePackage.getEString(), "name", null, 0, 1, Greeting.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(headerEClass, Header.class, "Header", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getHeader_NameFile(), ecorePackage.getEString(), "nameFile", null, 0, 1, Header.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getHeader_HasColumnName(), ecorePackage.getEBoolean(), "hasColumnName", null, 0, 1, Header.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(statementEClass, Statement.class, "Statement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getStatement_Statement(), this.getPrint(), null, "statement", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(printEClass, Print.class, "Print", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPrint_Print(), ecorePackage.getEString(), "print", null, 0, 1, Print.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

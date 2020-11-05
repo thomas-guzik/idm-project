@@ -58,103 +58,241 @@ public interface QsvPackage extends EPackage
   QsvPackage eINSTANCE = idm.qsv.impl.QsvPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link idm.qsv.impl.ModelImpl <em>Model</em>}' class.
+   * The meta object id for the '{@link idm.qsv.impl.QuerySepartedValueImpl <em>Query Separted Value</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see idm.qsv.impl.ModelImpl
-   * @see idm.qsv.impl.QsvPackageImpl#getModel()
+   * @see idm.qsv.impl.QuerySepartedValueImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getQuerySepartedValue()
    * @generated
    */
-  int MODEL = 0;
+  int QUERY_SEPARTED_VALUE = 0;
 
   /**
-   * The feature id for the '<em><b>Greetings</b></em>' containment reference list.
+   * The feature id for the '<em><b>Header</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MODEL__GREETINGS = 0;
+  int QUERY_SEPARTED_VALUE__HEADER = 0;
 
   /**
-   * The number of structural features of the '<em>Model</em>' class.
+   * The feature id for the '<em><b>Statements</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MODEL_FEATURE_COUNT = 1;
+  int QUERY_SEPARTED_VALUE__STATEMENTS = 1;
 
   /**
-   * The meta object id for the '{@link idm.qsv.impl.GreetingImpl <em>Greeting</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see idm.qsv.impl.GreetingImpl
-   * @see idm.qsv.impl.QsvPackageImpl#getGreeting()
-   * @generated
-   */
-  int GREETING = 1;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * The number of structural features of the '<em>Query Separted Value</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GREETING__NAME = 0;
+  int QUERY_SEPARTED_VALUE_FEATURE_COUNT = 2;
 
   /**
-   * The number of structural features of the '<em>Greeting</em>' class.
+   * The meta object id for the '{@link idm.qsv.impl.HeaderImpl <em>Header</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see idm.qsv.impl.HeaderImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getHeader()
+   * @generated
+   */
+  int HEADER = 1;
+
+  /**
+   * The feature id for the '<em><b>Name File</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GREETING_FEATURE_COUNT = 1;
+  int HEADER__NAME_FILE = 0;
+
+  /**
+   * The feature id for the '<em><b>Has Column Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HEADER__HAS_COLUMN_NAME = 1;
+
+  /**
+   * The number of structural features of the '<em>Header</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HEADER_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link idm.qsv.impl.StatementImpl <em>Statement</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see idm.qsv.impl.StatementImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getStatement()
+   * @generated
+   */
+  int STATEMENT = 2;
+
+  /**
+   * The feature id for the '<em><b>Statement</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATEMENT__STATEMENT = 0;
+
+  /**
+   * The number of structural features of the '<em>Statement</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATEMENT_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link idm.qsv.impl.PrintImpl <em>Print</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see idm.qsv.impl.PrintImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getPrint()
+   * @generated
+   */
+  int PRINT = 3;
+
+  /**
+   * The feature id for the '<em><b>Print</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PRINT__PRINT = 0;
+
+  /**
+   * The number of structural features of the '<em>Print</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PRINT_FEATURE_COUNT = 1;
 
 
   /**
-   * Returns the meta object for class '{@link idm.qsv.Model <em>Model</em>}'.
+   * Returns the meta object for class '{@link idm.qsv.QuerySepartedValue <em>Query Separted Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Model</em>'.
-   * @see idm.qsv.Model
+   * @return the meta object for class '<em>Query Separted Value</em>'.
+   * @see idm.qsv.QuerySepartedValue
    * @generated
    */
-  EClass getModel();
+  EClass getQuerySepartedValue();
 
   /**
-   * Returns the meta object for the containment reference list '{@link idm.qsv.Model#getGreetings <em>Greetings</em>}'.
+   * Returns the meta object for the containment reference '{@link idm.qsv.QuerySepartedValue#getHeader <em>Header</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Greetings</em>'.
-   * @see idm.qsv.Model#getGreetings()
-   * @see #getModel()
+   * @return the meta object for the containment reference '<em>Header</em>'.
+   * @see idm.qsv.QuerySepartedValue#getHeader()
+   * @see #getQuerySepartedValue()
    * @generated
    */
-  EReference getModel_Greetings();
+  EReference getQuerySepartedValue_Header();
 
   /**
-   * Returns the meta object for class '{@link idm.qsv.Greeting <em>Greeting</em>}'.
+   * Returns the meta object for the containment reference list '{@link idm.qsv.QuerySepartedValue#getStatements <em>Statements</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Greeting</em>'.
-   * @see idm.qsv.Greeting
+   * @return the meta object for the containment reference list '<em>Statements</em>'.
+   * @see idm.qsv.QuerySepartedValue#getStatements()
+   * @see #getQuerySepartedValue()
    * @generated
    */
-  EClass getGreeting();
+  EReference getQuerySepartedValue_Statements();
 
   /**
-   * Returns the meta object for the attribute '{@link idm.qsv.Greeting#getName <em>Name</em>}'.
+   * Returns the meta object for class '{@link idm.qsv.Header <em>Header</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see idm.qsv.Greeting#getName()
-   * @see #getGreeting()
+   * @return the meta object for class '<em>Header</em>'.
+   * @see idm.qsv.Header
    * @generated
    */
-  EAttribute getGreeting_Name();
+  EClass getHeader();
+
+  /**
+   * Returns the meta object for the attribute '{@link idm.qsv.Header#getNameFile <em>Name File</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name File</em>'.
+   * @see idm.qsv.Header#getNameFile()
+   * @see #getHeader()
+   * @generated
+   */
+  EAttribute getHeader_NameFile();
+
+  /**
+   * Returns the meta object for the attribute '{@link idm.qsv.Header#isHasColumnName <em>Has Column Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Has Column Name</em>'.
+   * @see idm.qsv.Header#isHasColumnName()
+   * @see #getHeader()
+   * @generated
+   */
+  EAttribute getHeader_HasColumnName();
+
+  /**
+   * Returns the meta object for class '{@link idm.qsv.Statement <em>Statement</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Statement</em>'.
+   * @see idm.qsv.Statement
+   * @generated
+   */
+  EClass getStatement();
+
+  /**
+   * Returns the meta object for the containment reference '{@link idm.qsv.Statement#getStatement <em>Statement</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Statement</em>'.
+   * @see idm.qsv.Statement#getStatement()
+   * @see #getStatement()
+   * @generated
+   */
+  EReference getStatement_Statement();
+
+  /**
+   * Returns the meta object for class '{@link idm.qsv.Print <em>Print</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Print</em>'.
+   * @see idm.qsv.Print
+   * @generated
+   */
+  EClass getPrint();
+
+  /**
+   * Returns the meta object for the attribute '{@link idm.qsv.Print#getPrint <em>Print</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Print</em>'.
+   * @see idm.qsv.Print#getPrint()
+   * @see #getPrint()
+   * @generated
+   */
+  EAttribute getPrint_Print();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -180,40 +318,92 @@ public interface QsvPackage extends EPackage
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link idm.qsv.impl.ModelImpl <em>Model</em>}' class.
+     * The meta object literal for the '{@link idm.qsv.impl.QuerySepartedValueImpl <em>Query Separted Value</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see idm.qsv.impl.ModelImpl
-     * @see idm.qsv.impl.QsvPackageImpl#getModel()
+     * @see idm.qsv.impl.QuerySepartedValueImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getQuerySepartedValue()
      * @generated
      */
-    EClass MODEL = eINSTANCE.getModel();
+    EClass QUERY_SEPARTED_VALUE = eINSTANCE.getQuerySepartedValue();
 
     /**
-     * The meta object literal for the '<em><b>Greetings</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Header</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference MODEL__GREETINGS = eINSTANCE.getModel_Greetings();
+    EReference QUERY_SEPARTED_VALUE__HEADER = eINSTANCE.getQuerySepartedValue_Header();
 
     /**
-     * The meta object literal for the '{@link idm.qsv.impl.GreetingImpl <em>Greeting</em>}' class.
+     * The meta object literal for the '<em><b>Statements</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see idm.qsv.impl.GreetingImpl
-     * @see idm.qsv.impl.QsvPackageImpl#getGreeting()
      * @generated
      */
-    EClass GREETING = eINSTANCE.getGreeting();
+    EReference QUERY_SEPARTED_VALUE__STATEMENTS = eINSTANCE.getQuerySepartedValue_Statements();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * The meta object literal for the '{@link idm.qsv.impl.HeaderImpl <em>Header</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see idm.qsv.impl.HeaderImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getHeader()
+     * @generated
+     */
+    EClass HEADER = eINSTANCE.getHeader();
+
+    /**
+     * The meta object literal for the '<em><b>Name File</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute GREETING__NAME = eINSTANCE.getGreeting_Name();
+    EAttribute HEADER__NAME_FILE = eINSTANCE.getHeader_NameFile();
+
+    /**
+     * The meta object literal for the '<em><b>Has Column Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute HEADER__HAS_COLUMN_NAME = eINSTANCE.getHeader_HasColumnName();
+
+    /**
+     * The meta object literal for the '{@link idm.qsv.impl.StatementImpl <em>Statement</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see idm.qsv.impl.StatementImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getStatement()
+     * @generated
+     */
+    EClass STATEMENT = eINSTANCE.getStatement();
+
+    /**
+     * The meta object literal for the '<em><b>Statement</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference STATEMENT__STATEMENT = eINSTANCE.getStatement_Statement();
+
+    /**
+     * The meta object literal for the '{@link idm.qsv.impl.PrintImpl <em>Print</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see idm.qsv.impl.PrintImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getPrint()
+     * @generated
+     */
+    EClass PRINT = eINSTANCE.getPrint();
+
+    /**
+     * The meta object literal for the '<em><b>Print</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PRINT__PRINT = eINSTANCE.getPrint_Print();
 
   }
 

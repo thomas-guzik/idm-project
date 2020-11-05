@@ -65,8 +65,10 @@ public class QsvFactoryImpl extends EFactoryImpl implements QsvFactory
   {
     switch (eClass.getClassifierID())
     {
-      case QsvPackage.MODEL: return createModel();
-      case QsvPackage.GREETING: return createGreeting();
+      case QsvPackage.QUERY_SEPARTED_VALUE: return createQuerySepartedValue();
+      case QsvPackage.HEADER: return createHeader();
+      case QsvPackage.STATEMENT: return createStatement();
+      case QsvPackage.PRINT: return createPrint();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -78,10 +80,10 @@ public class QsvFactoryImpl extends EFactoryImpl implements QsvFactory
    * @generated
    */
   @Override
-  public Model createModel()
+  public QuerySepartedValue createQuerySepartedValue()
   {
-    ModelImpl model = new ModelImpl();
-    return model;
+    QuerySepartedValueImpl querySepartedValue = new QuerySepartedValueImpl();
+    return querySepartedValue;
   }
 
   /**
@@ -90,10 +92,34 @@ public class QsvFactoryImpl extends EFactoryImpl implements QsvFactory
    * @generated
    */
   @Override
-  public Greeting createGreeting()
+  public Header createHeader()
   {
-    GreetingImpl greeting = new GreetingImpl();
-    return greeting;
+    HeaderImpl header = new HeaderImpl();
+    return header;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Statement createStatement()
+  {
+    StatementImpl statement = new StatementImpl();
+    return statement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Print createPrint()
+  {
+    PrintImpl print = new PrintImpl();
+    return print;
   }
 
   /**

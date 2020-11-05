@@ -4,27 +4,45 @@
 package idm.tests
 
 import com.google.inject.Inject
-import idm.qsv.Model
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.extensions.InjectionExtension
 import org.eclipse.xtext.testing.util.ParseHelper
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.^extension.ExtendWith
+import idm.qsv.QuerySepartedValue
 
 @ExtendWith(InjectionExtension)
 @InjectWith(QsvInjectorProvider)
 class QsvParsingTest {
 	@Inject
-	ParseHelper<Model> parseHelper
-	
+	ParseHelper<QuerySepartedValue> parseHelper
+
 	@Test
-	def void loadModel() {
+	def void loadFile() {
 		val result = parseHelper.parse('''
-			Hello Xtext!
+			using "test.csv" with column names: no
+			print
 		''')
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+	}
+
+	@Test
+	def void compileModel() {
+		val result = parseHelper.parse('''
+			using "foo1.csv" with column names: no
+			print
+		''')
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+
+		val PythonCompiler cmpPython = new PythonCompiler(result)
+		cmpPython.compileAndRun
+
+		// TODO 
+		// val BashCompiler cmpBash = null
 	}
 }

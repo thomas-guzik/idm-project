@@ -31,9 +31,15 @@ public class QsvParser extends AbstractContentAssistParser {
 		}
 		
 		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, QsvGrammarAccess grammarAccess) {
-			builder.put(grammarAccess.getGreetingAccess().getGroup(), "rule__Greeting__Group__0");
-			builder.put(grammarAccess.getModelAccess().getGreetingsAssignment(), "rule__Model__GreetingsAssignment");
-			builder.put(grammarAccess.getGreetingAccess().getNameAssignment_1(), "rule__Greeting__NameAssignment_1");
+			builder.put(grammarAccess.getHeaderAccess().getAlternatives_5(), "rule__Header__Alternatives_5");
+			builder.put(grammarAccess.getQuerySepartedValueAccess().getGroup(), "rule__QuerySepartedValue__Group__0");
+			builder.put(grammarAccess.getHeaderAccess().getGroup(), "rule__Header__Group__0");
+			builder.put(grammarAccess.getQuerySepartedValueAccess().getHeaderAssignment_0(), "rule__QuerySepartedValue__HeaderAssignment_0");
+			builder.put(grammarAccess.getQuerySepartedValueAccess().getStatementsAssignment_1(), "rule__QuerySepartedValue__StatementsAssignment_1");
+			builder.put(grammarAccess.getHeaderAccess().getNameFileAssignment_1(), "rule__Header__NameFileAssignment_1");
+			builder.put(grammarAccess.getHeaderAccess().getHasColumnNameAssignment_5_0(), "rule__Header__HasColumnNameAssignment_5_0");
+			builder.put(grammarAccess.getStatementAccess().getStatementAssignment(), "rule__Statement__StatementAssignment");
+			builder.put(grammarAccess.getPrintAccess().getPrintAssignment(), "rule__Print__PrintAssignment");
 		}
 	}
 	

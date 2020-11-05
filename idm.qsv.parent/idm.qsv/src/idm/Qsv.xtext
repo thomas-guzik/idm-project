@@ -2,8 +2,29 @@ grammar idm.Qsv with org.eclipse.xtext.common.Terminals
 
 generate qsv "http://www.Qsv.idm"
 
-Model:
-	greetings+=Greeting*;
-	
-Greeting:
-	'Hello' name=ID '!';
+QuerySepartedValue:
+	header = Header
+	statements += Statement*
+;
+
+Header:
+	'using' nameFile=STRING 'with' 'column' 'names:' (hasColumnName?='yes'|'no')
+;
+
+Statement:
+	statement = Print
+;
+
+Print:
+	print = 'print'	
+;
+
+Delete:
+	'delete'
+;
+
+Insert:
+	'insert'
+;
+
+

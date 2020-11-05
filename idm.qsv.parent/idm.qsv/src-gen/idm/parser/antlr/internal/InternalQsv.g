@@ -43,7 +43,7 @@ import idm.services.QsvGrammarAccess;
 
     @Override
     protected String getFirstRuleName() {
-    	return "Model";
+    	return "QuerySepartedValue";
    	}
 
    	@Override
@@ -60,15 +60,15 @@ import idm.services.QsvGrammarAccess;
     }
 }
 
-// Entry rule entryRuleModel
-entryRuleModel returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getModelRule()); }
-	iv_ruleModel=ruleModel
-	{ $current=$iv_ruleModel.current; }
+// Entry rule entryRuleQuerySepartedValue
+entryRuleQuerySepartedValue returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getQuerySepartedValueRule()); }
+	iv_ruleQuerySepartedValue=ruleQuerySepartedValue
+	{ $current=$iv_ruleQuerySepartedValue.current; }
 	EOF;
 
-// Rule Model
-ruleModel returns [EObject current=null]
+// Rule QuerySepartedValue
+ruleQuerySepartedValue returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -76,68 +76,185 @@ ruleModel returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		(
-			{
-				newCompositeNode(grammarAccess.getModelAccess().getGreetingsGreetingParserRuleCall_0());
-			}
-			lv_greetings_0_0=ruleGreeting
-			{
-				if ($current==null) {
-					$current = createModelElementForParent(grammarAccess.getModelRule());
-				}
-				add(
-					$current,
-					"greetings",
-					lv_greetings_0_0,
-					"idm.Qsv.Greeting");
-				afterParserOrEnumRuleCall();
-			}
-		)
-	)*
-;
-
-// Entry rule entryRuleGreeting
-entryRuleGreeting returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getGreetingRule()); }
-	iv_ruleGreeting=ruleGreeting
-	{ $current=$iv_ruleGreeting.current; }
-	EOF;
-
-// Rule Greeting
-ruleGreeting returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		otherlv_0='Hello'
-		{
-			newLeafNode(otherlv_0, grammarAccess.getGreetingAccess().getHelloKeyword_0());
-		}
 		(
 			(
-				lv_name_1_0=RULE_ID
 				{
-					newLeafNode(lv_name_1_0, grammarAccess.getGreetingAccess().getNameIDTerminalRuleCall_1_0());
+					newCompositeNode(grammarAccess.getQuerySepartedValueAccess().getHeaderHeaderParserRuleCall_0_0());
 				}
+				lv_header_0_0=ruleHeader
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getGreetingRule());
+						$current = createModelElementForParent(grammarAccess.getQuerySepartedValueRule());
 					}
-					setWithLastConsumed(
+					set(
 						$current,
-						"name",
-						lv_name_1_0,
-						"org.eclipse.xtext.common.Terminals.ID");
+						"header",
+						lv_header_0_0,
+						"idm.Qsv.Header");
+					afterParserOrEnumRuleCall();
 				}
 			)
 		)
-		otherlv_2='!'
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getQuerySepartedValueAccess().getStatementsStatementParserRuleCall_1_0());
+				}
+				lv_statements_1_0=ruleStatement
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getQuerySepartedValueRule());
+					}
+					add(
+						$current,
+						"statements",
+						lv_statements_1_0,
+						"idm.Qsv.Statement");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+	)
+;
+
+// Entry rule entryRuleHeader
+entryRuleHeader returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getHeaderRule()); }
+	iv_ruleHeader=ruleHeader
+	{ $current=$iv_ruleHeader.current; }
+	EOF;
+
+// Rule Header
+ruleHeader returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='using'
 		{
-			newLeafNode(otherlv_2, grammarAccess.getGreetingAccess().getExclamationMarkKeyword_2());
+			newLeafNode(otherlv_0, grammarAccess.getHeaderAccess().getUsingKeyword_0());
 		}
+		(
+			(
+				lv_nameFile_1_0=RULE_STRING
+				{
+					newLeafNode(lv_nameFile_1_0, grammarAccess.getHeaderAccess().getNameFileSTRINGTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getHeaderRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"nameFile",
+						lv_nameFile_1_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
+		otherlv_2='with'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getHeaderAccess().getWithKeyword_2());
+		}
+		otherlv_3='column'
+		{
+			newLeafNode(otherlv_3, grammarAccess.getHeaderAccess().getColumnKeyword_3());
+		}
+		otherlv_4='names:'
+		{
+			newLeafNode(otherlv_4, grammarAccess.getHeaderAccess().getNamesKeyword_4());
+		}
+		(
+			(
+				(
+					lv_hasColumnName_5_0='yes'
+					{
+						newLeafNode(lv_hasColumnName_5_0, grammarAccess.getHeaderAccess().getHasColumnNameYesKeyword_5_0_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getHeaderRule());
+						}
+						setWithLastConsumed($current, "hasColumnName", lv_hasColumnName_5_0 != null, "yes");
+					}
+				)
+			)
+			    |
+			otherlv_6='no'
+			{
+				newLeafNode(otherlv_6, grammarAccess.getHeaderAccess().getNoKeyword_5_1());
+			}
+		)
+	)
+;
+
+// Entry rule entryRuleStatement
+entryRuleStatement returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getStatementRule()); }
+	iv_ruleStatement=ruleStatement
+	{ $current=$iv_ruleStatement.current; }
+	EOF;
+
+// Rule Statement
+ruleStatement returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			{
+				newCompositeNode(grammarAccess.getStatementAccess().getStatementPrintParserRuleCall_0());
+			}
+			lv_statement_0_0=rulePrint
+			{
+				if ($current==null) {
+					$current = createModelElementForParent(grammarAccess.getStatementRule());
+				}
+				set(
+					$current,
+					"statement",
+					lv_statement_0_0,
+					"idm.Qsv.Print");
+				afterParserOrEnumRuleCall();
+			}
+		)
+	)
+;
+
+// Entry rule entryRulePrint
+entryRulePrint returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getPrintRule()); }
+	iv_rulePrint=rulePrint
+	{ $current=$iv_rulePrint.current; }
+	EOF;
+
+// Rule Print
+rulePrint returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			lv_print_0_0='print'
+			{
+				newLeafNode(lv_print_0_0, grammarAccess.getPrintAccess().getPrintPrintKeyword_0());
+			}
+			{
+				if ($current==null) {
+					$current = createModelElement(grammarAccess.getPrintRule());
+				}
+				setWithLastConsumed($current, "print", lv_print_0_0, "print");
+			}
+		)
 	)
 ;
 

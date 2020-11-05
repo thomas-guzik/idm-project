@@ -4,7 +4,8 @@
 package idm.tests;
 
 import com.google.inject.Inject;
-import idm.qsv.Model;
+import idm.qsv.QuerySepartedValue;
+import idm.tests.PythonCompiler;
 import idm.tests.QsvInjectorProvider;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -23,15 +24,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @SuppressWarnings("all")
 public class QsvParsingTest {
   @Inject
-  private ParseHelper<Model> parseHelper;
+  private ParseHelper<QuerySepartedValue> parseHelper;
   
   @Test
-  public void loadModel() {
+  public void loadFile() {
     try {
       StringConcatenation _builder = new StringConcatenation();
-      _builder.append("Hello Xtext!");
+      _builder.append("using \"test.csv\" with column names: no");
       _builder.newLine();
-      final Model result = this.parseHelper.parse(_builder);
+      _builder.append("print");
+      _builder.newLine();
+      final QuerySepartedValue result = this.parseHelper.parse(_builder);
       Assertions.assertNotNull(result);
       final EList<Resource.Diagnostic> errors = result.eResource().getErrors();
       boolean _isEmpty = errors.isEmpty();
@@ -40,6 +43,30 @@ public class QsvParsingTest {
       String _join = IterableExtensions.join(errors, ", ");
       _builder_1.append(_join);
       Assertions.assertTrue(_isEmpty, _builder_1.toString());
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void compileModel() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("using \"foo1.csv\" with column names: no");
+      _builder.newLine();
+      _builder.append("print");
+      _builder.newLine();
+      final QuerySepartedValue result = this.parseHelper.parse(_builder);
+      Assertions.assertNotNull(result);
+      final EList<Resource.Diagnostic> errors = result.eResource().getErrors();
+      boolean _isEmpty = errors.isEmpty();
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("Unexpected errors: ");
+      String _join = IterableExtensions.join(errors, ", ");
+      _builder_1.append(_join);
+      Assertions.assertTrue(_isEmpty, _builder_1.toString());
+      final PythonCompiler cmpPython = new PythonCompiler(result);
+      cmpPython.compileAndRun();
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

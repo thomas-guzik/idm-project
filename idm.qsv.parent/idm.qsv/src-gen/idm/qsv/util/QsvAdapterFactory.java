@@ -76,14 +76,24 @@ public class QsvAdapterFactory extends AdapterFactoryImpl
     new QsvSwitch<Adapter>()
     {
       @Override
-      public Adapter caseModel(Model object)
+      public Adapter caseQuerySepartedValue(QuerySepartedValue object)
       {
-        return createModelAdapter();
+        return createQuerySepartedValueAdapter();
       }
       @Override
-      public Adapter caseGreeting(Greeting object)
+      public Adapter caseHeader(Header object)
       {
-        return createGreetingAdapter();
+        return createHeaderAdapter();
+      }
+      @Override
+      public Adapter caseStatement(Statement object)
+      {
+        return createStatementAdapter();
+      }
+      @Override
+      public Adapter casePrint(Print object)
+      {
+        return createPrintAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -108,31 +118,61 @@ public class QsvAdapterFactory extends AdapterFactoryImpl
 
 
   /**
-   * Creates a new adapter for an object of class '{@link idm.qsv.Model <em>Model</em>}'.
+   * Creates a new adapter for an object of class '{@link idm.qsv.QuerySepartedValue <em>Query Separted Value</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see idm.qsv.Model
+   * @see idm.qsv.QuerySepartedValue
    * @generated
    */
-  public Adapter createModelAdapter()
+  public Adapter createQuerySepartedValueAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link idm.qsv.Greeting <em>Greeting</em>}'.
+   * Creates a new adapter for an object of class '{@link idm.qsv.Header <em>Header</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see idm.qsv.Greeting
+   * @see idm.qsv.Header
    * @generated
    */
-  public Adapter createGreetingAdapter()
+  public Adapter createHeaderAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link idm.qsv.Statement <em>Statement</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see idm.qsv.Statement
+   * @generated
+   */
+  public Adapter createStatementAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link idm.qsv.Print <em>Print</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see idm.qsv.Print
+   * @generated
+   */
+  public Adapter createPrintAdapter()
   {
     return null;
   }
