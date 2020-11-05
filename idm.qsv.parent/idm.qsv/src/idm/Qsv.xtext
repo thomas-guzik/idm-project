@@ -1,0 +1,9 @@
+grammar idm.Qsv with org.eclipse.xtext.common.Terminals
+
+generate qsv "http://www.Qsv.idm"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';
