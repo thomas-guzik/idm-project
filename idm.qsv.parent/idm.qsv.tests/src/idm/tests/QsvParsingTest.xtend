@@ -10,13 +10,13 @@ import org.eclipse.xtext.testing.util.ParseHelper
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.^extension.ExtendWith
-import idm.qsv.QuerySepartedValue
+import idm.qsv.QuerySeparatedValues
 
 @ExtendWith(InjectionExtension)
 @InjectWith(QsvInjectorProvider)
 class QsvParsingTest {
 	@Inject
-	ParseHelper<QuerySepartedValue> parseHelper
+	ParseHelper<QuerySeparatedValues> parseHelper
 
 	@Test
 	def void loadFile() {

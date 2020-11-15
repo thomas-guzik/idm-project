@@ -2,7 +2,7 @@ grammar idm.Qsv with org.eclipse.xtext.common.Terminals
 
 generate qsv "http://www.Qsv.idm"
 
-QuerySepartedValue:
+QuerySeparatedValues:
 	header = Header
 	statements += Statement*
 ;
@@ -16,9 +16,77 @@ Statement:
 ;
 
 Print:
-	print = 'print'	
+	'print' selector=Selector
 ;
 
+Selector: // Region
+	columns=Columns? lines=Lines?
+;
+
+Columns:
+	':columns' (range=ColRange | column=Column | '*')?
+;
+
+ColRange:
+	start=Column '-' end=Column
+;
+
+Column:
+	ColumnName | ColumnNumber
+;
+
+ColumnName:
+	nameb = ID
+;
+
+ColumnNumber:
+	'#' number=INT
+;
+
+Lines:
+	':lines' (range=LineRange | line=Line | '*')? cond=Condition?
+;
+
+LineRange:
+	start=INT '-' end=INT
+;
+
+Line:
+	'#' number=INT
+;
+
+Condition:
+	mid=MidPriority ('or' orCondition=Condition)?
+;
+
+MidPriority:
+	high=HighestPriority ('and' andCondition=MidPriority)?
+;
+
+HighestPriority:
+	condition=BinCond
+	| ( '(' condition=Condition ')' )
+;
+
+BinCond:
+	colId=ID operator=OpComp (compStr=STRING | compId=ID | compValue=INT)
+;
+
+OpComp:
+	op = '=' | 'in' | '<' | '>' | '<=' | '>=' | '!=' | 'not in'
+;
+
+Value:
+	val = INT | STRING | Boolean 
+;
+
+Boolean:
+	bol = 'yes'|'no'
+;
+
+Empty:
+	empty = ' '?
+;
 Delete:
 	'delete'
 ;

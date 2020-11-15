@@ -5,10 +5,13 @@ package idm.qsv.impl;
 
 import idm.qsv.Print;
 import idm.qsv.QsvPackage;
+import idm.qsv.Selector;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -21,7 +24,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link idm.qsv.impl.PrintImpl#getPrint <em>Print</em>}</li>
+ *   <li>{@link idm.qsv.impl.PrintImpl#getSelector <em>Selector</em>}</li>
  * </ul>
  *
  * @generated
@@ -29,24 +32,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class PrintImpl extends MinimalEObjectImpl.Container implements Print
 {
   /**
-   * The default value of the '{@link #getPrint() <em>Print</em>}' attribute.
+   * The cached value of the '{@link #getSelector() <em>Selector</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getPrint()
+   * @see #getSelector()
    * @generated
    * @ordered
    */
-  protected static final String PRINT_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getPrint() <em>Print</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getPrint()
-   * @generated
-   * @ordered
-   */
-  protected String print = PRINT_EDEFAULT;
+  protected Selector selector;
 
   /**
    * <!-- begin-user-doc -->
@@ -75,9 +68,26 @@ public class PrintImpl extends MinimalEObjectImpl.Container implements Print
    * @generated
    */
   @Override
-  public String getPrint()
+  public Selector getSelector()
   {
-    return print;
+    return selector;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetSelector(Selector newSelector, NotificationChain msgs)
+  {
+    Selector oldSelector = selector;
+    selector = newSelector;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QsvPackage.PRINT__SELECTOR, oldSelector, newSelector);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
   }
 
   /**
@@ -86,12 +96,36 @@ public class PrintImpl extends MinimalEObjectImpl.Container implements Print
    * @generated
    */
   @Override
-  public void setPrint(String newPrint)
+  public void setSelector(Selector newSelector)
   {
-    String oldPrint = print;
-    print = newPrint;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, QsvPackage.PRINT__PRINT, oldPrint, print));
+    if (newSelector != selector)
+    {
+      NotificationChain msgs = null;
+      if (selector != null)
+        msgs = ((InternalEObject)selector).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QsvPackage.PRINT__SELECTOR, null, msgs);
+      if (newSelector != null)
+        msgs = ((InternalEObject)newSelector).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QsvPackage.PRINT__SELECTOR, null, msgs);
+      msgs = basicSetSelector(newSelector, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, QsvPackage.PRINT__SELECTOR, newSelector, newSelector));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case QsvPackage.PRINT__SELECTOR:
+        return basicSetSelector(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -104,8 +138,8 @@ public class PrintImpl extends MinimalEObjectImpl.Container implements Print
   {
     switch (featureID)
     {
-      case QsvPackage.PRINT__PRINT:
-        return getPrint();
+      case QsvPackage.PRINT__SELECTOR:
+        return getSelector();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -120,8 +154,8 @@ public class PrintImpl extends MinimalEObjectImpl.Container implements Print
   {
     switch (featureID)
     {
-      case QsvPackage.PRINT__PRINT:
-        setPrint((String)newValue);
+      case QsvPackage.PRINT__SELECTOR:
+        setSelector((Selector)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -137,8 +171,8 @@ public class PrintImpl extends MinimalEObjectImpl.Container implements Print
   {
     switch (featureID)
     {
-      case QsvPackage.PRINT__PRINT:
-        setPrint(PRINT_EDEFAULT);
+      case QsvPackage.PRINT__SELECTOR:
+        setSelector((Selector)null);
         return;
     }
     super.eUnset(featureID);
@@ -154,27 +188,10 @@ public class PrintImpl extends MinimalEObjectImpl.Container implements Print
   {
     switch (featureID)
     {
-      case QsvPackage.PRINT__PRINT:
-        return PRINT_EDEFAULT == null ? print != null : !PRINT_EDEFAULT.equals(print);
+      case QsvPackage.PRINT__SELECTOR:
+        return selector != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (print: ");
-    result.append(print);
-    result.append(')');
-    return result.toString();
   }
 
 } //PrintImpl

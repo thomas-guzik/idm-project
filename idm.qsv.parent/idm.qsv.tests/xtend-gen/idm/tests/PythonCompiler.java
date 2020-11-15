@@ -7,13 +7,13 @@ import java.io.InputStreamReader;
 
 import com.google.common.io.Files;
 
-import idm.qsv.QuerySepartedValue;
+import idm.qsv.QuerySeparatedValues;
 import idm.qsv.Statement;
 
 public class PythonCompiler {
-	private QuerySepartedValue qsv;
+	private QuerySeparatedValues qsv;
 
-	PythonCompiler(QuerySepartedValue q) {
+	PythonCompiler(QuerySeparatedValues q) {
 		qsv = q;
 	}
 

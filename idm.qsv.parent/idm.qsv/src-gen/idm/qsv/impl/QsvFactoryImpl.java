@@ -3,7 +3,28 @@
  */
 package idm.qsv.impl;
 
-import idm.qsv.*;
+import idm.qsv.BinCond;
+import idm.qsv.ColRange;
+import idm.qsv.Column;
+import idm.qsv.ColumnName;
+import idm.qsv.ColumnNumber;
+import idm.qsv.Columns;
+import idm.qsv.Condition;
+import idm.qsv.Empty;
+import idm.qsv.Header;
+import idm.qsv.HighestPriority;
+import idm.qsv.Line;
+import idm.qsv.LineRange;
+import idm.qsv.Lines;
+import idm.qsv.MidPriority;
+import idm.qsv.OpComp;
+import idm.qsv.Print;
+import idm.qsv.QsvFactory;
+import idm.qsv.QsvPackage;
+import idm.qsv.QuerySeparatedValues;
+import idm.qsv.Selector;
+import idm.qsv.Statement;
+import idm.qsv.Value;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -65,10 +86,27 @@ public class QsvFactoryImpl extends EFactoryImpl implements QsvFactory
   {
     switch (eClass.getClassifierID())
     {
-      case QsvPackage.QUERY_SEPARTED_VALUE: return createQuerySepartedValue();
+      case QsvPackage.QUERY_SEPARATED_VALUES: return createQuerySeparatedValues();
       case QsvPackage.HEADER: return createHeader();
       case QsvPackage.STATEMENT: return createStatement();
       case QsvPackage.PRINT: return createPrint();
+      case QsvPackage.SELECTOR: return createSelector();
+      case QsvPackage.COLUMNS: return createColumns();
+      case QsvPackage.COL_RANGE: return createColRange();
+      case QsvPackage.COLUMN: return createColumn();
+      case QsvPackage.COLUMN_NAME: return createColumnName();
+      case QsvPackage.COLUMN_NUMBER: return createColumnNumber();
+      case QsvPackage.LINES: return createLines();
+      case QsvPackage.LINE_RANGE: return createLineRange();
+      case QsvPackage.LINE: return createLine();
+      case QsvPackage.CONDITION: return createCondition();
+      case QsvPackage.MID_PRIORITY: return createMidPriority();
+      case QsvPackage.HIGHEST_PRIORITY: return createHighestPriority();
+      case QsvPackage.BIN_COND: return createBinCond();
+      case QsvPackage.OP_COMP: return createOpComp();
+      case QsvPackage.VALUE: return createValue();
+      case QsvPackage.BOOLEAN: return createBoolean();
+      case QsvPackage.EMPTY: return createEmpty();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -80,10 +118,10 @@ public class QsvFactoryImpl extends EFactoryImpl implements QsvFactory
    * @generated
    */
   @Override
-  public QuerySepartedValue createQuerySepartedValue()
+  public QuerySeparatedValues createQuerySeparatedValues()
   {
-    QuerySepartedValueImpl querySepartedValue = new QuerySepartedValueImpl();
-    return querySepartedValue;
+    QuerySeparatedValuesImpl querySeparatedValues = new QuerySeparatedValuesImpl();
+    return querySeparatedValues;
   }
 
   /**
@@ -120,6 +158,210 @@ public class QsvFactoryImpl extends EFactoryImpl implements QsvFactory
   {
     PrintImpl print = new PrintImpl();
     return print;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Selector createSelector()
+  {
+    SelectorImpl selector = new SelectorImpl();
+    return selector;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Columns createColumns()
+  {
+    ColumnsImpl columns = new ColumnsImpl();
+    return columns;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ColRange createColRange()
+  {
+    ColRangeImpl colRange = new ColRangeImpl();
+    return colRange;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Column createColumn()
+  {
+    ColumnImpl column = new ColumnImpl();
+    return column;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ColumnName createColumnName()
+  {
+    ColumnNameImpl columnName = new ColumnNameImpl();
+    return columnName;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ColumnNumber createColumnNumber()
+  {
+    ColumnNumberImpl columnNumber = new ColumnNumberImpl();
+    return columnNumber;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Lines createLines()
+  {
+    LinesImpl lines = new LinesImpl();
+    return lines;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public LineRange createLineRange()
+  {
+    LineRangeImpl lineRange = new LineRangeImpl();
+    return lineRange;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Line createLine()
+  {
+    LineImpl line = new LineImpl();
+    return line;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Condition createCondition()
+  {
+    ConditionImpl condition = new ConditionImpl();
+    return condition;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public MidPriority createMidPriority()
+  {
+    MidPriorityImpl midPriority = new MidPriorityImpl();
+    return midPriority;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public HighestPriority createHighestPriority()
+  {
+    HighestPriorityImpl highestPriority = new HighestPriorityImpl();
+    return highestPriority;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public BinCond createBinCond()
+  {
+    BinCondImpl binCond = new BinCondImpl();
+    return binCond;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public OpComp createOpComp()
+  {
+    OpCompImpl opComp = new OpCompImpl();
+    return opComp;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Value createValue()
+  {
+    ValueImpl value = new ValueImpl();
+    return value;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public idm.qsv.Boolean createBoolean()
+  {
+    BooleanImpl boolean_ = new BooleanImpl();
+    return boolean_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Empty createEmpty()
+  {
+    EmptyImpl empty = new EmptyImpl();
+    return empty;
   }
 
   /**

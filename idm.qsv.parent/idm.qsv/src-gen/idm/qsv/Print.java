@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link idm.qsv.Print#getPrint <em>Print</em>}</li>
+ *   <li>{@link idm.qsv.Print#getSelector <em>Selector</em>}</li>
  * </ul>
  *
  * @see idm.qsv.QsvPackage#getPrint()
@@ -24,25 +24,25 @@ import org.eclipse.emf.ecore.EObject;
 public interface Print extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Print</b></em>' attribute.
+   * Returns the value of the '<em><b>Selector</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Print</em>' attribute.
-   * @see #setPrint(String)
-   * @see idm.qsv.QsvPackage#getPrint_Print()
-   * @model
+   * @return the value of the '<em>Selector</em>' containment reference.
+   * @see #setSelector(Selector)
+   * @see idm.qsv.QsvPackage#getPrint_Selector()
+   * @model containment="true"
    * @generated
    */
-  String getPrint();
+  Selector getSelector();
 
   /**
-   * Sets the value of the '{@link idm.qsv.Print#getPrint <em>Print</em>}' attribute.
+   * Sets the value of the '{@link idm.qsv.Print#getSelector <em>Selector</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Print</em>' attribute.
-   * @see #getPrint()
+   * @param value the new value of the '<em>Selector</em>' containment reference.
+   * @see #getSelector()
    * @generated
    */
-  void setPrint(String value);
+  void setSelector(Selector value);
 
 } // Print

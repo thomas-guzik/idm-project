@@ -6,6 +6,8 @@ package idm.qsv.impl;
 import idm.qsv.Header;
 import idm.qsv.QsvPackage;
 
+import java.lang.Boolean;
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;

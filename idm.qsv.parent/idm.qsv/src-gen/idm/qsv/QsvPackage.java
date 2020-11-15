@@ -58,14 +58,14 @@ public interface QsvPackage extends EPackage
   QsvPackage eINSTANCE = idm.qsv.impl.QsvPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link idm.qsv.impl.QuerySepartedValueImpl <em>Query Separted Value</em>}' class.
+   * The meta object id for the '{@link idm.qsv.impl.QuerySeparatedValuesImpl <em>Query Separated Values</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see idm.qsv.impl.QuerySepartedValueImpl
-   * @see idm.qsv.impl.QsvPackageImpl#getQuerySepartedValue()
+   * @see idm.qsv.impl.QuerySeparatedValuesImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getQuerySeparatedValues()
    * @generated
    */
-  int QUERY_SEPARTED_VALUE = 0;
+  int QUERY_SEPARATED_VALUES = 0;
 
   /**
    * The feature id for the '<em><b>Header</b></em>' containment reference.
@@ -74,7 +74,7 @@ public interface QsvPackage extends EPackage
    * @generated
    * @ordered
    */
-  int QUERY_SEPARTED_VALUE__HEADER = 0;
+  int QUERY_SEPARATED_VALUES__HEADER = 0;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -83,16 +83,16 @@ public interface QsvPackage extends EPackage
    * @generated
    * @ordered
    */
-  int QUERY_SEPARTED_VALUE__STATEMENTS = 1;
+  int QUERY_SEPARATED_VALUES__STATEMENTS = 1;
 
   /**
-   * The number of structural features of the '<em>Query Separted Value</em>' class.
+   * The number of structural features of the '<em>Query Separated Values</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int QUERY_SEPARTED_VALUE_FEATURE_COUNT = 2;
+  int QUERY_SEPARATED_VALUES_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link idm.qsv.impl.HeaderImpl <em>Header</em>}' class.
@@ -170,13 +170,13 @@ public interface QsvPackage extends EPackage
   int PRINT = 3;
 
   /**
-   * The feature id for the '<em><b>Print</b></em>' attribute.
+   * The feature id for the '<em><b>Selector</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PRINT__PRINT = 0;
+  int PRINT__SELECTOR = 0;
 
   /**
    * The number of structural features of the '<em>Print</em>' class.
@@ -187,38 +187,622 @@ public interface QsvPackage extends EPackage
    */
   int PRINT_FEATURE_COUNT = 1;
 
-
   /**
-   * Returns the meta object for class '{@link idm.qsv.QuerySepartedValue <em>Query Separted Value</em>}'.
+   * The meta object id for the '{@link idm.qsv.impl.SelectorImpl <em>Selector</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Query Separted Value</em>'.
-   * @see idm.qsv.QuerySepartedValue
+   * @see idm.qsv.impl.SelectorImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getSelector()
    * @generated
    */
-  EClass getQuerySepartedValue();
+  int SELECTOR = 4;
 
   /**
-   * Returns the meta object for the containment reference '{@link idm.qsv.QuerySepartedValue#getHeader <em>Header</em>}'.
+   * The feature id for the '<em><b>Columns</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECTOR__COLUMNS = 0;
+
+  /**
+   * The feature id for the '<em><b>Lines</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECTOR__LINES = 1;
+
+  /**
+   * The number of structural features of the '<em>Selector</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECTOR_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link idm.qsv.impl.ColumnsImpl <em>Columns</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see idm.qsv.impl.ColumnsImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getColumns()
+   * @generated
+   */
+  int COLUMNS = 5;
+
+  /**
+   * The feature id for the '<em><b>Range</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COLUMNS__RANGE = 0;
+
+  /**
+   * The feature id for the '<em><b>Column</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COLUMNS__COLUMN = 1;
+
+  /**
+   * The number of structural features of the '<em>Columns</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COLUMNS_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link idm.qsv.impl.ColRangeImpl <em>Col Range</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see idm.qsv.impl.ColRangeImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getColRange()
+   * @generated
+   */
+  int COL_RANGE = 6;
+
+  /**
+   * The feature id for the '<em><b>Start</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COL_RANGE__START = 0;
+
+  /**
+   * The feature id for the '<em><b>End</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COL_RANGE__END = 1;
+
+  /**
+   * The number of structural features of the '<em>Col Range</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COL_RANGE_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link idm.qsv.impl.ColumnImpl <em>Column</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see idm.qsv.impl.ColumnImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getColumn()
+   * @generated
+   */
+  int COLUMN = 7;
+
+  /**
+   * The number of structural features of the '<em>Column</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COLUMN_FEATURE_COUNT = 0;
+
+  /**
+   * The meta object id for the '{@link idm.qsv.impl.ColumnNameImpl <em>Column Name</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see idm.qsv.impl.ColumnNameImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getColumnName()
+   * @generated
+   */
+  int COLUMN_NAME = 8;
+
+  /**
+   * The feature id for the '<em><b>Nameb</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COLUMN_NAME__NAMEB = COLUMN_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Column Name</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COLUMN_NAME_FEATURE_COUNT = COLUMN_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link idm.qsv.impl.ColumnNumberImpl <em>Column Number</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see idm.qsv.impl.ColumnNumberImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getColumnNumber()
+   * @generated
+   */
+  int COLUMN_NUMBER = 9;
+
+  /**
+   * The feature id for the '<em><b>Number</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COLUMN_NUMBER__NUMBER = COLUMN_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Column Number</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COLUMN_NUMBER_FEATURE_COUNT = COLUMN_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link idm.qsv.impl.LinesImpl <em>Lines</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see idm.qsv.impl.LinesImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getLines()
+   * @generated
+   */
+  int LINES = 10;
+
+  /**
+   * The feature id for the '<em><b>Range</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINES__RANGE = 0;
+
+  /**
+   * The feature id for the '<em><b>Line</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINES__LINE = 1;
+
+  /**
+   * The feature id for the '<em><b>Cond</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINES__COND = 2;
+
+  /**
+   * The number of structural features of the '<em>Lines</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINES_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link idm.qsv.impl.LineRangeImpl <em>Line Range</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see idm.qsv.impl.LineRangeImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getLineRange()
+   * @generated
+   */
+  int LINE_RANGE = 11;
+
+  /**
+   * The feature id for the '<em><b>Start</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINE_RANGE__START = 0;
+
+  /**
+   * The feature id for the '<em><b>End</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINE_RANGE__END = 1;
+
+  /**
+   * The number of structural features of the '<em>Line Range</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINE_RANGE_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link idm.qsv.impl.LineImpl <em>Line</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see idm.qsv.impl.LineImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getLine()
+   * @generated
+   */
+  int LINE = 12;
+
+  /**
+   * The feature id for the '<em><b>Number</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINE__NUMBER = 0;
+
+  /**
+   * The number of structural features of the '<em>Line</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINE_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link idm.qsv.impl.ConditionImpl <em>Condition</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see idm.qsv.impl.ConditionImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getCondition()
+   * @generated
+   */
+  int CONDITION = 13;
+
+  /**
+   * The feature id for the '<em><b>Mid</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITION__MID = 0;
+
+  /**
+   * The feature id for the '<em><b>Or Condition</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITION__OR_CONDITION = 1;
+
+  /**
+   * The number of structural features of the '<em>Condition</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITION_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link idm.qsv.impl.MidPriorityImpl <em>Mid Priority</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see idm.qsv.impl.MidPriorityImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getMidPriority()
+   * @generated
+   */
+  int MID_PRIORITY = 14;
+
+  /**
+   * The feature id for the '<em><b>High</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MID_PRIORITY__HIGH = 0;
+
+  /**
+   * The feature id for the '<em><b>And Condition</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MID_PRIORITY__AND_CONDITION = 1;
+
+  /**
+   * The number of structural features of the '<em>Mid Priority</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MID_PRIORITY_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link idm.qsv.impl.HighestPriorityImpl <em>Highest Priority</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see idm.qsv.impl.HighestPriorityImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getHighestPriority()
+   * @generated
+   */
+  int HIGHEST_PRIORITY = 15;
+
+  /**
+   * The feature id for the '<em><b>Condition</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HIGHEST_PRIORITY__CONDITION = 0;
+
+  /**
+   * The number of structural features of the '<em>Highest Priority</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HIGHEST_PRIORITY_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link idm.qsv.impl.BinCondImpl <em>Bin Cond</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see idm.qsv.impl.BinCondImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getBinCond()
+   * @generated
+   */
+  int BIN_COND = 16;
+
+  /**
+   * The feature id for the '<em><b>Col Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BIN_COND__COL_ID = 0;
+
+  /**
+   * The feature id for the '<em><b>Operator</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BIN_COND__OPERATOR = 1;
+
+  /**
+   * The feature id for the '<em><b>Comp Str</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BIN_COND__COMP_STR = 2;
+
+  /**
+   * The feature id for the '<em><b>Comp Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BIN_COND__COMP_ID = 3;
+
+  /**
+   * The feature id for the '<em><b>Comp Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BIN_COND__COMP_VALUE = 4;
+
+  /**
+   * The number of structural features of the '<em>Bin Cond</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BIN_COND_FEATURE_COUNT = 5;
+
+  /**
+   * The meta object id for the '{@link idm.qsv.impl.OpCompImpl <em>Op Comp</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see idm.qsv.impl.OpCompImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getOpComp()
+   * @generated
+   */
+  int OP_COMP = 17;
+
+  /**
+   * The feature id for the '<em><b>Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OP_COMP__OP = 0;
+
+  /**
+   * The number of structural features of the '<em>Op Comp</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OP_COMP_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link idm.qsv.impl.ValueImpl <em>Value</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see idm.qsv.impl.ValueImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getValue()
+   * @generated
+   */
+  int VALUE = 18;
+
+  /**
+   * The feature id for the '<em><b>Val</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUE__VAL = 0;
+
+  /**
+   * The number of structural features of the '<em>Value</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUE_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link idm.qsv.impl.BooleanImpl <em>Boolean</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see idm.qsv.impl.BooleanImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getBoolean()
+   * @generated
+   */
+  int BOOLEAN = 19;
+
+  /**
+   * The feature id for the '<em><b>Val</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOLEAN__VAL = VALUE__VAL;
+
+  /**
+   * The feature id for the '<em><b>Bol</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOLEAN__BOL = VALUE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Boolean</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOLEAN_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link idm.qsv.impl.EmptyImpl <em>Empty</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see idm.qsv.impl.EmptyImpl
+   * @see idm.qsv.impl.QsvPackageImpl#getEmpty()
+   * @generated
+   */
+  int EMPTY = 20;
+
+  /**
+   * The feature id for the '<em><b>Empty</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY__EMPTY = 0;
+
+  /**
+   * The number of structural features of the '<em>Empty</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_FEATURE_COUNT = 1;
+
+
+  /**
+   * Returns the meta object for class '{@link idm.qsv.QuerySeparatedValues <em>Query Separated Values</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Query Separated Values</em>'.
+   * @see idm.qsv.QuerySeparatedValues
+   * @generated
+   */
+  EClass getQuerySeparatedValues();
+
+  /**
+   * Returns the meta object for the containment reference '{@link idm.qsv.QuerySeparatedValues#getHeader <em>Header</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Header</em>'.
-   * @see idm.qsv.QuerySepartedValue#getHeader()
-   * @see #getQuerySepartedValue()
+   * @see idm.qsv.QuerySeparatedValues#getHeader()
+   * @see #getQuerySeparatedValues()
    * @generated
    */
-  EReference getQuerySepartedValue_Header();
+  EReference getQuerySeparatedValues_Header();
 
   /**
-   * Returns the meta object for the containment reference list '{@link idm.qsv.QuerySepartedValue#getStatements <em>Statements</em>}'.
+   * Returns the meta object for the containment reference list '{@link idm.qsv.QuerySeparatedValues#getStatements <em>Statements</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Statements</em>'.
-   * @see idm.qsv.QuerySepartedValue#getStatements()
-   * @see #getQuerySepartedValue()
+   * @see idm.qsv.QuerySeparatedValues#getStatements()
+   * @see #getQuerySeparatedValues()
    * @generated
    */
-  EReference getQuerySepartedValue_Statements();
+  EReference getQuerySeparatedValues_Statements();
 
   /**
    * Returns the meta object for class '{@link idm.qsv.Header <em>Header</em>}'.
@@ -284,15 +868,493 @@ public interface QsvPackage extends EPackage
   EClass getPrint();
 
   /**
-   * Returns the meta object for the attribute '{@link idm.qsv.Print#getPrint <em>Print</em>}'.
+   * Returns the meta object for the containment reference '{@link idm.qsv.Print#getSelector <em>Selector</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Print</em>'.
-   * @see idm.qsv.Print#getPrint()
+   * @return the meta object for the containment reference '<em>Selector</em>'.
+   * @see idm.qsv.Print#getSelector()
    * @see #getPrint()
    * @generated
    */
-  EAttribute getPrint_Print();
+  EReference getPrint_Selector();
+
+  /**
+   * Returns the meta object for class '{@link idm.qsv.Selector <em>Selector</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Selector</em>'.
+   * @see idm.qsv.Selector
+   * @generated
+   */
+  EClass getSelector();
+
+  /**
+   * Returns the meta object for the containment reference '{@link idm.qsv.Selector#getColumns <em>Columns</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Columns</em>'.
+   * @see idm.qsv.Selector#getColumns()
+   * @see #getSelector()
+   * @generated
+   */
+  EReference getSelector_Columns();
+
+  /**
+   * Returns the meta object for the containment reference '{@link idm.qsv.Selector#getLines <em>Lines</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Lines</em>'.
+   * @see idm.qsv.Selector#getLines()
+   * @see #getSelector()
+   * @generated
+   */
+  EReference getSelector_Lines();
+
+  /**
+   * Returns the meta object for class '{@link idm.qsv.Columns <em>Columns</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Columns</em>'.
+   * @see idm.qsv.Columns
+   * @generated
+   */
+  EClass getColumns();
+
+  /**
+   * Returns the meta object for the containment reference '{@link idm.qsv.Columns#getRange <em>Range</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Range</em>'.
+   * @see idm.qsv.Columns#getRange()
+   * @see #getColumns()
+   * @generated
+   */
+  EReference getColumns_Range();
+
+  /**
+   * Returns the meta object for the containment reference '{@link idm.qsv.Columns#getColumn <em>Column</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Column</em>'.
+   * @see idm.qsv.Columns#getColumn()
+   * @see #getColumns()
+   * @generated
+   */
+  EReference getColumns_Column();
+
+  /**
+   * Returns the meta object for class '{@link idm.qsv.ColRange <em>Col Range</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Col Range</em>'.
+   * @see idm.qsv.ColRange
+   * @generated
+   */
+  EClass getColRange();
+
+  /**
+   * Returns the meta object for the containment reference '{@link idm.qsv.ColRange#getStart <em>Start</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Start</em>'.
+   * @see idm.qsv.ColRange#getStart()
+   * @see #getColRange()
+   * @generated
+   */
+  EReference getColRange_Start();
+
+  /**
+   * Returns the meta object for the containment reference '{@link idm.qsv.ColRange#getEnd <em>End</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>End</em>'.
+   * @see idm.qsv.ColRange#getEnd()
+   * @see #getColRange()
+   * @generated
+   */
+  EReference getColRange_End();
+
+  /**
+   * Returns the meta object for class '{@link idm.qsv.Column <em>Column</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Column</em>'.
+   * @see idm.qsv.Column
+   * @generated
+   */
+  EClass getColumn();
+
+  /**
+   * Returns the meta object for class '{@link idm.qsv.ColumnName <em>Column Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Column Name</em>'.
+   * @see idm.qsv.ColumnName
+   * @generated
+   */
+  EClass getColumnName();
+
+  /**
+   * Returns the meta object for the attribute '{@link idm.qsv.ColumnName#getNameb <em>Nameb</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Nameb</em>'.
+   * @see idm.qsv.ColumnName#getNameb()
+   * @see #getColumnName()
+   * @generated
+   */
+  EAttribute getColumnName_Nameb();
+
+  /**
+   * Returns the meta object for class '{@link idm.qsv.ColumnNumber <em>Column Number</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Column Number</em>'.
+   * @see idm.qsv.ColumnNumber
+   * @generated
+   */
+  EClass getColumnNumber();
+
+  /**
+   * Returns the meta object for the attribute '{@link idm.qsv.ColumnNumber#getNumber <em>Number</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Number</em>'.
+   * @see idm.qsv.ColumnNumber#getNumber()
+   * @see #getColumnNumber()
+   * @generated
+   */
+  EAttribute getColumnNumber_Number();
+
+  /**
+   * Returns the meta object for class '{@link idm.qsv.Lines <em>Lines</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Lines</em>'.
+   * @see idm.qsv.Lines
+   * @generated
+   */
+  EClass getLines();
+
+  /**
+   * Returns the meta object for the containment reference '{@link idm.qsv.Lines#getRange <em>Range</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Range</em>'.
+   * @see idm.qsv.Lines#getRange()
+   * @see #getLines()
+   * @generated
+   */
+  EReference getLines_Range();
+
+  /**
+   * Returns the meta object for the containment reference '{@link idm.qsv.Lines#getLine <em>Line</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Line</em>'.
+   * @see idm.qsv.Lines#getLine()
+   * @see #getLines()
+   * @generated
+   */
+  EReference getLines_Line();
+
+  /**
+   * Returns the meta object for the containment reference '{@link idm.qsv.Lines#getCond <em>Cond</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Cond</em>'.
+   * @see idm.qsv.Lines#getCond()
+   * @see #getLines()
+   * @generated
+   */
+  EReference getLines_Cond();
+
+  /**
+   * Returns the meta object for class '{@link idm.qsv.LineRange <em>Line Range</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Line Range</em>'.
+   * @see idm.qsv.LineRange
+   * @generated
+   */
+  EClass getLineRange();
+
+  /**
+   * Returns the meta object for the attribute '{@link idm.qsv.LineRange#getStart <em>Start</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Start</em>'.
+   * @see idm.qsv.LineRange#getStart()
+   * @see #getLineRange()
+   * @generated
+   */
+  EAttribute getLineRange_Start();
+
+  /**
+   * Returns the meta object for the attribute '{@link idm.qsv.LineRange#getEnd <em>End</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>End</em>'.
+   * @see idm.qsv.LineRange#getEnd()
+   * @see #getLineRange()
+   * @generated
+   */
+  EAttribute getLineRange_End();
+
+  /**
+   * Returns the meta object for class '{@link idm.qsv.Line <em>Line</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Line</em>'.
+   * @see idm.qsv.Line
+   * @generated
+   */
+  EClass getLine();
+
+  /**
+   * Returns the meta object for the attribute '{@link idm.qsv.Line#getNumber <em>Number</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Number</em>'.
+   * @see idm.qsv.Line#getNumber()
+   * @see #getLine()
+   * @generated
+   */
+  EAttribute getLine_Number();
+
+  /**
+   * Returns the meta object for class '{@link idm.qsv.Condition <em>Condition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Condition</em>'.
+   * @see idm.qsv.Condition
+   * @generated
+   */
+  EClass getCondition();
+
+  /**
+   * Returns the meta object for the containment reference '{@link idm.qsv.Condition#getMid <em>Mid</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Mid</em>'.
+   * @see idm.qsv.Condition#getMid()
+   * @see #getCondition()
+   * @generated
+   */
+  EReference getCondition_Mid();
+
+  /**
+   * Returns the meta object for the containment reference '{@link idm.qsv.Condition#getOrCondition <em>Or Condition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Or Condition</em>'.
+   * @see idm.qsv.Condition#getOrCondition()
+   * @see #getCondition()
+   * @generated
+   */
+  EReference getCondition_OrCondition();
+
+  /**
+   * Returns the meta object for class '{@link idm.qsv.MidPriority <em>Mid Priority</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Mid Priority</em>'.
+   * @see idm.qsv.MidPriority
+   * @generated
+   */
+  EClass getMidPriority();
+
+  /**
+   * Returns the meta object for the containment reference '{@link idm.qsv.MidPriority#getHigh <em>High</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>High</em>'.
+   * @see idm.qsv.MidPriority#getHigh()
+   * @see #getMidPriority()
+   * @generated
+   */
+  EReference getMidPriority_High();
+
+  /**
+   * Returns the meta object for the containment reference '{@link idm.qsv.MidPriority#getAndCondition <em>And Condition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>And Condition</em>'.
+   * @see idm.qsv.MidPriority#getAndCondition()
+   * @see #getMidPriority()
+   * @generated
+   */
+  EReference getMidPriority_AndCondition();
+
+  /**
+   * Returns the meta object for class '{@link idm.qsv.HighestPriority <em>Highest Priority</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Highest Priority</em>'.
+   * @see idm.qsv.HighestPriority
+   * @generated
+   */
+  EClass getHighestPriority();
+
+  /**
+   * Returns the meta object for the containment reference '{@link idm.qsv.HighestPriority#getCondition <em>Condition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Condition</em>'.
+   * @see idm.qsv.HighestPriority#getCondition()
+   * @see #getHighestPriority()
+   * @generated
+   */
+  EReference getHighestPriority_Condition();
+
+  /**
+   * Returns the meta object for class '{@link idm.qsv.BinCond <em>Bin Cond</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Bin Cond</em>'.
+   * @see idm.qsv.BinCond
+   * @generated
+   */
+  EClass getBinCond();
+
+  /**
+   * Returns the meta object for the attribute '{@link idm.qsv.BinCond#getColId <em>Col Id</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Col Id</em>'.
+   * @see idm.qsv.BinCond#getColId()
+   * @see #getBinCond()
+   * @generated
+   */
+  EAttribute getBinCond_ColId();
+
+  /**
+   * Returns the meta object for the containment reference '{@link idm.qsv.BinCond#getOperator <em>Operator</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Operator</em>'.
+   * @see idm.qsv.BinCond#getOperator()
+   * @see #getBinCond()
+   * @generated
+   */
+  EReference getBinCond_Operator();
+
+  /**
+   * Returns the meta object for the attribute '{@link idm.qsv.BinCond#getCompStr <em>Comp Str</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Comp Str</em>'.
+   * @see idm.qsv.BinCond#getCompStr()
+   * @see #getBinCond()
+   * @generated
+   */
+  EAttribute getBinCond_CompStr();
+
+  /**
+   * Returns the meta object for the attribute '{@link idm.qsv.BinCond#getCompId <em>Comp Id</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Comp Id</em>'.
+   * @see idm.qsv.BinCond#getCompId()
+   * @see #getBinCond()
+   * @generated
+   */
+  EAttribute getBinCond_CompId();
+
+  /**
+   * Returns the meta object for the attribute '{@link idm.qsv.BinCond#getCompValue <em>Comp Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Comp Value</em>'.
+   * @see idm.qsv.BinCond#getCompValue()
+   * @see #getBinCond()
+   * @generated
+   */
+  EAttribute getBinCond_CompValue();
+
+  /**
+   * Returns the meta object for class '{@link idm.qsv.OpComp <em>Op Comp</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Op Comp</em>'.
+   * @see idm.qsv.OpComp
+   * @generated
+   */
+  EClass getOpComp();
+
+  /**
+   * Returns the meta object for the attribute '{@link idm.qsv.OpComp#getOp <em>Op</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Op</em>'.
+   * @see idm.qsv.OpComp#getOp()
+   * @see #getOpComp()
+   * @generated
+   */
+  EAttribute getOpComp_Op();
+
+  /**
+   * Returns the meta object for class '{@link idm.qsv.Value <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Value</em>'.
+   * @see idm.qsv.Value
+   * @generated
+   */
+  EClass getValue();
+
+  /**
+   * Returns the meta object for the attribute '{@link idm.qsv.Value#getVal <em>Val</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Val</em>'.
+   * @see idm.qsv.Value#getVal()
+   * @see #getValue()
+   * @generated
+   */
+  EAttribute getValue_Val();
+
+  /**
+   * Returns the meta object for class '{@link idm.qsv.Boolean <em>Boolean</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Boolean</em>'.
+   * @see idm.qsv.Boolean
+   * @generated
+   */
+  EClass getBoolean();
+
+  /**
+   * Returns the meta object for the attribute '{@link idm.qsv.Boolean#getBol <em>Bol</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Bol</em>'.
+   * @see idm.qsv.Boolean#getBol()
+   * @see #getBoolean()
+   * @generated
+   */
+  EAttribute getBoolean_Bol();
+
+  /**
+   * Returns the meta object for class '{@link idm.qsv.Empty <em>Empty</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Empty</em>'.
+   * @see idm.qsv.Empty
+   * @generated
+   */
+  EClass getEmpty();
+
+  /**
+   * Returns the meta object for the attribute '{@link idm.qsv.Empty#getEmpty <em>Empty</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Empty</em>'.
+   * @see idm.qsv.Empty#getEmpty()
+   * @see #getEmpty()
+   * @generated
+   */
+  EAttribute getEmpty_Empty();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -318,14 +1380,14 @@ public interface QsvPackage extends EPackage
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link idm.qsv.impl.QuerySepartedValueImpl <em>Query Separted Value</em>}' class.
+     * The meta object literal for the '{@link idm.qsv.impl.QuerySeparatedValuesImpl <em>Query Separated Values</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see idm.qsv.impl.QuerySepartedValueImpl
-     * @see idm.qsv.impl.QsvPackageImpl#getQuerySepartedValue()
+     * @see idm.qsv.impl.QuerySeparatedValuesImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getQuerySeparatedValues()
      * @generated
      */
-    EClass QUERY_SEPARTED_VALUE = eINSTANCE.getQuerySepartedValue();
+    EClass QUERY_SEPARATED_VALUES = eINSTANCE.getQuerySeparatedValues();
 
     /**
      * The meta object literal for the '<em><b>Header</b></em>' containment reference feature.
@@ -333,7 +1395,7 @@ public interface QsvPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference QUERY_SEPARTED_VALUE__HEADER = eINSTANCE.getQuerySepartedValue_Header();
+    EReference QUERY_SEPARATED_VALUES__HEADER = eINSTANCE.getQuerySeparatedValues_Header();
 
     /**
      * The meta object literal for the '<em><b>Statements</b></em>' containment reference list feature.
@@ -341,7 +1403,7 @@ public interface QsvPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference QUERY_SEPARTED_VALUE__STATEMENTS = eINSTANCE.getQuerySepartedValue_Statements();
+    EReference QUERY_SEPARATED_VALUES__STATEMENTS = eINSTANCE.getQuerySeparatedValues_Statements();
 
     /**
      * The meta object literal for the '{@link idm.qsv.impl.HeaderImpl <em>Header</em>}' class.
@@ -398,12 +1460,406 @@ public interface QsvPackage extends EPackage
     EClass PRINT = eINSTANCE.getPrint();
 
     /**
-     * The meta object literal for the '<em><b>Print</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Selector</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute PRINT__PRINT = eINSTANCE.getPrint_Print();
+    EReference PRINT__SELECTOR = eINSTANCE.getPrint_Selector();
+
+    /**
+     * The meta object literal for the '{@link idm.qsv.impl.SelectorImpl <em>Selector</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see idm.qsv.impl.SelectorImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getSelector()
+     * @generated
+     */
+    EClass SELECTOR = eINSTANCE.getSelector();
+
+    /**
+     * The meta object literal for the '<em><b>Columns</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SELECTOR__COLUMNS = eINSTANCE.getSelector_Columns();
+
+    /**
+     * The meta object literal for the '<em><b>Lines</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SELECTOR__LINES = eINSTANCE.getSelector_Lines();
+
+    /**
+     * The meta object literal for the '{@link idm.qsv.impl.ColumnsImpl <em>Columns</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see idm.qsv.impl.ColumnsImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getColumns()
+     * @generated
+     */
+    EClass COLUMNS = eINSTANCE.getColumns();
+
+    /**
+     * The meta object literal for the '<em><b>Range</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COLUMNS__RANGE = eINSTANCE.getColumns_Range();
+
+    /**
+     * The meta object literal for the '<em><b>Column</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COLUMNS__COLUMN = eINSTANCE.getColumns_Column();
+
+    /**
+     * The meta object literal for the '{@link idm.qsv.impl.ColRangeImpl <em>Col Range</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see idm.qsv.impl.ColRangeImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getColRange()
+     * @generated
+     */
+    EClass COL_RANGE = eINSTANCE.getColRange();
+
+    /**
+     * The meta object literal for the '<em><b>Start</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COL_RANGE__START = eINSTANCE.getColRange_Start();
+
+    /**
+     * The meta object literal for the '<em><b>End</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COL_RANGE__END = eINSTANCE.getColRange_End();
+
+    /**
+     * The meta object literal for the '{@link idm.qsv.impl.ColumnImpl <em>Column</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see idm.qsv.impl.ColumnImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getColumn()
+     * @generated
+     */
+    EClass COLUMN = eINSTANCE.getColumn();
+
+    /**
+     * The meta object literal for the '{@link idm.qsv.impl.ColumnNameImpl <em>Column Name</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see idm.qsv.impl.ColumnNameImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getColumnName()
+     * @generated
+     */
+    EClass COLUMN_NAME = eINSTANCE.getColumnName();
+
+    /**
+     * The meta object literal for the '<em><b>Nameb</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COLUMN_NAME__NAMEB = eINSTANCE.getColumnName_Nameb();
+
+    /**
+     * The meta object literal for the '{@link idm.qsv.impl.ColumnNumberImpl <em>Column Number</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see idm.qsv.impl.ColumnNumberImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getColumnNumber()
+     * @generated
+     */
+    EClass COLUMN_NUMBER = eINSTANCE.getColumnNumber();
+
+    /**
+     * The meta object literal for the '<em><b>Number</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COLUMN_NUMBER__NUMBER = eINSTANCE.getColumnNumber_Number();
+
+    /**
+     * The meta object literal for the '{@link idm.qsv.impl.LinesImpl <em>Lines</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see idm.qsv.impl.LinesImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getLines()
+     * @generated
+     */
+    EClass LINES = eINSTANCE.getLines();
+
+    /**
+     * The meta object literal for the '<em><b>Range</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LINES__RANGE = eINSTANCE.getLines_Range();
+
+    /**
+     * The meta object literal for the '<em><b>Line</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LINES__LINE = eINSTANCE.getLines_Line();
+
+    /**
+     * The meta object literal for the '<em><b>Cond</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LINES__COND = eINSTANCE.getLines_Cond();
+
+    /**
+     * The meta object literal for the '{@link idm.qsv.impl.LineRangeImpl <em>Line Range</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see idm.qsv.impl.LineRangeImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getLineRange()
+     * @generated
+     */
+    EClass LINE_RANGE = eINSTANCE.getLineRange();
+
+    /**
+     * The meta object literal for the '<em><b>Start</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LINE_RANGE__START = eINSTANCE.getLineRange_Start();
+
+    /**
+     * The meta object literal for the '<em><b>End</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LINE_RANGE__END = eINSTANCE.getLineRange_End();
+
+    /**
+     * The meta object literal for the '{@link idm.qsv.impl.LineImpl <em>Line</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see idm.qsv.impl.LineImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getLine()
+     * @generated
+     */
+    EClass LINE = eINSTANCE.getLine();
+
+    /**
+     * The meta object literal for the '<em><b>Number</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LINE__NUMBER = eINSTANCE.getLine_Number();
+
+    /**
+     * The meta object literal for the '{@link idm.qsv.impl.ConditionImpl <em>Condition</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see idm.qsv.impl.ConditionImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getCondition()
+     * @generated
+     */
+    EClass CONDITION = eINSTANCE.getCondition();
+
+    /**
+     * The meta object literal for the '<em><b>Mid</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONDITION__MID = eINSTANCE.getCondition_Mid();
+
+    /**
+     * The meta object literal for the '<em><b>Or Condition</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONDITION__OR_CONDITION = eINSTANCE.getCondition_OrCondition();
+
+    /**
+     * The meta object literal for the '{@link idm.qsv.impl.MidPriorityImpl <em>Mid Priority</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see idm.qsv.impl.MidPriorityImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getMidPriority()
+     * @generated
+     */
+    EClass MID_PRIORITY = eINSTANCE.getMidPriority();
+
+    /**
+     * The meta object literal for the '<em><b>High</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MID_PRIORITY__HIGH = eINSTANCE.getMidPriority_High();
+
+    /**
+     * The meta object literal for the '<em><b>And Condition</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MID_PRIORITY__AND_CONDITION = eINSTANCE.getMidPriority_AndCondition();
+
+    /**
+     * The meta object literal for the '{@link idm.qsv.impl.HighestPriorityImpl <em>Highest Priority</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see idm.qsv.impl.HighestPriorityImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getHighestPriority()
+     * @generated
+     */
+    EClass HIGHEST_PRIORITY = eINSTANCE.getHighestPriority();
+
+    /**
+     * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference HIGHEST_PRIORITY__CONDITION = eINSTANCE.getHighestPriority_Condition();
+
+    /**
+     * The meta object literal for the '{@link idm.qsv.impl.BinCondImpl <em>Bin Cond</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see idm.qsv.impl.BinCondImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getBinCond()
+     * @generated
+     */
+    EClass BIN_COND = eINSTANCE.getBinCond();
+
+    /**
+     * The meta object literal for the '<em><b>Col Id</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute BIN_COND__COL_ID = eINSTANCE.getBinCond_ColId();
+
+    /**
+     * The meta object literal for the '<em><b>Operator</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference BIN_COND__OPERATOR = eINSTANCE.getBinCond_Operator();
+
+    /**
+     * The meta object literal for the '<em><b>Comp Str</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute BIN_COND__COMP_STR = eINSTANCE.getBinCond_CompStr();
+
+    /**
+     * The meta object literal for the '<em><b>Comp Id</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute BIN_COND__COMP_ID = eINSTANCE.getBinCond_CompId();
+
+    /**
+     * The meta object literal for the '<em><b>Comp Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute BIN_COND__COMP_VALUE = eINSTANCE.getBinCond_CompValue();
+
+    /**
+     * The meta object literal for the '{@link idm.qsv.impl.OpCompImpl <em>Op Comp</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see idm.qsv.impl.OpCompImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getOpComp()
+     * @generated
+     */
+    EClass OP_COMP = eINSTANCE.getOpComp();
+
+    /**
+     * The meta object literal for the '<em><b>Op</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute OP_COMP__OP = eINSTANCE.getOpComp_Op();
+
+    /**
+     * The meta object literal for the '{@link idm.qsv.impl.ValueImpl <em>Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see idm.qsv.impl.ValueImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getValue()
+     * @generated
+     */
+    EClass VALUE = eINSTANCE.getValue();
+
+    /**
+     * The meta object literal for the '<em><b>Val</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute VALUE__VAL = eINSTANCE.getValue_Val();
+
+    /**
+     * The meta object literal for the '{@link idm.qsv.impl.BooleanImpl <em>Boolean</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see idm.qsv.impl.BooleanImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getBoolean()
+     * @generated
+     */
+    EClass BOOLEAN = eINSTANCE.getBoolean();
+
+    /**
+     * The meta object literal for the '<em><b>Bol</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute BOOLEAN__BOL = eINSTANCE.getBoolean_Bol();
+
+    /**
+     * The meta object literal for the '{@link idm.qsv.impl.EmptyImpl <em>Empty</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see idm.qsv.impl.EmptyImpl
+     * @see idm.qsv.impl.QsvPackageImpl#getEmpty()
+     * @generated
+     */
+    EClass EMPTY = eINSTANCE.getEmpty();
+
+    /**
+     * The meta object literal for the '<em><b>Empty</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute EMPTY__EMPTY = eINSTANCE.getEmpty_Empty();
 
   }
 

@@ -27,7 +27,7 @@ public class QsvParser extends AbstractAntlrParser {
 
 	@Override 
 	protected String getDefaultRuleName() {
-		return "QuerySepartedValue";
+		return "QuerySeparatedValues";
 	}
 
 	public QsvGrammarAccess getGrammarAccess() {

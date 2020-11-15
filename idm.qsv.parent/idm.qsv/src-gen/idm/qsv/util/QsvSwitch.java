@@ -3,7 +3,27 @@
  */
 package idm.qsv.util;
 
-import idm.qsv.*;
+import idm.qsv.BinCond;
+import idm.qsv.ColRange;
+import idm.qsv.Column;
+import idm.qsv.ColumnName;
+import idm.qsv.ColumnNumber;
+import idm.qsv.Columns;
+import idm.qsv.Condition;
+import idm.qsv.Empty;
+import idm.qsv.Header;
+import idm.qsv.HighestPriority;
+import idm.qsv.Line;
+import idm.qsv.LineRange;
+import idm.qsv.Lines;
+import idm.qsv.MidPriority;
+import idm.qsv.OpComp;
+import idm.qsv.Print;
+import idm.qsv.QsvPackage;
+import idm.qsv.QuerySeparatedValues;
+import idm.qsv.Selector;
+import idm.qsv.Statement;
+import idm.qsv.Value;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -73,10 +93,10 @@ public class QsvSwitch<T> extends Switch<T>
   {
     switch (classifierID)
     {
-      case QsvPackage.QUERY_SEPARTED_VALUE:
+      case QsvPackage.QUERY_SEPARATED_VALUES:
       {
-        QuerySepartedValue querySepartedValue = (QuerySepartedValue)theEObject;
-        T result = caseQuerySepartedValue(querySepartedValue);
+        QuerySeparatedValues querySeparatedValues = (QuerySeparatedValues)theEObject;
+        T result = caseQuerySeparatedValues(querySeparatedValues);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -101,22 +121,144 @@ public class QsvSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case QsvPackage.SELECTOR:
+      {
+        Selector selector = (Selector)theEObject;
+        T result = caseSelector(selector);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case QsvPackage.COLUMNS:
+      {
+        Columns columns = (Columns)theEObject;
+        T result = caseColumns(columns);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case QsvPackage.COL_RANGE:
+      {
+        ColRange colRange = (ColRange)theEObject;
+        T result = caseColRange(colRange);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case QsvPackage.COLUMN:
+      {
+        Column column = (Column)theEObject;
+        T result = caseColumn(column);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case QsvPackage.COLUMN_NAME:
+      {
+        ColumnName columnName = (ColumnName)theEObject;
+        T result = caseColumnName(columnName);
+        if (result == null) result = caseColumn(columnName);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case QsvPackage.COLUMN_NUMBER:
+      {
+        ColumnNumber columnNumber = (ColumnNumber)theEObject;
+        T result = caseColumnNumber(columnNumber);
+        if (result == null) result = caseColumn(columnNumber);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case QsvPackage.LINES:
+      {
+        Lines lines = (Lines)theEObject;
+        T result = caseLines(lines);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case QsvPackage.LINE_RANGE:
+      {
+        LineRange lineRange = (LineRange)theEObject;
+        T result = caseLineRange(lineRange);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case QsvPackage.LINE:
+      {
+        Line line = (Line)theEObject;
+        T result = caseLine(line);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case QsvPackage.CONDITION:
+      {
+        Condition condition = (Condition)theEObject;
+        T result = caseCondition(condition);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case QsvPackage.MID_PRIORITY:
+      {
+        MidPriority midPriority = (MidPriority)theEObject;
+        T result = caseMidPriority(midPriority);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case QsvPackage.HIGHEST_PRIORITY:
+      {
+        HighestPriority highestPriority = (HighestPriority)theEObject;
+        T result = caseHighestPriority(highestPriority);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case QsvPackage.BIN_COND:
+      {
+        BinCond binCond = (BinCond)theEObject;
+        T result = caseBinCond(binCond);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case QsvPackage.OP_COMP:
+      {
+        OpComp opComp = (OpComp)theEObject;
+        T result = caseOpComp(opComp);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case QsvPackage.VALUE:
+      {
+        Value value = (Value)theEObject;
+        T result = caseValue(value);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case QsvPackage.BOOLEAN:
+      {
+        idm.qsv.Boolean boolean_ = (idm.qsv.Boolean)theEObject;
+        T result = caseBoolean(boolean_);
+        if (result == null) result = caseValue(boolean_);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case QsvPackage.EMPTY:
+      {
+        Empty empty = (Empty)theEObject;
+        T result = caseEmpty(empty);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       default: return defaultCase(theEObject);
     }
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Query Separted Value</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Query Separated Values</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Query Separted Value</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Query Separated Values</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseQuerySepartedValue(QuerySepartedValue object)
+  public T caseQuerySeparatedValues(QuerySeparatedValues object)
   {
     return null;
   }
@@ -165,6 +307,278 @@ public class QsvSwitch<T> extends Switch<T>
    * @generated
    */
   public T casePrint(Print object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Selector</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Selector</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSelector(Selector object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Columns</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Columns</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseColumns(Columns object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Col Range</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Col Range</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseColRange(ColRange object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Column</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Column</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseColumn(Column object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Column Name</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Column Name</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseColumnName(ColumnName object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Column Number</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Column Number</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseColumnNumber(ColumnNumber object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Lines</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Lines</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLines(Lines object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Line Range</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Line Range</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLineRange(LineRange object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Line</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Line</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLine(Line object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Condition</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Condition</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCondition(Condition object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Mid Priority</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Mid Priority</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseMidPriority(MidPriority object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Highest Priority</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Highest Priority</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseHighestPriority(HighestPriority object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Bin Cond</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Bin Cond</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseBinCond(BinCond object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Op Comp</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Op Comp</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseOpComp(OpComp object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Value</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Value</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseValue(Value object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Boolean</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Boolean</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseBoolean(idm.qsv.Boolean object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Empty</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Empty</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEmpty(Empty object)
   {
     return null;
   }

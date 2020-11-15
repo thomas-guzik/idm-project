@@ -5,7 +5,7 @@ package idm.qsv.impl;
 
 import idm.qsv.Header;
 import idm.qsv.QsvPackage;
-import idm.qsv.QuerySepartedValue;
+import idm.qsv.QuerySeparatedValues;
 import idm.qsv.Statement;
 
 import java.util.Collection;
@@ -26,19 +26,19 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Query Separted Value</b></em>'.
+ * An implementation of the model object '<em><b>Query Separated Values</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link idm.qsv.impl.QuerySepartedValueImpl#getHeader <em>Header</em>}</li>
- *   <li>{@link idm.qsv.impl.QuerySepartedValueImpl#getStatements <em>Statements</em>}</li>
+ *   <li>{@link idm.qsv.impl.QuerySeparatedValuesImpl#getHeader <em>Header</em>}</li>
+ *   <li>{@link idm.qsv.impl.QuerySeparatedValuesImpl#getStatements <em>Statements</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class QuerySepartedValueImpl extends MinimalEObjectImpl.Container implements QuerySepartedValue
+public class QuerySeparatedValuesImpl extends MinimalEObjectImpl.Container implements QuerySeparatedValues
 {
   /**
    * The cached value of the '{@link #getHeader() <em>Header</em>}' containment reference.
@@ -65,7 +65,7 @@ public class QuerySepartedValueImpl extends MinimalEObjectImpl.Container impleme
    * <!-- end-user-doc -->
    * @generated
    */
-  protected QuerySepartedValueImpl()
+  protected QuerySeparatedValuesImpl()
   {
     super();
   }
@@ -78,7 +78,7 @@ public class QuerySepartedValueImpl extends MinimalEObjectImpl.Container impleme
   @Override
   protected EClass eStaticClass()
   {
-    return QsvPackage.Literals.QUERY_SEPARTED_VALUE;
+    return QsvPackage.Literals.QUERY_SEPARATED_VALUES;
   }
 
   /**
@@ -103,7 +103,7 @@ public class QuerySepartedValueImpl extends MinimalEObjectImpl.Container impleme
     header = newHeader;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QsvPackage.QUERY_SEPARTED_VALUE__HEADER, oldHeader, newHeader);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QsvPackage.QUERY_SEPARATED_VALUES__HEADER, oldHeader, newHeader);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -121,14 +121,14 @@ public class QuerySepartedValueImpl extends MinimalEObjectImpl.Container impleme
     {
       NotificationChain msgs = null;
       if (header != null)
-        msgs = ((InternalEObject)header).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QsvPackage.QUERY_SEPARTED_VALUE__HEADER, null, msgs);
+        msgs = ((InternalEObject)header).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QsvPackage.QUERY_SEPARATED_VALUES__HEADER, null, msgs);
       if (newHeader != null)
-        msgs = ((InternalEObject)newHeader).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QsvPackage.QUERY_SEPARTED_VALUE__HEADER, null, msgs);
+        msgs = ((InternalEObject)newHeader).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QsvPackage.QUERY_SEPARATED_VALUES__HEADER, null, msgs);
       msgs = basicSetHeader(newHeader, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, QsvPackage.QUERY_SEPARTED_VALUE__HEADER, newHeader, newHeader));
+      eNotify(new ENotificationImpl(this, Notification.SET, QsvPackage.QUERY_SEPARATED_VALUES__HEADER, newHeader, newHeader));
   }
 
   /**
@@ -141,7 +141,7 @@ public class QuerySepartedValueImpl extends MinimalEObjectImpl.Container impleme
   {
     if (statements == null)
     {
-      statements = new EObjectContainmentEList<Statement>(Statement.class, this, QsvPackage.QUERY_SEPARTED_VALUE__STATEMENTS);
+      statements = new EObjectContainmentEList<Statement>(Statement.class, this, QsvPackage.QUERY_SEPARATED_VALUES__STATEMENTS);
     }
     return statements;
   }
@@ -156,9 +156,9 @@ public class QuerySepartedValueImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case QsvPackage.QUERY_SEPARTED_VALUE__HEADER:
+      case QsvPackage.QUERY_SEPARATED_VALUES__HEADER:
         return basicSetHeader(null, msgs);
-      case QsvPackage.QUERY_SEPARTED_VALUE__STATEMENTS:
+      case QsvPackage.QUERY_SEPARATED_VALUES__STATEMENTS:
         return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -174,9 +174,9 @@ public class QuerySepartedValueImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case QsvPackage.QUERY_SEPARTED_VALUE__HEADER:
+      case QsvPackage.QUERY_SEPARATED_VALUES__HEADER:
         return getHeader();
-      case QsvPackage.QUERY_SEPARTED_VALUE__STATEMENTS:
+      case QsvPackage.QUERY_SEPARATED_VALUES__STATEMENTS:
         return getStatements();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -193,10 +193,10 @@ public class QuerySepartedValueImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case QsvPackage.QUERY_SEPARTED_VALUE__HEADER:
+      case QsvPackage.QUERY_SEPARATED_VALUES__HEADER:
         setHeader((Header)newValue);
         return;
-      case QsvPackage.QUERY_SEPARTED_VALUE__STATEMENTS:
+      case QsvPackage.QUERY_SEPARATED_VALUES__STATEMENTS:
         getStatements().clear();
         getStatements().addAll((Collection<? extends Statement>)newValue);
         return;
@@ -214,10 +214,10 @@ public class QuerySepartedValueImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case QsvPackage.QUERY_SEPARTED_VALUE__HEADER:
+      case QsvPackage.QUERY_SEPARATED_VALUES__HEADER:
         setHeader((Header)null);
         return;
-      case QsvPackage.QUERY_SEPARTED_VALUE__STATEMENTS:
+      case QsvPackage.QUERY_SEPARATED_VALUES__STATEMENTS:
         getStatements().clear();
         return;
     }
@@ -234,12 +234,12 @@ public class QuerySepartedValueImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case QsvPackage.QUERY_SEPARTED_VALUE__HEADER:
+      case QsvPackage.QUERY_SEPARATED_VALUES__HEADER:
         return header != null;
-      case QsvPackage.QUERY_SEPARTED_VALUE__STATEMENTS:
+      case QsvPackage.QUERY_SEPARATED_VALUES__STATEMENTS:
         return statements != null && !statements.isEmpty();
     }
     return super.eIsSet(featureID);
   }
 
-} //QuerySepartedValueImpl
+} //QuerySeparatedValuesImpl

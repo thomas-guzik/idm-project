@@ -3,7 +3,27 @@
  */
 package idm.qsv.util;
 
-import idm.qsv.*;
+import idm.qsv.BinCond;
+import idm.qsv.ColRange;
+import idm.qsv.Column;
+import idm.qsv.ColumnName;
+import idm.qsv.ColumnNumber;
+import idm.qsv.Columns;
+import idm.qsv.Condition;
+import idm.qsv.Empty;
+import idm.qsv.Header;
+import idm.qsv.HighestPriority;
+import idm.qsv.Line;
+import idm.qsv.LineRange;
+import idm.qsv.Lines;
+import idm.qsv.MidPriority;
+import idm.qsv.OpComp;
+import idm.qsv.Print;
+import idm.qsv.QsvPackage;
+import idm.qsv.QuerySeparatedValues;
+import idm.qsv.Selector;
+import idm.qsv.Statement;
+import idm.qsv.Value;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -76,9 +96,9 @@ public class QsvAdapterFactory extends AdapterFactoryImpl
     new QsvSwitch<Adapter>()
     {
       @Override
-      public Adapter caseQuerySepartedValue(QuerySepartedValue object)
+      public Adapter caseQuerySeparatedValues(QuerySeparatedValues object)
       {
-        return createQuerySepartedValueAdapter();
+        return createQuerySeparatedValuesAdapter();
       }
       @Override
       public Adapter caseHeader(Header object)
@@ -94,6 +114,91 @@ public class QsvAdapterFactory extends AdapterFactoryImpl
       public Adapter casePrint(Print object)
       {
         return createPrintAdapter();
+      }
+      @Override
+      public Adapter caseSelector(Selector object)
+      {
+        return createSelectorAdapter();
+      }
+      @Override
+      public Adapter caseColumns(Columns object)
+      {
+        return createColumnsAdapter();
+      }
+      @Override
+      public Adapter caseColRange(ColRange object)
+      {
+        return createColRangeAdapter();
+      }
+      @Override
+      public Adapter caseColumn(Column object)
+      {
+        return createColumnAdapter();
+      }
+      @Override
+      public Adapter caseColumnName(ColumnName object)
+      {
+        return createColumnNameAdapter();
+      }
+      @Override
+      public Adapter caseColumnNumber(ColumnNumber object)
+      {
+        return createColumnNumberAdapter();
+      }
+      @Override
+      public Adapter caseLines(Lines object)
+      {
+        return createLinesAdapter();
+      }
+      @Override
+      public Adapter caseLineRange(LineRange object)
+      {
+        return createLineRangeAdapter();
+      }
+      @Override
+      public Adapter caseLine(Line object)
+      {
+        return createLineAdapter();
+      }
+      @Override
+      public Adapter caseCondition(Condition object)
+      {
+        return createConditionAdapter();
+      }
+      @Override
+      public Adapter caseMidPriority(MidPriority object)
+      {
+        return createMidPriorityAdapter();
+      }
+      @Override
+      public Adapter caseHighestPriority(HighestPriority object)
+      {
+        return createHighestPriorityAdapter();
+      }
+      @Override
+      public Adapter caseBinCond(BinCond object)
+      {
+        return createBinCondAdapter();
+      }
+      @Override
+      public Adapter caseOpComp(OpComp object)
+      {
+        return createOpCompAdapter();
+      }
+      @Override
+      public Adapter caseValue(Value object)
+      {
+        return createValueAdapter();
+      }
+      @Override
+      public Adapter caseBoolean(idm.qsv.Boolean object)
+      {
+        return createBooleanAdapter();
+      }
+      @Override
+      public Adapter caseEmpty(Empty object)
+      {
+        return createEmptyAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -118,16 +223,16 @@ public class QsvAdapterFactory extends AdapterFactoryImpl
 
 
   /**
-   * Creates a new adapter for an object of class '{@link idm.qsv.QuerySepartedValue <em>Query Separted Value</em>}'.
+   * Creates a new adapter for an object of class '{@link idm.qsv.QuerySeparatedValues <em>Query Separated Values</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see idm.qsv.QuerySepartedValue
+   * @see idm.qsv.QuerySeparatedValues
    * @generated
    */
-  public Adapter createQuerySepartedValueAdapter()
+  public Adapter createQuerySeparatedValuesAdapter()
   {
     return null;
   }
@@ -173,6 +278,261 @@ public class QsvAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createPrintAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link idm.qsv.Selector <em>Selector</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see idm.qsv.Selector
+   * @generated
+   */
+  public Adapter createSelectorAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link idm.qsv.Columns <em>Columns</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see idm.qsv.Columns
+   * @generated
+   */
+  public Adapter createColumnsAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link idm.qsv.ColRange <em>Col Range</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see idm.qsv.ColRange
+   * @generated
+   */
+  public Adapter createColRangeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link idm.qsv.Column <em>Column</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see idm.qsv.Column
+   * @generated
+   */
+  public Adapter createColumnAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link idm.qsv.ColumnName <em>Column Name</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see idm.qsv.ColumnName
+   * @generated
+   */
+  public Adapter createColumnNameAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link idm.qsv.ColumnNumber <em>Column Number</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see idm.qsv.ColumnNumber
+   * @generated
+   */
+  public Adapter createColumnNumberAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link idm.qsv.Lines <em>Lines</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see idm.qsv.Lines
+   * @generated
+   */
+  public Adapter createLinesAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link idm.qsv.LineRange <em>Line Range</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see idm.qsv.LineRange
+   * @generated
+   */
+  public Adapter createLineRangeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link idm.qsv.Line <em>Line</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see idm.qsv.Line
+   * @generated
+   */
+  public Adapter createLineAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link idm.qsv.Condition <em>Condition</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see idm.qsv.Condition
+   * @generated
+   */
+  public Adapter createConditionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link idm.qsv.MidPriority <em>Mid Priority</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see idm.qsv.MidPriority
+   * @generated
+   */
+  public Adapter createMidPriorityAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link idm.qsv.HighestPriority <em>Highest Priority</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see idm.qsv.HighestPriority
+   * @generated
+   */
+  public Adapter createHighestPriorityAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link idm.qsv.BinCond <em>Bin Cond</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see idm.qsv.BinCond
+   * @generated
+   */
+  public Adapter createBinCondAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link idm.qsv.OpComp <em>Op Comp</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see idm.qsv.OpComp
+   * @generated
+   */
+  public Adapter createOpCompAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link idm.qsv.Value <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see idm.qsv.Value
+   * @generated
+   */
+  public Adapter createValueAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link idm.qsv.Boolean <em>Boolean</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see idm.qsv.Boolean
+   * @generated
+   */
+  public Adapter createBooleanAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link idm.qsv.Empty <em>Empty</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see idm.qsv.Empty
+   * @generated
+   */
+  public Adapter createEmptyAdapter()
   {
     return null;
   }

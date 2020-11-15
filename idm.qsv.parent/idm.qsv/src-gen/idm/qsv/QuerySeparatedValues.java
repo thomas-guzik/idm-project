@@ -9,22 +9,22 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Query Separted Value</b></em>'.
+ * A representation of the model object '<em><b>Query Separated Values</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link idm.qsv.QuerySepartedValue#getHeader <em>Header</em>}</li>
- *   <li>{@link idm.qsv.QuerySepartedValue#getStatements <em>Statements</em>}</li>
+ *   <li>{@link idm.qsv.QuerySeparatedValues#getHeader <em>Header</em>}</li>
+ *   <li>{@link idm.qsv.QuerySeparatedValues#getStatements <em>Statements</em>}</li>
  * </ul>
  *
- * @see idm.qsv.QsvPackage#getQuerySepartedValue()
+ * @see idm.qsv.QsvPackage#getQuerySeparatedValues()
  * @model
  * @generated
  */
-public interface QuerySepartedValue extends EObject
+public interface QuerySeparatedValues extends EObject
 {
   /**
    * Returns the value of the '<em><b>Header</b></em>' containment reference.
@@ -32,14 +32,14 @@ public interface QuerySepartedValue extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Header</em>' containment reference.
    * @see #setHeader(Header)
-   * @see idm.qsv.QsvPackage#getQuerySepartedValue_Header()
+   * @see idm.qsv.QsvPackage#getQuerySeparatedValues_Header()
    * @model containment="true"
    * @generated
    */
   Header getHeader();
 
   /**
-   * Sets the value of the '{@link idm.qsv.QuerySepartedValue#getHeader <em>Header</em>}' containment reference.
+   * Sets the value of the '{@link idm.qsv.QuerySeparatedValues#getHeader <em>Header</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Header</em>' containment reference.
@@ -54,10 +54,10 @@ public interface QuerySepartedValue extends EObject
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Statements</em>' containment reference list.
-   * @see idm.qsv.QsvPackage#getQuerySepartedValue_Statements()
+   * @see idm.qsv.QsvPackage#getQuerySeparatedValues_Statements()
    * @model containment="true"
    * @generated
    */
   EList<Statement> getStatements();
 
-} // QuerySepartedValue
+} // QuerySeparatedValues

@@ -24,13 +24,13 @@ public interface QsvFactory extends EFactory
   QsvFactory eINSTANCE = idm.qsv.impl.QsvFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Query Separted Value</em>'.
+   * Returns a new object of class '<em>Query Separated Values</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Query Separted Value</em>'.
+   * @return a new object of class '<em>Query Separated Values</em>'.
    * @generated
    */
-  QuerySepartedValue createQuerySepartedValue();
+  QuerySeparatedValues createQuerySeparatedValues();
 
   /**
    * Returns a new object of class '<em>Header</em>'.
@@ -58,6 +58,159 @@ public interface QsvFactory extends EFactory
    * @generated
    */
   Print createPrint();
+
+  /**
+   * Returns a new object of class '<em>Selector</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Selector</em>'.
+   * @generated
+   */
+  Selector createSelector();
+
+  /**
+   * Returns a new object of class '<em>Columns</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Columns</em>'.
+   * @generated
+   */
+  Columns createColumns();
+
+  /**
+   * Returns a new object of class '<em>Col Range</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Col Range</em>'.
+   * @generated
+   */
+  ColRange createColRange();
+
+  /**
+   * Returns a new object of class '<em>Column</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Column</em>'.
+   * @generated
+   */
+  Column createColumn();
+
+  /**
+   * Returns a new object of class '<em>Column Name</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Column Name</em>'.
+   * @generated
+   */
+  ColumnName createColumnName();
+
+  /**
+   * Returns a new object of class '<em>Column Number</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Column Number</em>'.
+   * @generated
+   */
+  ColumnNumber createColumnNumber();
+
+  /**
+   * Returns a new object of class '<em>Lines</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Lines</em>'.
+   * @generated
+   */
+  Lines createLines();
+
+  /**
+   * Returns a new object of class '<em>Line Range</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Line Range</em>'.
+   * @generated
+   */
+  LineRange createLineRange();
+
+  /**
+   * Returns a new object of class '<em>Line</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Line</em>'.
+   * @generated
+   */
+  Line createLine();
+
+  /**
+   * Returns a new object of class '<em>Condition</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Condition</em>'.
+   * @generated
+   */
+  Condition createCondition();
+
+  /**
+   * Returns a new object of class '<em>Mid Priority</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Mid Priority</em>'.
+   * @generated
+   */
+  MidPriority createMidPriority();
+
+  /**
+   * Returns a new object of class '<em>Highest Priority</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Highest Priority</em>'.
+   * @generated
+   */
+  HighestPriority createHighestPriority();
+
+  /**
+   * Returns a new object of class '<em>Bin Cond</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Bin Cond</em>'.
+   * @generated
+   */
+  BinCond createBinCond();
+
+  /**
+   * Returns a new object of class '<em>Op Comp</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Op Comp</em>'.
+   * @generated
+   */
+  OpComp createOpComp();
+
+  /**
+   * Returns a new object of class '<em>Value</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Value</em>'.
+   * @generated
+   */
+  Value createValue();
+
+  /**
+   * Returns a new object of class '<em>Boolean</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Boolean</em>'.
+   * @generated
+   */
+  Boolean createBoolean();
+
+  /**
+   * Returns a new object of class '<em>Empty</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Empty</em>'.
+   * @generated
+   */
+  Empty createEmpty();
 
   /**
    * Returns the package supported by this factory.

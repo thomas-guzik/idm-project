@@ -6,9 +6,9 @@
     copyrightFields="false" runtimeVersion="2.20">
   <genPackages prefix="Qsv" basePackage="idm" disposableProviderFactory="true" fileExtensions="qsv"
       ecorePackage="Qsv.ecore#/">
-    <genClasses ecoreClass="Qsv.ecore#//QuerySepartedValue">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//QuerySepartedValue/header"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//QuerySepartedValue/statements"/>
+    <genClasses ecoreClass="Qsv.ecore#//QuerySeparatedValues">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//QuerySeparatedValues/header"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//QuerySeparatedValues/statements"/>
     </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//Header">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//Header/nameFile"/>
@@ -18,7 +18,68 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Statement/statement"/>
     </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//Print">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//Print/print"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Print/selector"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//Selector">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Selector/columns"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Selector/lines"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//Columns">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Columns/range"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Columns/column"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//ColRange">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//ColRange/start"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//ColRange/end"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//Column"/>
+    <genClasses ecoreClass="Qsv.ecore#//ColumnName">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//ColumnName/nameb"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//ColumnNumber">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//ColumnNumber/number"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//Lines">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Lines/range"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Lines/line"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Lines/cond"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//LineRange">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//LineRange/start"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//LineRange/end"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//Line">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//Line/number"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//Condition">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Condition/mid"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Condition/orCondition"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//MidPriority">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//MidPriority/high"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//MidPriority/andCondition"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//HighestPriority">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//HighestPriority/condition"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//BinCond">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//BinCond/colId"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//BinCond/operator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//BinCond/compStr"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//BinCond/compId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//BinCond/compValue"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//OpComp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//OpComp/op"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//Value">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//Value/val"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//Boolean">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//Boolean/bol"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//Empty">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//Empty/empty"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

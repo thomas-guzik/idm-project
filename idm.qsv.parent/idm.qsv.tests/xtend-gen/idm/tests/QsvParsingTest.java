@@ -4,7 +4,7 @@
 package idm.tests;
 
 import com.google.inject.Inject;
-import idm.qsv.QuerySepartedValue;
+import idm.qsv.QuerySeparatedValues;
 import idm.tests.PythonCompiler;
 import idm.tests.QsvInjectorProvider;
 import org.eclipse.emf.common.util.EList;
@@ -24,7 +24,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @SuppressWarnings("all")
 public class QsvParsingTest {
   @Inject
-  private ParseHelper<QuerySepartedValue> parseHelper;
+  private ParseHelper<QuerySeparatedValues> parseHelper;
   
   @Test
   public void loadFile() {
@@ -34,7 +34,7 @@ public class QsvParsingTest {
       _builder.newLine();
       _builder.append("print");
       _builder.newLine();
-      final QuerySepartedValue result = this.parseHelper.parse(_builder);
+      final QuerySeparatedValues result = this.parseHelper.parse(_builder);
       Assertions.assertNotNull(result);
       final EList<Resource.Diagnostic> errors = result.eResource().getErrors();
       boolean _isEmpty = errors.isEmpty();
@@ -56,7 +56,7 @@ public class QsvParsingTest {
       _builder.newLine();
       _builder.append("print");
       _builder.newLine();
-      final QuerySepartedValue result = this.parseHelper.parse(_builder);
+      final QuerySeparatedValues result = this.parseHelper.parse(_builder);
       Assertions.assertNotNull(result);
       final EList<Resource.Diagnostic> errors = result.eResource().getErrors();
       boolean _isEmpty = errors.isEmpty();

@@ -3,12 +3,28 @@
  */
 package idm.qsv.impl;
 
+import idm.qsv.BinCond;
+import idm.qsv.ColRange;
+import idm.qsv.Column;
+import idm.qsv.ColumnName;
+import idm.qsv.ColumnNumber;
+import idm.qsv.Columns;
+import idm.qsv.Condition;
+import idm.qsv.Empty;
 import idm.qsv.Header;
+import idm.qsv.HighestPriority;
+import idm.qsv.Line;
+import idm.qsv.LineRange;
+import idm.qsv.Lines;
+import idm.qsv.MidPriority;
+import idm.qsv.OpComp;
 import idm.qsv.Print;
 import idm.qsv.QsvFactory;
 import idm.qsv.QsvPackage;
-import idm.qsv.QuerySepartedValue;
+import idm.qsv.QuerySeparatedValues;
+import idm.qsv.Selector;
 import idm.qsv.Statement;
+import idm.qsv.Value;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -30,7 +46,7 @@ public class QsvPackageImpl extends EPackageImpl implements QsvPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass querySepartedValueEClass = null;
+  private EClass querySeparatedValuesEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -52,6 +68,125 @@ public class QsvPackageImpl extends EPackageImpl implements QsvPackage
    * @generated
    */
   private EClass printEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass selectorEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass columnsEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass colRangeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass columnEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass columnNameEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass columnNumberEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass linesEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass lineRangeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass lineEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass conditionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass midPriorityEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass highestPriorityEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass binCondEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass opCompEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass valueEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass booleanEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass emptyEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -122,9 +257,9 @@ public class QsvPackageImpl extends EPackageImpl implements QsvPackage
    * @generated
    */
   @Override
-  public EClass getQuerySepartedValue()
+  public EClass getQuerySeparatedValues()
   {
-    return querySepartedValueEClass;
+    return querySeparatedValuesEClass;
   }
 
   /**
@@ -133,9 +268,9 @@ public class QsvPackageImpl extends EPackageImpl implements QsvPackage
    * @generated
    */
   @Override
-  public EReference getQuerySepartedValue_Header()
+  public EReference getQuerySeparatedValues_Header()
   {
-    return (EReference)querySepartedValueEClass.getEStructuralFeatures().get(0);
+    return (EReference)querySeparatedValuesEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -144,9 +279,9 @@ public class QsvPackageImpl extends EPackageImpl implements QsvPackage
    * @generated
    */
   @Override
-  public EReference getQuerySepartedValue_Statements()
+  public EReference getQuerySeparatedValues_Statements()
   {
-    return (EReference)querySepartedValueEClass.getEStructuralFeatures().get(1);
+    return (EReference)querySeparatedValuesEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -221,9 +356,504 @@ public class QsvPackageImpl extends EPackageImpl implements QsvPackage
    * @generated
    */
   @Override
-  public EAttribute getPrint_Print()
+  public EReference getPrint_Selector()
   {
-    return (EAttribute)printEClass.getEStructuralFeatures().get(0);
+    return (EReference)printEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getSelector()
+  {
+    return selectorEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getSelector_Columns()
+  {
+    return (EReference)selectorEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getSelector_Lines()
+  {
+    return (EReference)selectorEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getColumns()
+  {
+    return columnsEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getColumns_Range()
+  {
+    return (EReference)columnsEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getColumns_Column()
+  {
+    return (EReference)columnsEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getColRange()
+  {
+    return colRangeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getColRange_Start()
+  {
+    return (EReference)colRangeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getColRange_End()
+  {
+    return (EReference)colRangeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getColumn()
+  {
+    return columnEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getColumnName()
+  {
+    return columnNameEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getColumnName_Nameb()
+  {
+    return (EAttribute)columnNameEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getColumnNumber()
+  {
+    return columnNumberEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getColumnNumber_Number()
+  {
+    return (EAttribute)columnNumberEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getLines()
+  {
+    return linesEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getLines_Range()
+  {
+    return (EReference)linesEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getLines_Line()
+  {
+    return (EReference)linesEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getLines_Cond()
+  {
+    return (EReference)linesEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getLineRange()
+  {
+    return lineRangeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getLineRange_Start()
+  {
+    return (EAttribute)lineRangeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getLineRange_End()
+  {
+    return (EAttribute)lineRangeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getLine()
+  {
+    return lineEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getLine_Number()
+  {
+    return (EAttribute)lineEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getCondition()
+  {
+    return conditionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getCondition_Mid()
+  {
+    return (EReference)conditionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getCondition_OrCondition()
+  {
+    return (EReference)conditionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getMidPriority()
+  {
+    return midPriorityEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getMidPriority_High()
+  {
+    return (EReference)midPriorityEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getMidPriority_AndCondition()
+  {
+    return (EReference)midPriorityEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getHighestPriority()
+  {
+    return highestPriorityEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getHighestPriority_Condition()
+  {
+    return (EReference)highestPriorityEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getBinCond()
+  {
+    return binCondEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getBinCond_ColId()
+  {
+    return (EAttribute)binCondEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getBinCond_Operator()
+  {
+    return (EReference)binCondEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getBinCond_CompStr()
+  {
+    return (EAttribute)binCondEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getBinCond_CompId()
+  {
+    return (EAttribute)binCondEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getBinCond_CompValue()
+  {
+    return (EAttribute)binCondEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getOpComp()
+  {
+    return opCompEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getOpComp_Op()
+  {
+    return (EAttribute)opCompEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getValue()
+  {
+    return valueEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getValue_Val()
+  {
+    return (EAttribute)valueEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getBoolean()
+  {
+    return booleanEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getBoolean_Bol()
+  {
+    return (EAttribute)booleanEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getEmpty()
+  {
+    return emptyEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getEmpty_Empty()
+  {
+    return (EAttribute)emptyEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -257,9 +887,9 @@ public class QsvPackageImpl extends EPackageImpl implements QsvPackage
     isCreated = true;
 
     // Create classes and their features
-    querySepartedValueEClass = createEClass(QUERY_SEPARTED_VALUE);
-    createEReference(querySepartedValueEClass, QUERY_SEPARTED_VALUE__HEADER);
-    createEReference(querySepartedValueEClass, QUERY_SEPARTED_VALUE__STATEMENTS);
+    querySeparatedValuesEClass = createEClass(QUERY_SEPARATED_VALUES);
+    createEReference(querySeparatedValuesEClass, QUERY_SEPARATED_VALUES__HEADER);
+    createEReference(querySeparatedValuesEClass, QUERY_SEPARATED_VALUES__STATEMENTS);
 
     headerEClass = createEClass(HEADER);
     createEAttribute(headerEClass, HEADER__NAME_FILE);
@@ -269,7 +899,69 @@ public class QsvPackageImpl extends EPackageImpl implements QsvPackage
     createEReference(statementEClass, STATEMENT__STATEMENT);
 
     printEClass = createEClass(PRINT);
-    createEAttribute(printEClass, PRINT__PRINT);
+    createEReference(printEClass, PRINT__SELECTOR);
+
+    selectorEClass = createEClass(SELECTOR);
+    createEReference(selectorEClass, SELECTOR__COLUMNS);
+    createEReference(selectorEClass, SELECTOR__LINES);
+
+    columnsEClass = createEClass(COLUMNS);
+    createEReference(columnsEClass, COLUMNS__RANGE);
+    createEReference(columnsEClass, COLUMNS__COLUMN);
+
+    colRangeEClass = createEClass(COL_RANGE);
+    createEReference(colRangeEClass, COL_RANGE__START);
+    createEReference(colRangeEClass, COL_RANGE__END);
+
+    columnEClass = createEClass(COLUMN);
+
+    columnNameEClass = createEClass(COLUMN_NAME);
+    createEAttribute(columnNameEClass, COLUMN_NAME__NAMEB);
+
+    columnNumberEClass = createEClass(COLUMN_NUMBER);
+    createEAttribute(columnNumberEClass, COLUMN_NUMBER__NUMBER);
+
+    linesEClass = createEClass(LINES);
+    createEReference(linesEClass, LINES__RANGE);
+    createEReference(linesEClass, LINES__LINE);
+    createEReference(linesEClass, LINES__COND);
+
+    lineRangeEClass = createEClass(LINE_RANGE);
+    createEAttribute(lineRangeEClass, LINE_RANGE__START);
+    createEAttribute(lineRangeEClass, LINE_RANGE__END);
+
+    lineEClass = createEClass(LINE);
+    createEAttribute(lineEClass, LINE__NUMBER);
+
+    conditionEClass = createEClass(CONDITION);
+    createEReference(conditionEClass, CONDITION__MID);
+    createEReference(conditionEClass, CONDITION__OR_CONDITION);
+
+    midPriorityEClass = createEClass(MID_PRIORITY);
+    createEReference(midPriorityEClass, MID_PRIORITY__HIGH);
+    createEReference(midPriorityEClass, MID_PRIORITY__AND_CONDITION);
+
+    highestPriorityEClass = createEClass(HIGHEST_PRIORITY);
+    createEReference(highestPriorityEClass, HIGHEST_PRIORITY__CONDITION);
+
+    binCondEClass = createEClass(BIN_COND);
+    createEAttribute(binCondEClass, BIN_COND__COL_ID);
+    createEReference(binCondEClass, BIN_COND__OPERATOR);
+    createEAttribute(binCondEClass, BIN_COND__COMP_STR);
+    createEAttribute(binCondEClass, BIN_COND__COMP_ID);
+    createEAttribute(binCondEClass, BIN_COND__COMP_VALUE);
+
+    opCompEClass = createEClass(OP_COMP);
+    createEAttribute(opCompEClass, OP_COMP__OP);
+
+    valueEClass = createEClass(VALUE);
+    createEAttribute(valueEClass, VALUE__VAL);
+
+    booleanEClass = createEClass(BOOLEAN);
+    createEAttribute(booleanEClass, BOOLEAN__BOL);
+
+    emptyEClass = createEClass(EMPTY);
+    createEAttribute(emptyEClass, EMPTY__EMPTY);
   }
 
   /**
@@ -301,11 +993,14 @@ public class QsvPackageImpl extends EPackageImpl implements QsvPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    columnNameEClass.getESuperTypes().add(this.getColumn());
+    columnNumberEClass.getESuperTypes().add(this.getColumn());
+    booleanEClass.getESuperTypes().add(this.getValue());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(querySepartedValueEClass, QuerySepartedValue.class, "QuerySepartedValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getQuerySepartedValue_Header(), this.getHeader(), null, "header", null, 0, 1, QuerySepartedValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getQuerySepartedValue_Statements(), this.getStatement(), null, "statements", null, 0, -1, QuerySepartedValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(querySeparatedValuesEClass, QuerySeparatedValues.class, "QuerySeparatedValues", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getQuerySeparatedValues_Header(), this.getHeader(), null, "header", null, 0, 1, QuerySeparatedValues.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getQuerySeparatedValues_Statements(), this.getStatement(), null, "statements", null, 0, -1, QuerySeparatedValues.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(headerEClass, Header.class, "Header", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getHeader_NameFile(), ecorePackage.getEString(), "nameFile", null, 0, 1, Header.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -315,7 +1010,69 @@ public class QsvPackageImpl extends EPackageImpl implements QsvPackage
     initEReference(getStatement_Statement(), this.getPrint(), null, "statement", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(printEClass, Print.class, "Print", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPrint_Print(), ecorePackage.getEString(), "print", null, 0, 1, Print.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrint_Selector(), this.getSelector(), null, "selector", null, 0, 1, Print.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(selectorEClass, Selector.class, "Selector", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSelector_Columns(), this.getColumns(), null, "columns", null, 0, 1, Selector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSelector_Lines(), this.getLines(), null, "lines", null, 0, 1, Selector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(columnsEClass, Columns.class, "Columns", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getColumns_Range(), this.getColRange(), null, "range", null, 0, 1, Columns.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getColumns_Column(), this.getColumn(), null, "column", null, 0, 1, Columns.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(colRangeEClass, ColRange.class, "ColRange", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getColRange_Start(), this.getColumn(), null, "start", null, 0, 1, ColRange.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getColRange_End(), this.getColumn(), null, "end", null, 0, 1, ColRange.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(columnEClass, Column.class, "Column", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(columnNameEClass, ColumnName.class, "ColumnName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getColumnName_Nameb(), ecorePackage.getEString(), "nameb", null, 0, 1, ColumnName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(columnNumberEClass, ColumnNumber.class, "ColumnNumber", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getColumnNumber_Number(), ecorePackage.getEInt(), "number", null, 0, 1, ColumnNumber.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(linesEClass, Lines.class, "Lines", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getLines_Range(), this.getLineRange(), null, "range", null, 0, 1, Lines.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLines_Line(), this.getLine(), null, "line", null, 0, 1, Lines.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLines_Cond(), this.getCondition(), null, "cond", null, 0, 1, Lines.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(lineRangeEClass, LineRange.class, "LineRange", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getLineRange_Start(), ecorePackage.getEInt(), "start", null, 0, 1, LineRange.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getLineRange_End(), ecorePackage.getEInt(), "end", null, 0, 1, LineRange.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(lineEClass, Line.class, "Line", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getLine_Number(), ecorePackage.getEInt(), "number", null, 0, 1, Line.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(conditionEClass, Condition.class, "Condition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCondition_Mid(), this.getMidPriority(), null, "mid", null, 0, 1, Condition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCondition_OrCondition(), this.getCondition(), null, "orCondition", null, 0, 1, Condition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(midPriorityEClass, MidPriority.class, "MidPriority", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getMidPriority_High(), this.getHighestPriority(), null, "high", null, 0, 1, MidPriority.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMidPriority_AndCondition(), this.getMidPriority(), null, "andCondition", null, 0, 1, MidPriority.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(highestPriorityEClass, HighestPriority.class, "HighestPriority", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getHighestPriority_Condition(), ecorePackage.getEObject(), null, "condition", null, 0, 1, HighestPriority.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(binCondEClass, BinCond.class, "BinCond", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getBinCond_ColId(), ecorePackage.getEString(), "colId", null, 0, 1, BinCond.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBinCond_Operator(), this.getOpComp(), null, "operator", null, 0, 1, BinCond.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBinCond_CompStr(), ecorePackage.getEString(), "compStr", null, 0, 1, BinCond.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBinCond_CompId(), ecorePackage.getEString(), "compId", null, 0, 1, BinCond.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBinCond_CompValue(), ecorePackage.getEInt(), "compValue", null, 0, 1, BinCond.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(opCompEClass, OpComp.class, "OpComp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getOpComp_Op(), ecorePackage.getEString(), "op", null, 0, 1, OpComp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(valueEClass, Value.class, "Value", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getValue_Val(), ecorePackage.getEInt(), "val", null, 0, 1, Value.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(booleanEClass, idm.qsv.Boolean.class, "Boolean", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getBoolean_Bol(), ecorePackage.getEString(), "bol", null, 0, 1, idm.qsv.Boolean.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(emptyEClass, Empty.class, "Empty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEmpty_Empty(), ecorePackage.getEString(), "empty", null, 0, 1, Empty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);
