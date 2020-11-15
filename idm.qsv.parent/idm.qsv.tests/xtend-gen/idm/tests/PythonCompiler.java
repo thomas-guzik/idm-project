@@ -1,65 +1,64 @@
 package idm.tests;
 
+import com.google.common.io.Files;
+import idm.qsv.QuerySeparatedValues;
+import idm.qsv.Statement;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.xtend2.lib.StringConcatenation;
 
-import com.google.common.io.Files;
-
-import idm.qsv.QuerySeparatedValues;
-import idm.qsv.Statement;
-
+@SuppressWarnings("all")
 public class PythonCompiler {
-	private QuerySeparatedValues qsv;
-
-	PythonCompiler(QuerySeparatedValues q) {
-		qsv = q;
-	}
-
-	public void compileAndRun() throws IOException {
-		String python = "";
-		
-		String nameFile = qsv.getHeader().getNameFile();
-		Boolean hasColumnName = qsv.getHeader().isHasColumnName();
-		
-		python += "import pandas as pd\n";
-		python += "df = pd.read_csv(\"" + nameFile + "\")\n";
-		
-		for(Statement s : qsv.getStatements()) {
-			// s.compile();
-		}
-		
-		python += "print(df)";
-
-		// serialize code into Python filename
-		String PYTHON_OUTPUT = "foo.py";
-		/*
-		 * FileWriter fw = new FileWriter(PYTHON_OUTPUT); fw.write(pythonCode);
-		 * fw.flush(); fw.close();
-		 */
-		// or shorter
-		Files.write(python.getBytes(), new File(PYTHON_OUTPUT));
-
-		// execute the generated Python code
-		// roughly: exec "python foo.py"
-
-		Process p = Runtime.getRuntime().exec("python " + PYTHON_OUTPUT);
-
-		// output
-		BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-
-		// error
-		BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-
-		String o;
-		while ((o = stdInput.readLine()) != null) {
-			System.out.println(o);
-		}
-
-		String err;
-		while ((err = stdError.readLine()) != null) {
-			System.out.println(err);
-		}
-	}
+  private QuerySeparatedValues qsv;
+  
+  PythonCompiler(final QuerySeparatedValues q) {
+    this.qsv = q;
+  }
+  
+  public void compileAndRun() throws IOException {
+    String python = "";
+    String nameFile = this.qsv.getHeader().getNameFile();
+    Boolean hasColumnName = Boolean.valueOf(this.qsv.getHeader().isHasColumnName());
+    String _python = python;
+    python = (_python + "import pandas as pd\n");
+    String _python_1 = python;
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("df = pd.read_csv(\"");
+    _builder.append(nameFile);
+    _builder.append("\")");
+    _builder.newLineIfNotEmpty();
+    python = (_python_1 + _builder);
+    EList<Statement> _statements = this.qsv.getStatements();
+    for (final Statement s : _statements) {
+    }
+    String _python_2 = python;
+    python = (_python_2 + "print(df)");
+    String PYTHON_OUTPUT = "foo.py";
+    byte[] _bytes = python.getBytes();
+    File _file = new File(PYTHON_OUTPUT);
+    Files.write(_bytes, _file);
+    Runtime _runtime = Runtime.getRuntime();
+    StringConcatenation _builder_1 = new StringConcatenation();
+    _builder_1.append("python ");
+    _builder_1.append(PYTHON_OUTPUT);
+    Process p = _runtime.exec(_builder_1.toString());
+    InputStream _inputStream = p.getInputStream();
+    InputStreamReader _inputStreamReader = new InputStreamReader(_inputStream);
+    BufferedReader stdInput = new BufferedReader(_inputStreamReader);
+    InputStream _errorStream = p.getErrorStream();
+    InputStreamReader _inputStreamReader_1 = new InputStreamReader(_errorStream);
+    BufferedReader stdError = new BufferedReader(_inputStreamReader_1);
+    String o = null;
+    while (((o = stdInput.readLine()) != null)) {
+      System.out.println(o);
+    }
+    String err = null;
+    while (((err = stdError.readLine()) != null)) {
+      System.out.println(err);
+    }
+  }
 }
