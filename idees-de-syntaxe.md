@@ -8,9 +8,35 @@ auquel on fait référence dans l'énoncé du projet. On aurait donc quelque cho
 comme:
 
 ```
-using "myfile.csv" headers, separate ","
+load "myfile.csv" headers, delimiter ",", quotechar "'"
     [une commande]
     [une autre]
+```
+
+```
+load "myfile.csv" noheaders, quotechar """, delimiter "\t"
+    [une commande]
+    [une autre]
+```
+
+On peut imaginer utiliser des valeurs par défaut
+```
+load "myfile.csv"
+    [une commande]
+    [une autre]
+```
+
+Variations de CSV à supporter:
+- delimiter
+- quotechar
+- doublequote ?
+- quoting ?
+(https://docs.python.org/3/library/csv.html#csv-fmt-params)
+
+Manière de PostgreSQL:
+
+```
+COPY items FROM ‘/Users/matt/Desktop/items.csv’ DELIMITER ‘,’ CSV HEADER;
 ```
 
 Possible suite de l'idée:
@@ -56,12 +82,6 @@ print
 Pour calculer la somme de la colonne du nombre d'habitants et stocker dans la
 variable `sommeHabitants`
 ```
-compute
-    :sum nb_habitants
-    :store $sommeHabitants
-```
-Ou bien
-```
 compute $sommeHabitants
     :sum nb_habitants
 ```
@@ -69,13 +89,7 @@ compute $sommeHabitants
 
 Pour afficher la valeur de la variable
 ```
-print
-    :value $sommeHabitants
-```
-Ou bien ça étant donné que `print` seul (sans précision ligne/colonne) est
-censé montrer le csv entier?
-```
-print $sommeHabitants
+echo $sommeHabitants
 ```
 
 La distinction de `print` et `compute` permettrait de garder une séparation
@@ -163,4 +177,8 @@ Il reste des trucs à ajouter, comme développer les conditions sur la sélectio
 des lignes, voir si on garde compute ou si on met ça quand même dans print, ou
 d'autres choses.
 
+```
+print
+    :lines pays="Italie" and nb_habitants < 0
+```
 
