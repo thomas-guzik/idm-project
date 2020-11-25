@@ -12,7 +12,7 @@ Header:
 ;
 
 Statement:
-	statement = Print
+	Print
 ;
 
 Print:

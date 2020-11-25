@@ -14,9 +14,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//Header/nameFile"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//Header/hasColumnName"/>
     </genClasses>
-    <genClasses ecoreClass="Qsv.ecore#//Statement">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Statement/statement"/>
-    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//Statement"/>
     <genClasses ecoreClass="Qsv.ecore#//Print">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Print/selector"/>
     </genClasses>

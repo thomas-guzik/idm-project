@@ -11,11 +11,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nameFile" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hasColumnName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Statement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="statement" eType="#//Print"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Print">
+  <eClassifiers xsi:type="ecore:EClass" name="Statement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Print" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="selector" eType="#//Selector"
         containment="true"/>
   </eClassifiers>

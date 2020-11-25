@@ -1,3 +1,3 @@
 import pandas as pd
-df = pd.read_csv("foo1.csv")
-print(df)
+my_data = pd.read_csv("foo1.csv", header='infer')
+print(my_data)
