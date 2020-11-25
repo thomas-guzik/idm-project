@@ -4,8 +4,8 @@
 package idm.tests;
 
 import com.google.inject.Inject;
+import idm.compiler.python.PythonCompiler;
 import idm.qsv.QuerySeparatedValues;
-import idm.tests.PythonCompiler;
 import idm.tests.QsvInjectorProvider;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;

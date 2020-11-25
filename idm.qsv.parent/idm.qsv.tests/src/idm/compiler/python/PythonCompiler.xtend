@@ -1,4 +1,4 @@
-package idm.tests
+package idm.compiler.python
 
 import java.io.BufferedReader
 import java.io.File
@@ -7,35 +7,47 @@ import java.io.InputStreamReader
 import com.google.common.io.Files
 import idm.qsv.QuerySeparatedValues
 import idm.qsv.Statement
+import idm.qsv.Header
 
 class PythonCompiler {
 	QuerySeparatedValues qsv
 
-	package new(QuerySeparatedValues q) {
+	new(QuerySeparatedValues q) {
 		qsv = q
 	}
 
 	def void compileAndRun() throws IOException {
 		var String python = ""
-		var String nameFile = qsv.getHeader().getNameFile()
-		var Boolean hasColumnName = qsv.getHeader().isHasColumnName()
-		python += "import pandas as pd\n"
-		python += '''df = pd.read_csv("«nameFile»")
-'''
-		for (Statement s : qsv.getStatements()) { // s.compile();
+		python += qsv.getHeader().compile()
+		for (Statement s : qsv.getStatements()) {
+			python += s.compile();
 		}
 		python += "print(df)"
-		// serialize code into Python filename
 		var String PYTHON_OUTPUT = "foo.py"
-		/*
-		 * FileWriter fw = new FileWriter(PYTHON_OUTPUT); fw.write(pythonCode);
-		 * fw.flush(); fw.close();
-		 */
+		writeToFileAndExecute(PYTHON_OUTPUT, python)
+		
+	}
+	
+	private def compile(Header header) {
+		var String nameFile = qsv.getHeader().getNameFile()
+		var String code = ""
+		code += "import pandas as pd\n"
+		code += '''df = pd.read_csv("«nameFile»")
+'''
+		var Boolean hasColumnName = header.isHasColumnName()
+		return code
+	}
+	
+	private def compile(Statement statement) {
+		
+	}
+	
+	private def writeToFileAndExecute(String fileName, String pythonCode) {
 		// or shorter
-		Files.write(python.getBytes(), new File(PYTHON_OUTPUT))
+		Files.write(pythonCode.getBytes(), new File(fileName))
 		// execute the generated Python code
 		// roughly: exec "python foo.py"
-		var Process p = Runtime.getRuntime().exec('''python «PYTHON_OUTPUT»''')
+		var Process p = Runtime.getRuntime().exec('''python «fileName»''')
 		// output
 		var BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()))
 		// error

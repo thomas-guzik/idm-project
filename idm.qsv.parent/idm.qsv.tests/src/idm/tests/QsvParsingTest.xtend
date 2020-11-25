@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.^extension.ExtendWith
 import idm.qsv.QuerySeparatedValues
+import idm.compiler.python.PythonCompiler
 
 @ExtendWith(InjectionExtension)
 @InjectWith(QsvInjectorProvider)
