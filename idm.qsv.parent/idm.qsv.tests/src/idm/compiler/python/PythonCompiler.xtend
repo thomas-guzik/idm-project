@@ -30,11 +30,11 @@ class PythonCompiler {
 	
 	private def compile(Header header) {
 		var String nameFile = qsv.getHeader().getNameFile()
+		var Boolean hasColumnName = header.isHasColumnName()
 		var String code = ""
 		code += "import pandas as pd\n"
-		code += '''df = pd.read_csv("«nameFile»")
+		code += '''df = pd.read_csv("«nameFile»", header=«hasColumnName? "'infer'" : "None"»)
 '''
-		var Boolean hasColumnName = header.isHasColumnName()
 		return code
 	}
 	

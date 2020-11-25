@@ -71,4 +71,40 @@ public class QsvParsingTest {
       throw Exceptions.sneakyThrow(_e);
     }
   }
+  
+  @Test
+  public void withHeader() {
+  }
+  
+  @Test
+  public void withoutHeader() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("using \"foo1.csv\" with column names: no");
+      _builder.newLine();
+      _builder.append("print");
+      _builder.newLine();
+      final QuerySeparatedValues result = this.parseHelper.parse(_builder);
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("    ");
+      _builder_1.append("0   1   2");
+      _builder_1.newLine();
+      _builder_1.append("0  f1  f2  f3");
+      _builder_1.newLine();
+      _builder_1.append("1  v1  v2  v3");
+      final String expectedResult = _builder_1.toString();
+      Assertions.assertNotNull(result);
+      final EList<Resource.Diagnostic> errors = result.eResource().getErrors();
+      boolean _isEmpty = errors.isEmpty();
+      StringConcatenation _builder_2 = new StringConcatenation();
+      _builder_2.append("Unexpected errors: ");
+      String _join = IterableExtensions.join(errors, ", ");
+      _builder_2.append(_join);
+      Assertions.assertTrue(_isEmpty, _builder_2.toString());
+      final PythonCompiler cmpPython = new PythonCompiler(result);
+      cmpPython.compileAndRun();
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
 }

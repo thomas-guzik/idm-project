@@ -40,6 +40,7 @@ public class PythonCompiler {
   
   private String compile(final Header header) {
     String nameFile = this.qsv.getHeader().getNameFile();
+    Boolean hasColumnName = Boolean.valueOf(header.isHasColumnName());
     String code = "";
     String _code = code;
     code = (_code + "import pandas as pd\n");
@@ -47,10 +48,17 @@ public class PythonCompiler {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("df = pd.read_csv(\"");
     _builder.append(nameFile);
-    _builder.append("\")");
+    _builder.append("\", header=");
+    String _xifexpression = null;
+    if ((hasColumnName).booleanValue()) {
+      _xifexpression = "\'infer\'";
+    } else {
+      _xifexpression = "None";
+    }
+    _builder.append(_xifexpression);
+    _builder.append(")");
     _builder.newLineIfNotEmpty();
     code = (_code_1 + _builder);
-    Boolean hasColumnName = Boolean.valueOf(header.isHasColumnName());
     return code;
   }
   

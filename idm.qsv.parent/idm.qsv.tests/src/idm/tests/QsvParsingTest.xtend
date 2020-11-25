@@ -42,8 +42,27 @@ class QsvParsingTest {
 
 		val PythonCompiler cmpPython = new PythonCompiler(result)
 		cmpPython.compileAndRun
+	}
 
-		// TODO 
-		// val BashCompiler cmpBash = null
+	@Test
+	def void withHeader() {
+	}
+
+	@Test
+	def void withoutHeader() {
+		val result = parseHelper.parse('''
+			using "foo1.csv" with column names: no
+			print
+		''')
+		val expectedResult = '''
+		    0   1   2
+		0  f1  f2  f3
+		1  v1  v2  v3'''
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+
+		val PythonCompiler cmpPython = new PythonCompiler(result)
+		cmpPython.compileAndRun
 	}
 }
