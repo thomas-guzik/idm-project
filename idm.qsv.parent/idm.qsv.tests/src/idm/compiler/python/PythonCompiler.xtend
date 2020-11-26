@@ -1,6 +1,9 @@
 package idm.compiler.python
 
 import com.google.common.io.Files
+import idm.qsv.Column
+import idm.qsv.ColumnNames
+import idm.qsv.ColumnNumbers
 import idm.qsv.Columns
 import idm.qsv.Header
 import idm.qsv.Lines
@@ -11,6 +14,8 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
+import java.util.ArrayList
+import java.util.stream.Collectors
 
 class PythonCompiler {
 	QuerySeparatedValues qsv
@@ -51,11 +56,36 @@ class PythonCompiler {
 	}
 
 	private def dispatch compile(Print print) {
+		var code = ""
 		if (print.selector !== null) {
-			val Columns columns = print.selector.columnSelection
+			val Columns columnSelection = print.selector.columnSelection
+			if (columnSelection !== null) {
+				code += columnSelection.select()
+			}
 			val Lines lines = print.selector.lineSelection
 		}
-		return '''print(«csvDataVariable»)'''
+		code += '''print(«csvDataVariable»)'''
+		return code
+	}
+
+	private def select(Columns selection) {
+		var code = '''«csvDataVariable» = «csvDataVariable»[['''
+		var codeNames = selection.columns.getNames().stream().map([name|'''"«name»"''']).collect(Collectors.toList)
+		code += codeNames.join(',')
+		code += "]]\n"
+		return code
+	}
+
+	private def dispatch getNames(Column column) {
+		return new ArrayList<String>()
+	}
+
+	private def dispatch getNames(ColumnNames names) {
+		return names.ids.toList
+	}
+
+	private def dispatch getNames(ColumnNumbers numbers) {
+		return new ArrayList<String>()
 	}
 
 	private def writeToFileAndExecute(String fileName, String pythonCode) {

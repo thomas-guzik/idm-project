@@ -26,11 +26,11 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Columns/columns"/>
     </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//Column"/>
-    <genClasses ecoreClass="Qsv.ecore#//ColumnName">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//ColumnName/nameb"/>
+    <genClasses ecoreClass="Qsv.ecore#//ColumnNames">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//ColumnNames/ids"/>
     </genClasses>
-    <genClasses ecoreClass="Qsv.ecore#//ColumnNumber">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//ColumnNumber/number"/>
+    <genClasses ecoreClass="Qsv.ecore#//ColumnNumbers">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//ColumnNumbers/numbers"/>
     </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//Lines">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Lines/range"/>

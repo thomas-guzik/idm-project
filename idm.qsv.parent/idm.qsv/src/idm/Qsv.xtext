@@ -24,19 +24,19 @@ Selector: // Region
 ;
 
 Columns:
-	':columns' (columns += Column | '*')?
+	':columns' (columns = Column) ?
 ;
 
 Column:
-	ColumnName | ColumnNumber
+	ColumnNames | ColumnNumbers
 ;
 
-ColumnName:
-	nameb = ID
+ColumnNames:
+	ids += ID (',' ids += ID)*
 ;
 
-ColumnNumber:
-	'#' number=INT
+ColumnNumbers:
+	numbers += INT (',' numbers += INT)*
 ;
 
 Lines:
