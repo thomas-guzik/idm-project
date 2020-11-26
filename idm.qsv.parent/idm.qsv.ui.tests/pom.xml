@@ -5,6 +5,7 @@
 		<groupId>idm.qsv</groupId>
 		<artifactId>idm.qsv.parent</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../idm.qsv.parent</relativePath>
 	</parent>
 	<artifactId>idm.qsv.ui.tests</artifactId>
 	<packaging>eclipse-test-plugin</packaging>
