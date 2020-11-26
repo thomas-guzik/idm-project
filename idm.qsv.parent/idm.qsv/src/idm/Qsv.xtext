@@ -20,15 +20,11 @@ Print:
 ;
 
 Selector: // Region
-	columns=Columns? lines=Lines?
+	columnSelection=Columns? & lineSelection=Lines?
 ;
 
 Columns:
-	':columns' (range=ColRange | column=Column | '*')?
-;
-
-ColRange:
-	start=Column '-' end=Column
+	':columns' (columns += Column | '*')?
 ;
 
 Column:

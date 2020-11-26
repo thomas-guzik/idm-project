@@ -1,14 +1,16 @@
 package idm.compiler.python
 
+import com.google.common.io.Files
+import idm.qsv.Columns
+import idm.qsv.Header
+import idm.qsv.Lines
+import idm.qsv.Print
+import idm.qsv.QuerySeparatedValues
+import idm.qsv.Statement
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
-import com.google.common.io.Files
-import idm.qsv.QuerySeparatedValues
-import idm.qsv.Statement
-import idm.qsv.Header
-import idm.qsv.Print
 
 class PythonCompiler {
 	QuerySeparatedValues qsv
@@ -34,7 +36,7 @@ class PythonCompiler {
 		return python
 	}
 
-	private def compile(Header header) {
+	private def dispatch compile(Header header) {
 		var String nameFile = qsv.getHeader().getNameFile()
 		var Boolean hasColumnName = header.isHasColumnName()
 		var String code = ""
@@ -47,8 +49,12 @@ class PythonCompiler {
 	private def dispatch compile(Statement statement) {
 		return "should this happen?"
 	}
-	
-	private def dispatch compile(Print statement) {
+
+	private def dispatch compile(Print print) {
+		if (print.selector !== null) {
+			val Columns columns = print.selector.columnSelection
+			val Lines lines = print.selector.lineSelection
+		}
 		return '''print(«csvDataVariable»)'''
 	}
 
@@ -75,6 +81,6 @@ class PythonCompiler {
 			System.out.println(err)
 		}
 		return new PythonCompilerOutput(output, error)
-		
+
 	}
 }

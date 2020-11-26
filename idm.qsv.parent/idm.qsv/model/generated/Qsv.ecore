@@ -17,22 +17,14 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Selector">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="columns" eType="#//Columns"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="columnSelection" eType="#//Columns"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="lines" eType="#//Lines"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="lineSelection" eType="#//Lines"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Columns">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="range" eType="#//ColRange"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="column" eType="#//Column"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ColRange">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="start" eType="#//Column"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="end" eType="#//Column"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="columns" upperBound="-1"
+        eType="#//Column" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Column"/>
   <eClassifiers xsi:type="ecore:EClass" name="ColumnName" eSuperTypes="#//Column">

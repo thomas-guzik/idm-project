@@ -19,16 +19,11 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Print/selector"/>
     </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//Selector">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Selector/columns"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Selector/lines"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Selector/columnSelection"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Selector/lineSelection"/>
     </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//Columns">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Columns/range"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Columns/column"/>
-    </genClasses>
-    <genClasses ecoreClass="Qsv.ecore#//ColRange">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//ColRange/start"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//ColRange/end"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Columns/columns"/>
     </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//Column"/>
     <genClasses ecoreClass="Qsv.ecore#//ColumnName">
