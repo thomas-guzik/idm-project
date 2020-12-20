@@ -20,21 +20,7 @@ class QsvPythonCompilerTests {
 	ParseHelper<QuerySeparatedValues> parseHelper
 
 	@Test
-	def void compileModel() {
-		val result = parseHelper.parse('''
-			using "foo1.csv" with column names: no
-			print
-		''')
-		Assertions.assertNotNull(result)
-		val errors = result.eResource.errors
-		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-
-		val PythonCompiler cmpPython = new PythonCompiler(result)
-		cmpPython.compileAndRun
-	}
-
-	@Test
-	def void withHeader() {
+	def void printWithHeader() {
 		val result = parseHelper.parse('''
 			using "foo1.csv" with column names: yes
 			print
@@ -54,7 +40,7 @@ class QsvPythonCompilerTests {
 	}
 
 	@Test
-	def void withoutHeader() {
+	def void printWithoutHeader() {
 		val result = parseHelper.parse('''
 			using "foo1.csv" with column names: no
 			print
@@ -102,8 +88,8 @@ class QsvPythonCompilerTests {
 		val result = parseHelper.parse('''
 			using "foo2.csv" with column names: yes
 			print
-				:lines
 				:columns
+				:lines
 		''')
 		val expectedResult = '''
 			   f1  f2  f3
@@ -143,7 +129,30 @@ class QsvPythonCompilerTests {
 	}
 
 	@Test
-	def void printColumnsWithMultipleSelection() {
+	def void printColumnsWithSingleSelectionAllLines() {
+		val result = parseHelper.parse('''
+			using "foo2.csv" with column names: yes
+			print
+				:columns f2
+				:lines
+		''')
+		val expectedResult = '''
+			   f2
+			0  v2
+			1  v7
+		'''
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+
+		val PythonCompiler cmpPython = new PythonCompiler(result)
+		val outputResult = cmpPython.compileAndRun
+		Assertions.assertEquals(expectedResult, outputResult.getOutput)
+		Assertions.assertEquals("", outputResult.getError)
+	}
+
+	@Test
+	def void printColumnsWithMultipleSelectionKeepsOrder() {
 		val result = parseHelper.parse('''
 			using "foo2.csv" with column names: yes
 			print

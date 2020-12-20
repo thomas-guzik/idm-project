@@ -1,12 +1,8 @@
 package idm.compiler.python
 
 import com.google.common.io.Files
-import idm.qsv.Column
-import idm.qsv.ColumnNames
-import idm.qsv.ColumnNumbers
-import idm.qsv.Columns
+import idm.compiler.python.actions.PrintAction
 import idm.qsv.Header
-import idm.qsv.Lines
 import idm.qsv.Print
 import idm.qsv.QuerySeparatedValues
 import idm.qsv.Statement
@@ -14,8 +10,6 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
-import java.util.ArrayList
-import java.util.stream.Collectors
 
 class PythonCompiler {
 	QuerySeparatedValues qsv
@@ -29,64 +23,39 @@ class PythonCompiler {
 		csvDataVariable = "my_data"
 		var pythonCode = compile()
 		var String PYTHON_OUTPUT = "foo.py"
+		println(pythonCode)
 		return writeToFileAndExecute(PYTHON_OUTPUT, pythonCode)
 	}
 
 	private def String compile() {
-		var String python = ""
-		python += qsv.getHeader().compile()
+		var String pythonCode = ""
+		pythonCode += qsv.getHeader().compile()
 		for (Statement s : qsv.getStatements()) {
-			python += s.compile();
+			pythonCode += s.compile();
 		}
-		return python
+		return pythonCode
 	}
 
 	private def dispatch compile(Header header) {
-		var String nameFile = qsv.getHeader().getNameFile()
+		var String csvFileName = qsv.getHeader().getNameFile()
 		var Boolean hasColumnName = header.isHasColumnName()
 		var String code = ""
 		code += "import pandas as pd\n"
-		code += '''«csvDataVariable» = pd.read_csv("«nameFile»", header=«hasColumnName? "'infer'" : "None"»)
+		code += '''«csvDataVariable» = pd.read_csv("«csvFileName»", header=«hasColumnName? "'infer'" : "None"»)
 '''
 		return code
 	}
 
 	private def dispatch compile(Statement statement) {
-		return "should this happen?"
+		throw new MissingConcreteImplementationException("Statement")
 	}
 
 	private def dispatch compile(Print print) {
-		var code = ""
-		if (print.selector !== null) {
-			val Columns columnSelection = print.selector.columnSelection
-			if (columnSelection !== null) {
-				code += columnSelection.select()
-			}
-			val Lines lines = print.selector.lineSelection
-		}
-		code += '''print(«csvDataVariable»)'''
+		var printer = new PrintAction(print, csvDataVariable)
+		var code = printer.compile
 		return code
 	}
 
-	private def select(Columns selection) {
-		var code = '''«csvDataVariable» = «csvDataVariable»[['''
-		var codeNames = selection.columns.getNames().stream().map([name|'''"«name»"''']).collect(Collectors.toList)
-		code += codeNames.join(',')
-		code += "]]\n"
-		return code
-	}
-
-	private def dispatch getNames(Column column) {
-		return new ArrayList<String>()
-	}
-
-	private def dispatch getNames(ColumnNames names) {
-		return names.ids.toList
-	}
-
-	private def dispatch getNames(ColumnNumbers numbers) {
-		return new ArrayList<String>()
-	}
 
 	private def writeToFileAndExecute(String fileName, String pythonCode) {
 		// or shorter
@@ -102,7 +71,7 @@ class PythonCompiler {
 		var String output = ""
 		while ((o = stdInput.readLine()) !== null) {
 			output += o + "\n"
-			System.out.println(o)
+//			System.out.println(o)
 		}
 		var String err
 		var String error = ""
