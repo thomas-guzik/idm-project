@@ -12,6 +12,7 @@ import org.eclipse.xtext.testing.util.ParseHelper
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.^extension.ExtendWith
+import idm.compiler.python.PythonCompilerOutput
 
 @ExtendWith(InjectionExtension)
 @InjectWith(QsvInjectorProvider)
@@ -26,10 +27,15 @@ class QsvPythonCompilerTests {
 	}
 
 	def void assertPythonCompilesAndRuns(QuerySeparatedValues qsv, String expectedStdOut) {
-		val PythonCompiler cmpPython = new PythonCompiler(qsv)
-		val outputResult = cmpPython.compileAndRun
+		val outputResult = pythonCompileAndRun(qsv)
 		Assertions.assertEquals(expectedStdOut, outputResult.getOutput)
 		Assertions.assertEquals("", outputResult.getError)
+	}
+
+	def PythonCompilerOutput pythonCompileAndRun(QuerySeparatedValues qsv) {
+		val PythonCompiler cmpPython = new PythonCompiler(qsv)
+		val outputResult = cmpPython.compileAndRun
+		return outputResult
 	}
 
 	@Test
@@ -256,4 +262,106 @@ class QsvPythonCompilerTests {
 		assertASTNotNullAndNoErrors(parseTreeGreaterOrEqual)
 		assertPythonCompilesAndRuns(parseTreeGreaterOrEqual, expectedResultGreaterOrEqual)
 	}
+
+	@Test
+	def void printEmptyData() {
+		val parseTree = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines col0 = -1
+		''')
+		assertASTNotNullAndNoErrors(parseTree)
+
+		val result = pythonCompileAndRun(parseTree)
+		Assertions.assertEquals("", result.output.strip)
+		Assertions.assertEquals("", result.getError)
+
+	}
+
+	@Test
+	def void printLinesWithOrCondition() {
+		val parseTree = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines col0 = 1 or col0 = 3
+		''')
+		val expectedResult = '''
+			   col0  col1
+			2     1     3
+			3     3     5
+			5     1    10
+		'''
+		assertASTNotNullAndNoErrors(parseTree)
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printLinesWithAndCondition() {
+		val parseTree = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines col0 > 2 and col0 < 5
+		''')
+		val expectedResult = '''
+			   col0  col1
+			0     4     3
+			3     3     5
+		'''
+		assertASTNotNullAndNoErrors(parseTree)
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printLinesWithNestedCondition() {
+		val parseTree = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines (col0 > 2 and col0 < 5) or col1 = 10
+		''')
+		val expectedResult = '''
+			   col0  col1
+			0     4     3
+			3     3     5
+			5     1    10
+		'''
+		assertASTNotNullAndNoErrors(parseTree)
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printLinesAndColumnWithNestedCondition() {
+		val parseTree = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:columns col1
+				:lines (col0 > 2 and col0 < 5) or col1 = 10
+		''')
+		val expectedResult = '''
+			   col1
+			0     3
+			3     5
+			5    10
+		'''
+		assertASTNotNullAndNoErrors(parseTree)
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printLinesWithNestedConditions() {
+		val parseTree = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines (col0 <= 3 or col0 = 4) and (col1 != 3 or (col0 < 3 and col0 < 2))
+		''')
+		val expectedResult = '''
+			   col0  col1
+			1     2     7
+			2     1     3
+			3     3     5
+			5     1    10
+		'''
+		assertASTNotNullAndNoErrors(parseTree)
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
 }

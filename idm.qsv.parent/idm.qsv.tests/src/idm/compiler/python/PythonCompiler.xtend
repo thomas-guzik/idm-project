@@ -37,6 +37,8 @@ class PythonCompiler {
 
 	private def String compile() {
 		var String pythonCode = ""
+		pythonCode += "import pandas as pd"
+		pythonCode += NEWLINE
 		pythonCode += printIfNotEmptyFunction
 		pythonCode += NEWLINE
 		pythonCode += qsv.getHeader().compile()
@@ -50,7 +52,6 @@ class PythonCompiler {
 		var String csvFileName = qsv.getHeader().getNameFile()
 		var Boolean hasColumnName = header.isHasColumnName()
 		var String code = ""
-		code += "import pandas as pd\n"
 		code += '''«csvDataVariable» = pd.read_csv("«csvFileName»", header=«hasColumnName? "'infer'" : "None"»)
 '''
 		return code
