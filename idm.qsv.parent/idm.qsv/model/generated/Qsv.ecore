@@ -62,7 +62,9 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HighestPriority">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="baseCondition" eType="#//BinCond"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nestedCondition" eType="#//Condition"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BinCond">
@@ -73,16 +75,17 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="compId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="compValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="OpComp">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="op" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OpComp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CompareEqual" eSuperTypes="#//OpComp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CompareNotEqual" eSuperTypes="#//OpComp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CompareLower" eSuperTypes="#//OpComp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CompareGreater" eSuperTypes="#//OpComp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CompareLowerOrEqual" eSuperTypes="#//OpComp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CompareGreaterOrEqual" eSuperTypes="#//OpComp"/>
   <eClassifiers xsi:type="ecore:EClass" name="Value">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="val" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Boolean" eSuperTypes="#//Value">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="bol" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Empty">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="empty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -53,7 +53,8 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//MidPriority/andCondition"/>
     </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//HighestPriority">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//HighestPriority/condition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//HighestPriority/baseCondition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//HighestPriority/nestedCondition"/>
     </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//BinCond">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//BinCond/colId"/>
@@ -62,17 +63,18 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//BinCond/compId"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//BinCond/compValue"/>
     </genClasses>
-    <genClasses ecoreClass="Qsv.ecore#//OpComp">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//OpComp/op"/>
-    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//OpComp"/>
+    <genClasses ecoreClass="Qsv.ecore#//CompareEqual"/>
+    <genClasses ecoreClass="Qsv.ecore#//CompareNotEqual"/>
+    <genClasses ecoreClass="Qsv.ecore#//CompareLower"/>
+    <genClasses ecoreClass="Qsv.ecore#//CompareGreater"/>
+    <genClasses ecoreClass="Qsv.ecore#//CompareLowerOrEqual"/>
+    <genClasses ecoreClass="Qsv.ecore#//CompareGreaterOrEqual"/>
     <genClasses ecoreClass="Qsv.ecore#//Value">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//Value/val"/>
     </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//Boolean">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//Boolean/bol"/>
-    </genClasses>
-    <genClasses ecoreClass="Qsv.ecore#//Empty">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//Empty/empty"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -19,9 +19,22 @@ class QsvPythonCompilerTests {
 	@Inject
 	ParseHelper<QuerySeparatedValues> parseHelper
 
+	def void assertASTNotNullAndNoErrors(QuerySeparatedValues qsv) {
+		Assertions.assertNotNull(qsv)
+		val errors = qsv.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+	}
+
+	def void assertPythonCompilesAndRuns(QuerySeparatedValues qsv, String expectedStdOut) {
+		val PythonCompiler cmpPython = new PythonCompiler(qsv)
+		val outputResult = cmpPython.compileAndRun
+		Assertions.assertEquals(expectedStdOut, outputResult.getOutput)
+		Assertions.assertEquals("", outputResult.getError)
+	}
+
 	@Test
 	def void printWithHeader() {
-		val result = parseHelper.parse('''
+		val parseTree = parseHelper.parse('''
 			using "foo1.csv" with column names: yes
 			print
 		''')
@@ -29,19 +42,13 @@ class QsvPythonCompilerTests {
 			   f1  f2  f3
 			0  v1  v2  v3
 		'''
-		Assertions.assertNotNull(result)
-		val errors = result.eResource.errors
-		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-
-		val PythonCompiler cmpPython = new PythonCompiler(result)
-		val outputResult = cmpPython.compileAndRun
-		Assertions.assertEquals(expectedResult, outputResult.getOutput)
-		Assertions.assertEquals("", outputResult.getError)
+		assertASTNotNullAndNoErrors(parseTree)
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
 
 	@Test
 	def void printWithoutHeader() {
-		val result = parseHelper.parse('''
+		val parseTree = parseHelper.parse('''
 			using "foo1.csv" with column names: no
 			print
 		''')
@@ -50,19 +57,14 @@ class QsvPythonCompilerTests {
 			0  f1  f2  f3
 			1  v1  v2  v3
 		'''
-		Assertions.assertNotNull(result)
-		val errors = result.eResource.errors
-		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		assertASTNotNullAndNoErrors(parseTree)
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
 
-		val PythonCompiler cmpPython = new PythonCompiler(result)
-		val outputResult = cmpPython.compileAndRun
-		Assertions.assertEquals(expectedResult, outputResult.getOutput)
-		Assertions.assertEquals("", outputResult.getError)
 	}
 
 	@Test
 	def void printAllLinesAndColumns() {
-		val result = parseHelper.parse('''
+		val parseTree = parseHelper.parse('''
 			using "foo2.csv" with column names: yes
 			print
 				:lines
@@ -73,19 +75,14 @@ class QsvPythonCompilerTests {
 			0  v1  v2  v3
 			1  v1  v7  v3
 		'''
-		Assertions.assertNotNull(result)
-		val errors = result.eResource.errors
-		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		assertASTNotNullAndNoErrors(parseTree)
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
 
-		val PythonCompiler cmpPython = new PythonCompiler(result)
-		val outputResult = cmpPython.compileAndRun
-		Assertions.assertEquals(expectedResult, outputResult.getOutput)
-		Assertions.assertEquals("", outputResult.getError)
 	}
 
 	@Test
 	def void printAllColumnsAndLines() {
-		val result = parseHelper.parse('''
+		val parseTree = parseHelper.parse('''
 			using "foo2.csv" with column names: yes
 			print
 				:columns
@@ -96,19 +93,13 @@ class QsvPythonCompilerTests {
 			0  v1  v2  v3
 			1  v1  v7  v3
 		'''
-		Assertions.assertNotNull(result)
-		val errors = result.eResource.errors
-		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-
-		val PythonCompiler cmpPython = new PythonCompiler(result)
-		val outputResult = cmpPython.compileAndRun
-		Assertions.assertEquals(expectedResult, outputResult.getOutput)
-		Assertions.assertEquals("", outputResult.getError)
+		assertASTNotNullAndNoErrors(parseTree)
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
 
 	@Test
 	def void printColumnsWithSingleSelection() {
-		val result = parseHelper.parse('''
+		val parseTree = parseHelper.parse('''
 			using "foo2.csv" with column names: yes
 			print
 				:columns f2
@@ -118,19 +109,13 @@ class QsvPythonCompilerTests {
 			0  v2
 			1  v7
 		'''
-		Assertions.assertNotNull(result)
-		val errors = result.eResource.errors
-		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-
-		val PythonCompiler cmpPython = new PythonCompiler(result)
-		val outputResult = cmpPython.compileAndRun
-		Assertions.assertEquals(expectedResult, outputResult.getOutput)
-		Assertions.assertEquals("", outputResult.getError)
+		assertASTNotNullAndNoErrors(parseTree)
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
 
 	@Test
 	def void printColumnsWithSingleSelectionAllLines() {
-		val result = parseHelper.parse('''
+		val parseTree = parseHelper.parse('''
 			using "foo2.csv" with column names: yes
 			print
 				:columns f2
@@ -141,19 +126,13 @@ class QsvPythonCompilerTests {
 			0  v2
 			1  v7
 		'''
-		Assertions.assertNotNull(result)
-		val errors = result.eResource.errors
-		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-
-		val PythonCompiler cmpPython = new PythonCompiler(result)
-		val outputResult = cmpPython.compileAndRun
-		Assertions.assertEquals(expectedResult, outputResult.getOutput)
-		Assertions.assertEquals("", outputResult.getError)
+		assertASTNotNullAndNoErrors(parseTree)
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
 
 	@Test
 	def void printColumnsWithMultipleSelectionKeepsOrder() {
-		val result = parseHelper.parse('''
+		val parseTree = parseHelper.parse('''
 			using "foo2.csv" with column names: yes
 			print
 				:columns f3, f1
@@ -163,13 +142,118 @@ class QsvPythonCompilerTests {
 			0  v3  v1
 			1  v3  v1
 		'''
-		Assertions.assertNotNull(result)
-		val errors = result.eResource.errors
-		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		assertASTNotNullAndNoErrors(parseTree)
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
 
-		val PythonCompiler cmpPython = new PythonCompiler(result)
-		val outputResult = cmpPython.compileAndRun
-		Assertions.assertEquals(expectedResult, outputResult.getOutput)
-		Assertions.assertEquals("", outputResult.getError)
+	@Test
+	def void printLinesWhereColumnsEqualsInt() {
+		val parseTree = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines col0 = 1
+		''')
+		val expectedResult = '''
+			   col0  col1
+			2     1     3
+			5     1    10
+		'''
+		assertASTNotNullAndNoErrors(parseTree)
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printLinesWhereColumnsIntegerComparison() {
+		// CompareEqual
+		val parseTreeEqual = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines col0 = 2
+		''')
+		val expectedResultEqual = '''
+			   col0  col1
+			1     2     7
+		'''
+		assertASTNotNullAndNoErrors(parseTreeEqual)
+		assertPythonCompilesAndRuns(parseTreeEqual, expectedResultEqual)
+
+		// CompareNotEqual
+		val parseTreeNotEqual = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines col0 != 5
+		''')
+		val expectedResultNotEqual = '''
+			   col0  col1
+			0     4     3
+			1     2     7
+			2     1     3
+			3     3     5
+			5     1    10
+		'''
+		assertASTNotNullAndNoErrors(parseTreeNotEqual)
+		assertPythonCompilesAndRuns(parseTreeNotEqual, expectedResultNotEqual)
+
+		// CompareLower
+		val parseTreeLower = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines col0 < 4
+		''')
+		val expectedResultLower = '''
+			   col0  col1
+			1     2     7
+			2     1     3
+			3     3     5
+			5     1    10
+		'''
+		assertASTNotNullAndNoErrors(parseTreeLower)
+		assertPythonCompilesAndRuns(parseTreeLower, expectedResultLower)
+
+		// CompareGreater
+		val parseTreeGreater = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines col1 > 3
+		''')
+		val expectedResultGreater = '''
+			   col0  col1
+			1     2     7
+			3     3     5
+			5     1    10
+		'''
+		assertASTNotNullAndNoErrors(parseTreeGreater)
+		assertPythonCompilesAndRuns(parseTreeGreater, expectedResultGreater)
+
+		// CompareLowerOrEqual
+		val parseTreeLowerOrEqual = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines col0 <= 3
+		''')
+		val expectedResultLowerOrEqual = '''
+			   col0  col1
+			1     2     7
+			2     1     3
+			3     3     5
+			5     1    10
+		'''
+		assertASTNotNullAndNoErrors(parseTreeLowerOrEqual)
+		assertPythonCompilesAndRuns(parseTreeLowerOrEqual, expectedResultLowerOrEqual)
+
+		// CompareGreaterOrEqual
+		val parseTreeGreaterOrEqual = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines col1 >= 5
+		''')
+		val expectedResultGreaterOrEqual = '''
+			   col0  col1
+			1     2     7
+			3     3     5
+			5     1    10
+		'''
+		assertASTNotNullAndNoErrors(parseTreeGreaterOrEqual)
+		assertPythonCompilesAndRuns(parseTreeGreaterOrEqual, expectedResultGreaterOrEqual)
 	}
 }

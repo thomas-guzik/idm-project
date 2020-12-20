@@ -14,6 +14,14 @@ import java.io.InputStreamReader
 class PythonCompiler {
 	QuerySeparatedValues qsv
 	String csvDataVariable
+	public static String NEWLINE = "\n"
+	public static String PRINT_FUNCTION_NAME = "printData"
+	String printIfNotEmptyFunction = '''def «PRINT_FUNCTION_NAME»(data):
+	    if data.empty:
+	        print()
+	    else:
+	        print(data)
+	    '''
 
 	new(QuerySeparatedValues q) {
 		qsv = q
@@ -29,6 +37,8 @@ class PythonCompiler {
 
 	private def String compile() {
 		var String pythonCode = ""
+		pythonCode += printIfNotEmptyFunction
+		pythonCode += NEWLINE
 		pythonCode += qsv.getHeader().compile()
 		for (Statement s : qsv.getStatements()) {
 			pythonCode += s.compile();
@@ -55,7 +65,6 @@ class PythonCompiler {
 		var code = printer.compile
 		return code
 	}
-
 
 	private def writeToFileAndExecute(String fileName, String pythonCode) {
 		// or shorter
