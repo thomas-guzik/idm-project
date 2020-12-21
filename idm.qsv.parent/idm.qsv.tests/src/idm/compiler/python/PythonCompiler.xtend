@@ -31,7 +31,6 @@ class PythonCompiler {
 		csvDataVariable = "my_data"
 		var pythonCode = compile()
 		var String PYTHON_OUTPUT = "foo.py"
-		println(pythonCode)
 		return writeToFileAndExecute(PYTHON_OUTPUT, pythonCode)
 	}
 

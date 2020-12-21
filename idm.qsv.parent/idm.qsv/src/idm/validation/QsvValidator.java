@@ -3,23 +3,41 @@
  */
 package idm.validation;
 
+import java.util.List;
+
+import org.eclipse.xtext.validation.Check;
+
+import idm.qsv.QsvPackage;
+import idm.qsv.QuerySeparatedValues;
+import idm.qsv.Statement;
 
 /**
- * This class contains custom validation rules. 
+ * This class contains custom validation rules.
  *
- * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
+ * See
+ * https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 public class QsvValidator extends AbstractQsvValidator {
-	
-//	public static final String INVALID_NAME = "invalidName";
-//
+
+	public static final String INVALID_NAME = "invalidName";
+
 //	@Check
-//	public void checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.getName().charAt(0))) {
-//			warning("Name should start with a capital",
-//					QsvPackage.Literals.GREETING__NAME,
-//					INVALID_NAME);
-//		}
+//	public void checkNamesUsedOnlyIfColumnsHaveNames(QuerySeparatedValues qsv) {
+//		boolean hasColumnNames = qsv.getHeader().isHasColumnName();
+//		List<Statement> statements = qsv.getStatements();
+//		
+//		
+//		boolean namesInPrint = false;
+//		warning("Name should start with a capital", QsvPackage.Literals.QUERY_SEPARATED_VALUES__HEADER, INVALID_NAME);
+//	}
+//	
+//	public void namesUsed(Statement statement) {
+//		
 //	}
 	
+	@Check
+	public void aa(QuerySeparatedValues qsv) {
+//		error("something", QsvPackage.Literals.QUERY_SEPARATED_VALUES__HEADER);
+	}
+
 }

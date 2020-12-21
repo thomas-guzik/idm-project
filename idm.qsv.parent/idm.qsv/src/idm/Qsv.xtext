@@ -8,6 +8,8 @@ QuerySeparatedValues:
 	statements += Statement*
 ;
 
+// TODO ? : check that column names are not used if with names = no
+
 Header:
 	'using' nameFile=STRING 'with' 'column' 'names:' (hasColumnName?='yes'|'no')
 ;
@@ -20,7 +22,7 @@ Print:
 	'print' selector=Selector
 ;
 
-Selector: // Region
+Selector:
 	columnSelection=Columns? & lineSelection=Lines?
 ;
 
@@ -33,11 +35,11 @@ Column:
 ;
 
 ColumnNames:
-	ids += ID (',' ids += ID)*
+	names += ColumnName (',' names += ColumnName)*
 ;
 
 ColumnNumbers:
-	numbers += INT (',' numbers += INT)*
+	numbers += ColumnNumber (',' numbers += ColumnNumber)*
 ;
 
 Lines:
@@ -66,7 +68,7 @@ HighestPriority:
 ;
 
 BinCond:
-	colId=ID operator=OpComp (compStr=STRING | compId=ID | compValue=SignedInt)
+	columnId=ColumnIdentifier operator=OpComp compValue=Value
 ;
 
 OpComp:
@@ -98,11 +100,19 @@ CompareGreaterOrEqual:
 ;
 
 Value:
-	val = INT | STRING | Boolean 
+	IntegerValue | StringValue | BooleanValue 
 ;
 
-Boolean:
-	bol = 'yes'|'no'
+IntegerValue:
+	value = SignedInt
+;
+
+StringValue:
+	value = STRING
+;
+
+BooleanValue:
+	truthy?='yes' | {BooleanValue} 'no'
 ;
 
 Delete:
@@ -113,7 +123,12 @@ Insert:
 	'insert'
 ;
 
-SignedInt returns ecore::EInt: '-'? INT;
+ColumnIdentifier:
+	ColumnNumber | ColumnName
+;
 
+SignedInt returns ecore::EInt: '-'? INT;
+ColumnNumber returns ecore::EString: '#' INT;
+ColumnName returns ecore::EString: ID;
 
 

@@ -14,12 +14,14 @@ import idm.qsv.CompareLowerOrEqual
 import idm.qsv.CompareNotEqual
 import idm.qsv.Condition
 import idm.qsv.HighestPriority
+import idm.qsv.IntegerValue
 import idm.qsv.Lines
 import idm.qsv.MidPriority
 import idm.qsv.OpComp
 import idm.qsv.Print
-import java.util.ArrayList
-import java.util.stream.Collectors
+import idm.qsv.StringValue
+import idm.qsv.Value
+import java.util.List
 
 class PrintAction implements Action {
 	Print print
@@ -50,7 +52,7 @@ class PrintAction implements Action {
 
 	private def String select(Columns selection) {
 		code += '''«csvDataVariable» = «csvDataVariable»[['''
-		var columnNames = selection.columns.getNames().stream().map([name|'''"«name»"''']).collect(Collectors.toList)
+		var columnNames = selection.columns.getPythonNames()
 		code += columnNames.join(',')
 		code += "]]\n"
 		code += PythonCompiler.NEWLINE
@@ -97,9 +99,9 @@ class PrintAction implements Action {
 		var nestedCondition = high.nestedCondition
 		if (baseCondition !== null) {
 			var filter = createNewFilterName()
-			var String column = baseCondition.colId
+			var String column = baseCondition.columnId
 			var String operator = baseCondition.operator.pythonOperator
-			var Integer value = baseCondition.compValue
+			var String value = baseCondition.compValue.pythonValue
 			code += '''«filter» = «csvDataVariable»["«column»"] «operator» «value»'''
 			code += PythonCompiler.NEWLINE
 			return filter
@@ -114,6 +116,18 @@ class PrintAction implements Action {
 		return "filter" + filterCount++
 	}
 
+	private def dispatch String getPythonValue(Value value) {
+		throw new MissingConcreteImplementationException("Value")
+	}
+	
+	private def dispatch String getPythonValue(IntegerValue integer) {
+		return integer.value + ""
+	}
+	
+	private def dispatch String getPythonValue(StringValue string) {
+		return '''"«string.value»"'''
+	}
+	
 	private def dispatch String getPythonOperator(OpComp operator) {
 		throw new MissingConcreteImplementationException("OpComp")
 	}
@@ -142,16 +156,16 @@ class PrintAction implements Action {
 		return ">="
 	}
 
-	private def dispatch getNames(Column column) {
+	private def dispatch List<String> getPythonNames(Column column) {
 		throw new MissingConcreteImplementationException("Column")
 	}
 
-	private def dispatch getNames(ColumnNames names) {
-		return names.ids.toList
+	private def dispatch List<String>getPythonNames(ColumnNames names) {
+		return names.names.toList.map[n | '''"«n»"''']
 	}
 
-	private def dispatch getNames(ColumnNumbers numbers) {
-		return new ArrayList<String>()
+	private def dispatch List<String> getPythonNames(ColumnNumbers numbers) {
+		return numbers.numbers.toList.map[n | n.replaceAll("[^0-9.]", "")]
 	}
 
 }
