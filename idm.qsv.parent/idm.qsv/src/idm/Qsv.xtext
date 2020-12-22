@@ -15,11 +15,15 @@ Header:
 ;
 
 Statement:
-	Print
+	Print | Delete
 ;
 
 Print:
 	'print' selector=Selector
+;
+
+Delete:
+	'delete' selector=Selector
 ;
 
 Selector:
@@ -113,10 +117,6 @@ StringValue:
 
 BooleanValue:
 	truthy?='yes' | {BooleanValue} 'no'
-;
-
-Delete:
-	'delete'
 ;
 
 Insert:

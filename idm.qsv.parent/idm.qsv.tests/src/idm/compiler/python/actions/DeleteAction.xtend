@@ -3,42 +3,45 @@ package idm.compiler.python.actions
 import idm.compiler.python.PythonCompiler
 import idm.qsv.Columns
 import idm.qsv.Condition
+import idm.qsv.Delete
 import idm.qsv.Lines
-import idm.qsv.Print
 import idm.compiler.python.LineFilters
 import idm.compiler.python.ConcreteValues
 
-class PrintAction implements Action {
-	Print print
+class DeleteAction implements Action {
+	Delete delete
 	String csvDataVariable
 	String code
+	boolean deleteAll
 	static Integer filterCount = 0
 
 	extension LineFilters lineFiltering
 	extension ConcreteValues pythonValues
-	extension PythonCompiler
 
-	new(Print p, String dataVariable) {
-		print = p
+	new(Delete d, String dataVariable) {
+		delete = d
 		csvDataVariable = dataVariable
 		lineFiltering = new LineFilters(csvDataVariable)
 		pythonValues = new ConcreteValues
-
 	}
 
 	override String compile() {
 		code = ""
-		if (print.selector !== null) {
-			val Lines lineSelection = print.selector.lineSelection
+		deleteAll = true
+		if (delete.selector !== null) {
+			val Lines lineSelection = delete.selector.lineSelection
 			if (lineSelection !== null) {
 				code += lineSelection.select()
 			}
-			val Columns columnSelection = print.selector.columnSelection
-			if (columnSelection !== null) {
-				code += columnSelection.select()
-			}
+//			val Columns columnSelection = delete.selector.columnSelection
+//			if (columnSelection !== null) {
+//				code += columnSelection.select()
+//			}
 		}
-		code += '''«PythonCompiler.PRINT_FUNCTION_NAME»(«csvDataVariable»)'''
+		if (deleteAll) {
+			code += '''«csvDataVariable» = «csvDataVariable»[0:0]'''
+		}
+		code += PythonCompiler.NEWLINE
 		return code
 	}
 
@@ -54,9 +57,10 @@ class PrintAction implements Action {
 	private def select(Lines selection) {
 		var Condition condition = selection.cond
 		if (condition !== null) {
+			deleteAll = false
 			var filter = PythonCompiler.newFilterName
 			code += condition.createFilter(filter)
-			code += '''«csvDataVariable» = «csvDataVariable»[«filter»]'''
+			code += '''«csvDataVariable» = «csvDataVariable».drop(«csvDataVariable»[«filter»].index)'''
 			code += PythonCompiler.NEWLINE
 		}
 	}

@@ -10,12 +10,15 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
+import idm.qsv.Delete
+import idm.compiler.python.actions.DeleteAction
 
 class PythonCompiler {
 	QuerySeparatedValues qsv
 	String csvDataVariable
 	public static String NEWLINE = "\n"
 	public static String PRINT_FUNCTION_NAME = "printData"
+	static Integer filterCount = 0
 	String printIfNotEmptyFunction = '''def «PRINT_FUNCTION_NAME»(data):
 	    if data.empty:
 	        print()
@@ -30,6 +33,7 @@ class PythonCompiler {
 	def PythonCompilerOutput compileAndRun() throws IOException {
 		csvDataVariable = "my_data"
 		var pythonCode = compile()
+		println(pythonCode)
 		var String PYTHON_OUTPUT = "foo.py"
 		return writeToFileAndExecute(PYTHON_OUTPUT, pythonCode)
 	}
@@ -64,6 +68,20 @@ class PythonCompiler {
 		var printer = new PrintAction(print, csvDataVariable)
 		var code = printer.compile
 		return code
+	}
+
+	private def dispatch compile(Delete delete) {
+		var deleter = new DeleteAction(delete, csvDataVariable)
+		var code = deleter.compile
+		return code
+	}
+
+	static def getNewFilterName() {
+		return "filter" + filterCount++
+	}
+	
+	static def String blabla() {
+		return ""
 	}
 
 	private def writeToFileAndExecute(String fileName, String pythonCode) {

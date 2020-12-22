@@ -14,10 +14,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//Header/nameFile"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//Header/hasColumnName"/>
     </genClasses>
-    <genClasses ecoreClass="Qsv.ecore#//Statement"/>
-    <genClasses ecoreClass="Qsv.ecore#//Print">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Print/selector"/>
+    <genClasses ecoreClass="Qsv.ecore#//Statement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Statement/selector"/>
     </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//Print"/>
+    <genClasses ecoreClass="Qsv.ecore#//Delete"/>
     <genClasses ecoreClass="Qsv.ecore#//Selector">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Selector/columnSelection"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Selector/lineSelection"/>
