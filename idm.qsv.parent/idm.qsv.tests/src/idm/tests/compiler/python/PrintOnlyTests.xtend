@@ -208,6 +208,23 @@ class PrintOnlyTests {
 	}
 
 	@Test
+	def void printLinesWhereColumnsEqualIntNoHeaders() {
+		val parseTree = parseHelper.parse('''
+			using "foo_numbers_noheaders.csv" with column names: no
+			print
+				:lines #0 = 5
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+			   0  1
+			4  5  1
+			6  5  1
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
 	def void printLinesWhereColumnsEqualString() {
 		val parseTree = parseHelper.parse('''
 			using "foo2.csv" with column names: yes

@@ -58,7 +58,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//HighestPriority/nestedCondition"/>
     </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//BinCond">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//BinCond/columnId"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//BinCond/columnId"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//BinCond/operator"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//BinCond/compValue"/>
     </genClasses>
@@ -79,5 +79,10 @@
     <genClasses ecoreClass="Qsv.ecore#//BooleanValue">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//BooleanValue/truthy"/>
     </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//ColumnIdentifier">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//ColumnIdentifier/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//ColumnNumberIdentifier"/>
+    <genClasses ecoreClass="Qsv.ecore#//ColumnNameIdentifier"/>
   </genPackages>
 </genmodel:GenModel>

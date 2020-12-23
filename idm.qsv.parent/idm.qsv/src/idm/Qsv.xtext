@@ -124,7 +124,15 @@ Insert:
 ;
 
 ColumnIdentifier:
-	ColumnNumber | ColumnName
+	ColumnNumberIdentifier | ColumnNameIdentifier
+;
+
+ColumnNumberIdentifier:
+	value = ColumnNumber
+;
+
+ColumnNameIdentifier:
+	value = ColumnName
 ;
 
 SignedInt returns ecore::EInt: '-'? INT;

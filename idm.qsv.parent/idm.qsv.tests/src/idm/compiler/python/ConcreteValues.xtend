@@ -1,7 +1,10 @@
 package idm.compiler.python
 
 import idm.qsv.Column
+import idm.qsv.ColumnIdentifier
+import idm.qsv.ColumnNameIdentifier
 import idm.qsv.ColumnNames
+import idm.qsv.ColumnNumberIdentifier
 import idm.qsv.ColumnNumbers
 import idm.qsv.CompareEqual
 import idm.qsv.CompareGreater
@@ -16,6 +19,19 @@ import idm.qsv.Value
 import java.util.List
 
 class ConcreteValues {
+
+	def dispatch String getPythonColumn(ColumnIdentifier id) {
+		throw new MissingConcreteImplementationException("ColumnIdentifier")
+	}
+	
+	def dispatch String getPythonColumn(ColumnNameIdentifier id) {
+		return '''"«id.value»"'''
+	}
+	
+	def dispatch String getPythonColumn(ColumnNumberIdentifier id) {
+		return id.value.replaceAll("[^0-9.]", "")
+	}
+
 	def dispatch String getPythonValue(Value value) {
 		throw new MissingConcreteImplementationException("Value")
 	}

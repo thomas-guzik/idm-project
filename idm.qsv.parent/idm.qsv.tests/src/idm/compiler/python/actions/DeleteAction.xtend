@@ -13,7 +13,6 @@ class DeleteAction implements Action {
 	String csvDataVariable
 	String code
 	boolean deleteAll
-	static Integer filterCount = 0
 
 	extension LineFilters lineFiltering
 	extension ConcreteValues pythonValues

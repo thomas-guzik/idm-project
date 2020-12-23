@@ -45,8 +45,8 @@ class DeleteTests {
 		Assertions.assertEquals("", result.output.strip)
 		Assertions.assertEquals("", result.getError)
 	}
-	
-		@Test
+
+	@Test
 	def void deleteLinesWhereIntCondition() {
 		val parseTree = parseHelper.parse('''
 			using "foo_numbers.csv" with column names: yes
@@ -61,6 +61,41 @@ class DeleteTests {
 			1     2     7
 			3     3     5
 			5     1    10
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void deleteLinesWhereStringCondition() {
+		val parseTree = parseHelper.parse('''
+			using "foo2.csv" with column names: yes
+			delete
+				:lines f2 = "v2"
+			print
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+			   f1  f2  f3
+			1  v1  v7  v3
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+	
+		@Test
+	def void deleteLinesWhereStringConditionNoColumnNames() {
+		val parseTree = parseHelper.parse('''
+			using "foo2.csv" with column names: no
+			delete
+				:lines #1 = "v2"
+			print
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+			    0   1   2
+			0  f1  f2  f3
+			2  v1  v7  v3
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}

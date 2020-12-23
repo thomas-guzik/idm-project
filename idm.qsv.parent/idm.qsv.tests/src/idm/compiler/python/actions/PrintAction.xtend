@@ -12,11 +12,9 @@ class PrintAction implements Action {
 	Print print
 	String csvDataVariable
 	String code
-	static Integer filterCount = 0
 
 	extension LineFilters lineFiltering
 	extension ConcreteValues pythonValues
-	extension PythonCompiler
 
 	new(Print p, String dataVariable) {
 		print = p

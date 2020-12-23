@@ -56,10 +56,10 @@ class LineFilters {
 		var nestedCondition = high.nestedCondition
 		if (baseCondition !== null) {
 			var filter = createNewFilterName()
-			var String column = baseCondition.columnId
+			var String column = baseCondition.columnId.pythonColumn
 			var String operator = baseCondition.operator.pythonOperator
 			var String value = baseCondition.compValue.pythonValue
-			code += '''«filter» = «csvDataVariable»["«column»"] «operator» «value»'''
+			code += '''«filter» = «csvDataVariable»[«column»] «operator» «value»'''
 			code += PythonCompiler.NEWLINE
 			return filter
 		}
