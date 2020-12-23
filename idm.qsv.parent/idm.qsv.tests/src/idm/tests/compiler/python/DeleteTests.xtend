@@ -81,8 +81,8 @@ class DeleteTests {
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
-	
-		@Test
+
+	@Test
 	def void deleteLinesWhereStringConditionNoColumnNames() {
 		val parseTree = parseHelper.parse('''
 			using "foo2.csv" with column names: no
@@ -96,6 +96,80 @@ class DeleteTests {
 			    0   1   2
 			0  f1  f2  f3
 			2  v1  v7  v3
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void deleteOneColumn() {
+		val parseTree = parseHelper.parse('''
+			using "foo2.csv" with column names: yes
+			delete
+				:columns f2
+			print
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+			   f1  f3
+			0  v1  v3
+			1  v1  v3
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void deleteTwoColumns() {
+		val parseTree = parseHelper.parse('''
+			using "foo2.csv" with column names: yes
+			delete
+				:columns f3, f1
+			print
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+			   f2
+			0  v2
+			1  v7
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void deleteOneColumnNoHeader() {
+		val parseTree = parseHelper.parse('''
+			using "foo2.csv" with column names: no
+			delete
+				:columns #1
+			print
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+			    0   2
+			0  f1  f3
+			1  v1  v3
+			2  v1  v3
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void deleteTwoColumnsNoHeader() {
+		val parseTree = parseHelper.parse('''
+			using "foo2.csv" with column names: no
+			delete
+				:columns #2, #0
+			print
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+			    1
+			0  f2
+			1  v2
+			2  v7
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}

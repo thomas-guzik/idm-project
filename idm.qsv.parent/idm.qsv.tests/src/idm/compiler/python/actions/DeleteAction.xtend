@@ -32,10 +32,10 @@ class DeleteAction implements Action {
 			if (lineSelection !== null) {
 				code += lineSelection.select()
 			}
-//			val Columns columnSelection = delete.selector.columnSelection
-//			if (columnSelection !== null) {
-//				code += columnSelection.select()
-//			}
+			val Columns columnSelection = delete.selector.columnSelection
+			if (columnSelection !== null) {
+				code += columnSelection.select()
+			}
 		}
 		if (deleteAll) {
 			code += '''«csvDataVariable» = «csvDataVariable»[0:0]'''
@@ -45,10 +45,11 @@ class DeleteAction implements Action {
 	}
 
 	private def String select(Columns selection) {
-		code += '''«csvDataVariable» = «csvDataVariable»[['''
+		deleteAll = false
+		code += '''«csvDataVariable» = «csvDataVariable».drop(['''
 		var columnNames = selection.columns.getPythonNames()
 		code += columnNames.join(',')
-		code += "]]\n"
+		code += "], axis='columns')"
 		code += PythonCompiler.NEWLINE
 		return code
 	}
