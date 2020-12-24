@@ -14,11 +14,16 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//Header/nameFile"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//Header/hasColumnName"/>
     </genClasses>
-    <genClasses ecoreClass="Qsv.ecore#//Statement">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Statement/selector"/>
+    <genClasses ecoreClass="Qsv.ecore#//Statement"/>
+    <genClasses ecoreClass="Qsv.ecore#//Print">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Print/selector"/>
     </genClasses>
-    <genClasses ecoreClass="Qsv.ecore#//Print"/>
-    <genClasses ecoreClass="Qsv.ecore#//Delete"/>
+    <genClasses ecoreClass="Qsv.ecore#//Delete">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Delete/selector"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//Insert">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Insert/inserted"/>
+    </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//Selector">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Selector/columnSelection"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Selector/lineSelection"/>
@@ -44,6 +49,17 @@
     </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//Line">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//Line/number"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//Insertion"/>
+    <genClasses ecoreClass="Qsv.ecore#//LineInsertion">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//LineInsertion/rows"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//ContentList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//ContentList/values"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//ColumnInsertion">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//ColumnInsertion/columnName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//ColumnInsertion/content"/>
     </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//Condition">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Condition/mid"/>

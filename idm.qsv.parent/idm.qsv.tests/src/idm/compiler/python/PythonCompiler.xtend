@@ -1,8 +1,12 @@
 package idm.compiler.python
 
 import com.google.common.io.Files
+import idm.compiler.python.actions.DeleteAction
+import idm.compiler.python.actions.InsertAction
 import idm.compiler.python.actions.PrintAction
+import idm.qsv.Delete
 import idm.qsv.Header
+import idm.qsv.Insert
 import idm.qsv.Print
 import idm.qsv.QuerySeparatedValues
 import idm.qsv.Statement
@@ -10,8 +14,6 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
-import idm.qsv.Delete
-import idm.compiler.python.actions.DeleteAction
 
 class PythonCompiler {
 	QuerySeparatedValues qsv
@@ -76,10 +78,16 @@ class PythonCompiler {
 		return code
 	}
 
+	private def dispatch compile(Insert delete) {
+		var inserter = new InsertAction(delete, csvDataVariable)
+		var code = inserter.compile
+		return code
+	}
+
 	static def getNewFilterName() {
 		return "filter" + filterCount++
 	}
-	
+
 	static def String blabla() {
 		return ""
 	}
@@ -98,7 +106,6 @@ class PythonCompiler {
 		var String output = ""
 		while ((o = stdInput.readLine()) !== null) {
 			output += o + "\n"
-//			System.out.println(o)
 		}
 		var String err
 		var String error = ""

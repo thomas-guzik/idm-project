@@ -11,12 +11,19 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nameFile" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hasColumnName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Statement">
+  <eClassifiers xsi:type="ecore:EClass" name="Statement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Print" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="selector" eType="#//Selector"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Print" eSuperTypes="#//Statement"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Delete" eSuperTypes="#//Statement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Delete" eSuperTypes="#//Statement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="selector" eType="#//Selector"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Insert" eSuperTypes="#//Statement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inserted" eType="#//Insertion"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Selector">
     <eStructuralFeatures xsi:type="ecore:EReference" name="columnSelection" eType="#//Columns"
         containment="true"/>
@@ -49,6 +56,21 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Line">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="number" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Insertion"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LineInsertion" eSuperTypes="#//Insertion">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rows" upperBound="-1" eType="#//ContentList"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ContentList">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
+        eType="#//Value" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ColumnInsertion" eSuperTypes="#//Insertion">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="columnName" eType="#//ColumnNameIdentifier"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="content" eType="#//ContentList"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Condition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="mid" eType="#//MidPriority"

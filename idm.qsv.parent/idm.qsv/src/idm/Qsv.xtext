@@ -68,7 +68,7 @@ Insertion:
 ;
 
 LineInsertion:
-	':line' rows+=ContentList (',' rows+=ContentList)*
+	':lines' rows+=ContentList (',' rows+=ContentList)*
 ;
 
 ContentList:

@@ -5,9 +5,6 @@ def printData(data):
 	    else:
 	        print(data)
 
-my_data = pd.read_csv("foo_numbers.csv", header='infer')
-filter11 = my_data["col1"] < 5
-filter10 = filter11
-my_data = my_data.drop(my_data[filter10].index)
-
+my_data = pd.read_csv("foo_mix_int_str.csv", header='infer')
+my_data.insert(loc=len(my_data.columns), column="ef", value=["ar", "zt"])
 printData(my_data)
