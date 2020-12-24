@@ -8,14 +8,15 @@ QuerySeparatedValues:
 	statements += Statement*
 ;
 
-// TODO ? : check that column names are not used if with names = no
+// TODO ? : check that column names are not used in selections if with names = no
+// TODO ? : same for column insertion
 
 Header:
 	'using' nameFile=STRING 'with' 'column' 'names:' (hasColumnName?='yes'|'no')
 ;
 
 Statement:
-	Print | Delete
+	Print | Insert | Delete
 ;
 
 Print:
@@ -24,6 +25,10 @@ Print:
 
 Delete:
 	'delete' selector=Selector
+;
+
+Insert:
+	'insert' inserted=Insertion
 ;
 
 Selector:
@@ -56,6 +61,22 @@ LineRange:
 
 Line:
 	'#' number=INT
+;
+
+Insertion:
+	LineInsertion | ColumnInsertion
+;
+
+LineInsertion:
+	':line' rows+=ContentList (',' rows+=ContentList)*
+;
+
+ContentList:
+	'(' values+=Value (',' values+=Value)* ')'
+;
+
+ColumnInsertion:
+	':column' (columnName=ColumnNameIdentifier)? content=ContentList
 ;
 
 Condition:
@@ -117,10 +138,6 @@ StringValue:
 
 BooleanValue:
 	truthy?='yes' | {BooleanValue} 'no'
-;
-
-Insert:
-	'insert'
 ;
 
 ColumnIdentifier:
