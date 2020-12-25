@@ -3,6 +3,7 @@ package idm.compiler.python.actions
 import idm.compiler.python.ConcreteValues
 import idm.compiler.python.MissingConcreteImplementationException
 import idm.compiler.python.PythonCompiler
+import idm.qsv.ColumnDescription
 import idm.qsv.ColumnInsertion
 import idm.qsv.ContentList
 import idm.qsv.Insert
@@ -44,15 +45,18 @@ class InsertAction implements Action {
 	}
 
 	private def dispatch insert(ColumnInsertion columnInsertion) {
-		val columnName = columnInsertion.columnName.value
-		val content = '''[«columnInsertion.content.pythonRowContent»]'''
-		code +=
-			'''«csvDataVariable».insert(loc=len(«csvDataVariable».columns), column="«columnName»", value=«content»)'''
-		code += PythonCompiler.NEWLINE
-	}
-
-	private def getPythonRowContent(ContentList contentList) {
-		return contentList.values.map[v|v.pythonValue].reduce[v1, v2|'''«v1», «v2»''']
+		for (ColumnDescription description : columnInsertion.descriptions) {
+			val hasColumnName = description.columnName !== null
+			val content = '''[«description.content.pythonRowContent»]'''
+			if (hasColumnName) {
+				val columnName = description.columnName.value
+				code +=
+					'''«csvDataVariable».insert(loc=len(«csvDataVariable».columns), column="«columnName»", value=«content»)'''
+			} else {
+				code += '''«csvDataVariable»[len(«csvDataVariable».columns)] = «content»'''
+			}
+			code += PythonCompiler.NEWLINE
+		}
 	}
 
 }

@@ -58,8 +58,11 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//ContentList/values"/>
     </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//ColumnInsertion">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//ColumnInsertion/columnName"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//ColumnInsertion/content"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//ColumnInsertion/descriptions"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//ColumnDescription">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//ColumnDescription/columnName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//ColumnDescription/content"/>
     </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//Condition">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Condition/mid"/>

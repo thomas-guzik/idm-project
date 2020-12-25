@@ -136,13 +136,13 @@ class InsertTests {
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
-	
-		@Test
+
+	@Test
 	def void insertColumnAllString() {
 		val parseTree = parseHelper.parse('''
 			using "foo_mix_int_str.csv" with column names: yes
 			insert
-				:column ef ("ar", "zt")
+				:columns ef ("ar", "zt")
 			print
 		''')
 		parseTree.assertNoErrors
@@ -151,6 +151,106 @@ class InsertTests {
 			   f1  f2  f3  ef
 			0  v1   2  v3  ar
 			1  v6   7  v4  zt
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void insertThreeColumnsAllString() {
+		val parseTree = parseHelper.parse('''
+			using "foo_mix_int_str.csv" with column names: yes
+			insert
+				:columns ef ("ar", "zt"), th ("gb", "hn"), il ("ol", "pm")
+			print
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+			   f1  f2  f3  ef  th  il
+			0  v1   2  v3  ar  gb  ol
+			1  v6   7  v4  zt  hn  pm
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void insertColumnAllInt() {
+		val parseTree = parseHelper.parse('''
+			using "foo_mix_int_str.csv" with column names: yes
+			insert
+				:columns ef (8, 6)
+			print
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+			   f1  f2  f3  ef
+			0  v1   2  v3   8
+			1  v6   7  v4   6
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void insertColumnAllIntNoHeaders() {
+		val parseTree = parseHelper.parse('''
+			using "foo_numbers_noheaders.csv" with column names: no
+			insert
+				:columns (7, 6, 5, 4, 3, 2, 1)
+			print
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+			   0   1  2
+			0  4   3  7
+			1  2   7  6
+			2  1   3  5
+			3  3   5  4
+			4  5   1  3
+			5  1  10  2
+			6  5   1  1
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void insertTwoColumnsAllIntNoHeaders() {
+		val parseTree = parseHelper.parse('''
+			using "foo_numbers_noheaders.csv" with column names: no
+			insert
+				:columns (7, 6, 5, 4, 3, 2, 1), (6, 8, 1, 3, 5, 7, 9)
+			print
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+			   0   1  2  3
+			0  4   3  7  6
+			1  2   7  6  8
+			2  1   3  5  1
+			3  3   5  4  3
+			4  5   1  3  5
+			5  1  10  2  7
+			6  5   1  1  9
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void insertColumnMixIntString() {
+		val parseTree = parseHelper.parse('''
+			using "foo_mix_int_str.csv" with column names: yes
+			insert
+				:columns ef (8, "e")
+			print
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+			   f1  f2  f3 ef
+			0  v1   2  v3  8
+			1  v6   7  v4  e
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}

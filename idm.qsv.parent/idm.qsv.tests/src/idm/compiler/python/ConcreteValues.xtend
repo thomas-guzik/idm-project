@@ -12,6 +12,7 @@ import idm.qsv.CompareGreaterOrEqual
 import idm.qsv.CompareLower
 import idm.qsv.CompareLowerOrEqual
 import idm.qsv.CompareNotEqual
+import idm.qsv.ContentList
 import idm.qsv.IntegerValue
 import idm.qsv.OpComp
 import idm.qsv.StringValue
@@ -23,11 +24,11 @@ class ConcreteValues {
 	def dispatch String getPythonColumn(ColumnIdentifier id) {
 		throw new MissingConcreteImplementationException("ColumnIdentifier")
 	}
-	
+
 	def dispatch String getPythonColumn(ColumnNameIdentifier id) {
 		return '''"«id.value»"'''
 	}
-	
+
 	def dispatch String getPythonColumn(ColumnNumberIdentifier id) {
 		return id.value.replaceAll("[^0-9.]", "")
 	}
@@ -82,5 +83,9 @@ class ConcreteValues {
 
 	def dispatch List<String> getPythonNames(ColumnNumbers numbers) {
 		return numbers.numbers.toList.map[n|n.replaceAll("[^0-9.]", "")]
+	}
+
+	def getPythonRowContent(ContentList contentList) {
+		return contentList.values.map[v|v.pythonValue].reduce[v1, v2|'''«v1», «v2»''']
 	}
 }

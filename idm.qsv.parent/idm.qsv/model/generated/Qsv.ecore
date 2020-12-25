@@ -67,6 +67,10 @@
         eType="#//Value" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ColumnInsertion" eSuperTypes="#//Insertion">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="descriptions" upperBound="-1"
+        eType="#//ColumnDescription" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ColumnDescription">
     <eStructuralFeatures xsi:type="ecore:EReference" name="columnName" eType="#//ColumnNameIdentifier"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="content" eType="#//ContentList"

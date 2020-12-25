@@ -76,7 +76,11 @@ ContentList:
 ;
 
 ColumnInsertion:
-	':column' (columnName=ColumnNameIdentifier)? content=ContentList
+	':columns' descriptions+=ColumnDescription (',' descriptions+=ColumnDescription)*
+;
+
+ColumnDescription:
+	(columnName=ColumnNameIdentifier)? content=ContentList
 ;
 
 Condition:
