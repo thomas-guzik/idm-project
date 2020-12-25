@@ -5,7 +5,7 @@ def printData(data):
 	    else:
 	        print(data)
 
-my_data = pd.read_csv("foo2.csv", header=None)
-
-my_data = my_data.append(dict(zip(my_data.columns,["v4", "v1", "v0"])), ignore_index=True)
+my_data = pd.read_csv("foo2.csv", header='infer')
+my_data["f2"] = "v8"
+my_data["f1"] = "v8"
 printData(my_data)

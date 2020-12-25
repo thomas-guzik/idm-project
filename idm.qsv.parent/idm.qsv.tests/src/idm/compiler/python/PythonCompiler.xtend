@@ -4,12 +4,14 @@ import com.google.common.io.Files
 import idm.compiler.python.actions.DeleteAction
 import idm.compiler.python.actions.InsertAction
 import idm.compiler.python.actions.PrintAction
+import idm.compiler.python.actions.UpdateAction
 import idm.qsv.Delete
 import idm.qsv.Header
 import idm.qsv.Insert
 import idm.qsv.Print
 import idm.qsv.QuerySeparatedValues
 import idm.qsv.Statement
+import idm.qsv.Update
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
@@ -81,6 +83,12 @@ class PythonCompiler {
 	private def dispatch compile(Insert delete) {
 		var inserter = new InsertAction(delete, csvDataVariable)
 		var code = inserter.compile
+		return code
+	}
+	
+		private def dispatch compile(Update update) {
+		var updater = new UpdateAction(update, csvDataVariable)
+		var code = updater.compile
 		return code
 	}
 

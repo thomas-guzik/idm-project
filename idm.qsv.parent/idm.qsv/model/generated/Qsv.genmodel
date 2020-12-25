@@ -24,6 +24,11 @@
     <genClasses ecoreClass="Qsv.ecore#//Insert">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Insert/inserted"/>
     </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//Update">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Update/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Update/columns"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Update/cond"/>
+    </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//Selector">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Selector/columnSelection"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Selector/lineSelection"/>

@@ -16,7 +16,7 @@ Header:
 ;
 
 Statement:
-	Print | Insert | Delete
+	Print | Insert | Delete | Update
 ;
 
 Print:
@@ -29,6 +29,13 @@ Delete:
 
 Insert:
 	'insert' inserted=Insertion
+;
+
+Update:
+	'update' 
+		':set' value=Value
+		':columns' columns=Column
+		(':lines' cond=Condition)?
 ;
 
 Selector:

@@ -24,6 +24,14 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="inserted" eType="#//Insertion"
         containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Update" eSuperTypes="#//Statement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Value"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="columns" eType="#//Column"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cond" eType="#//Condition"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Selector">
     <eStructuralFeatures xsi:type="ecore:EReference" name="columnSelection" eType="#//Columns"
         containment="true"/>
