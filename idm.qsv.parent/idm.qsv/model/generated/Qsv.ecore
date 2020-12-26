@@ -32,6 +32,21 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="cond" eType="#//Condition"
         containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Compute" eSuperTypes="#//Statement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="#//VariableIdentifier"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="function" eType="#//Function"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Function"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SumLines" eSuperTypes="#//Function">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="column" eType="#//ColumnIdentifier"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Echo" eSuperTypes="#//Statement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="#//VariableIdentifier"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Selector">
     <eStructuralFeatures xsi:type="ecore:EReference" name="columnSelection" eType="#//Columns"
         containment="true"/>
@@ -132,4 +147,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ColumnNumberIdentifier" eSuperTypes="#//ColumnIdentifier"/>
   <eClassifiers xsi:type="ecore:EClass" name="ColumnNameIdentifier" eSuperTypes="#//ColumnIdentifier"/>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableIdentifier">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
 </ecore:EPackage>

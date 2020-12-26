@@ -17,6 +17,7 @@ import idm.qsv.IntegerValue
 import idm.qsv.OpComp
 import idm.qsv.StringValue
 import idm.qsv.Value
+import idm.qsv.VariableIdentifier
 import java.util.List
 
 class ConcreteValues {
@@ -31,6 +32,10 @@ class ConcreteValues {
 
 	def dispatch String getPythonColumn(ColumnNumberIdentifier id) {
 		return id.value.replaceAll("[^0-9.]", "")
+	}
+
+	def dispatch String getPythonValue(VariableIdentifier id) {
+		return id.value.substring(1)
 	}
 
 	def dispatch String getPythonValue(Value value) {

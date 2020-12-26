@@ -85,6 +85,24 @@ variable `sommeHabitants`
 compute $sommeHabitants
     :sum nb_habitants
 ```
+```
+compute $sommeHabitants
+    :sumLines nb_habitants
+```
+^ sum lines of the column (returns int)
+
+```
+compute $sommeHabitantsEtChats
+    :sumLines nb_habitants, nb_chats
+```
+^ sum lines of each column (returns line int, int)
+
+```
+compute $sommeHabitantsEtChatsParPays
+    :sumColumns nb_habitants, nb_chats
+```
+^ sum for each line, values of these columns (returns column)
+
 (On pourra imaginer n'importe quoi comme fonction au lieu de sum)
 
 Pour afficher la valeur de la variable
@@ -125,7 +143,7 @@ Supprimer les lignes dont le nombre d'habitants est inférieur à 10
 ```
 delete
     :lines nb_habitants < 10
-``` 
+```
 (je sais pas ce qu'on peut imaginer si on utilise à la fois `:lines` et
 :`columns` pour `delete`)
 

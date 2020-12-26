@@ -1,11 +1,15 @@
 package idm.compiler.python
 
 import com.google.common.io.Files
+import idm.compiler.python.actions.ComputeAction
 import idm.compiler.python.actions.DeleteAction
+import idm.compiler.python.actions.EchoAction
 import idm.compiler.python.actions.InsertAction
 import idm.compiler.python.actions.PrintAction
 import idm.compiler.python.actions.UpdateAction
+import idm.qsv.Compute
 import idm.qsv.Delete
+import idm.qsv.Echo
 import idm.qsv.Header
 import idm.qsv.Insert
 import idm.qsv.Print
@@ -24,10 +28,11 @@ class PythonCompiler {
 	public static String PRINT_FUNCTION_NAME = "printData"
 	static Integer filterCount = 0
 	String printIfNotEmptyFunction = '''def «PRINT_FUNCTION_NAME»(data):
-	    if data.empty:
-	        print()
-	    else:
-	        print(data)
+    if type(data) is pd.DataFrame:
+        if data.empty:
+            print()
+            return
+    print(data)
 	    '''
 
 	new(QuerySeparatedValues q) {
@@ -85,19 +90,27 @@ class PythonCompiler {
 		var code = inserter.compile
 		return code
 	}
-	
-		private def dispatch compile(Update update) {
+
+	private def dispatch compile(Update update) {
 		var updater = new UpdateAction(update, csvDataVariable)
 		var code = updater.compile
 		return code
 	}
 
-	static def getNewFilterName() {
-		return "filter" + filterCount++
+	private def dispatch compile(Compute compute) {
+		var computer = new ComputeAction(compute, csvDataVariable)
+		var code = computer.compile
+		return code
 	}
 
-	static def String blabla() {
-		return ""
+	private def dispatch compile(Echo echo) {
+		var echoer = new EchoAction(echo)
+		var code = echoer.compile
+		return code
+	}
+
+	static def getNewFilterName() {
+		return "filter" + filterCount++
 	}
 
 	private def writeToFileAndExecute(String fileName, String pythonCode) {

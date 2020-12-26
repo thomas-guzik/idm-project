@@ -42,8 +42,4 @@ class UpdateAction implements Action {
 		return code
 	}
 
-	private def dispatch insert(Insertion insertion) {
-		throw new MissingConcreteImplementationException("Insertion")
-	}
-
 }

@@ -16,7 +16,7 @@ Header:
 ;
 
 Statement:
-	Print | Insert | Delete | Update
+	Print | Insert | Delete | Update | Compute | Echo
 ;
 
 Print:
@@ -38,12 +38,29 @@ Update:
 		(':lines' cond=Condition)?
 ;
 
+Compute:
+	'compute' variable=VariableIdentifier
+		function=Function
+;
+
+Function:
+	SumLines
+;
+
+SumLines:
+	':sumLines' column=ColumnIdentifier
+;
+
+Echo:
+	'echo' variable=VariableIdentifier
+;
+
 Selector:
 	columnSelection=Columns? & lineSelection=Lines?
 ;
 
 Columns:
-	':columns' (columns = Column) ?
+	':columns' (columns=Column)?
 ;
 
 Column:
@@ -163,8 +180,13 @@ ColumnNameIdentifier:
 	value = ColumnName
 ;
 
+VariableIdentifier:
+	value = Variable
+;
+
 SignedInt returns ecore::EInt: '-'? INT;
 ColumnNumber returns ecore::EString: '#' INT;
 ColumnName returns ecore::EString: ID;
+Variable returns ecore::EString: '$' ID;
 
 

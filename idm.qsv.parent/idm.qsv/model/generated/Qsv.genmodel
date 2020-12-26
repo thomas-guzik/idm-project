@@ -29,6 +29,17 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Update/columns"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Update/cond"/>
     </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//Compute">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Compute/variable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Compute/function"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//Function"/>
+    <genClasses ecoreClass="Qsv.ecore#//SumLines">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//SumLines/column"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//Echo">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Echo/variable"/>
+    </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//Selector">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Selector/columnSelection"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Selector/lineSelection"/>
@@ -108,5 +119,8 @@
     </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//ColumnNumberIdentifier"/>
     <genClasses ecoreClass="Qsv.ecore#//ColumnNameIdentifier"/>
+    <genClasses ecoreClass="Qsv.ecore#//VariableIdentifier">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//VariableIdentifier/value"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>
