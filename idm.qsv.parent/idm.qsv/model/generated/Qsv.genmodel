@@ -37,6 +37,9 @@
     <genClasses ecoreClass="Qsv.ecore#//SumLines">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//SumLines/column"/>
     </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//SumColumns">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//SumColumns/columns"/>
+    </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//Echo">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Echo/variable"/>
     </genClasses>

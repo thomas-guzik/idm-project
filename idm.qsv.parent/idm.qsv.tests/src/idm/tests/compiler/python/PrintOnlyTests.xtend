@@ -208,6 +208,32 @@ class PrintOnlyTests {
 	}
 
 	@Test
+	def void printTwice() {
+		val parseTree = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines col0 = 1
+			print
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+			   col0  col1
+			2     1     3
+			5     1    10
+			   col0  col1
+			0     4     3
+			1     2     7
+			2     1     3
+			3     3     5
+			4     5     1
+			5     1    10
+			6     5     1
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
 	def void printLinesWhereColumnsEqualIntNoHeaders() {
 		val parseTree = parseHelper.parse('''
 			using "foo_numbers_noheaders.csv" with column names: no

@@ -44,11 +44,15 @@ Compute:
 ;
 
 Function:
-	SumLines
+	SumLines | SumColumns
 ;
 
 SumLines:
 	':sumLines' column=ColumnIdentifier
+;
+
+SumColumns:
+	':sumColumns' columns+=ColumnIdentifier (',' columns+=ColumnIdentifier)*
 ;
 
 Echo:

@@ -27,11 +27,15 @@ class PythonCompiler {
 	public static String NEWLINE = "\n"
 	public static String PRINT_FUNCTION_NAME = "printData"
 	static Integer filterCount = 0
+	static Integer tmpVariableCount = 0
 	String printIfNotEmptyFunction = '''def «PRINT_FUNCTION_NAME»(data):
     if type(data) is pd.DataFrame:
         if data.empty:
             print()
             return
+    if type(data) is pd.Series:
+    	print(data.to_string())
+    	return
     print(data)
 	    '''
 
@@ -111,6 +115,10 @@ class PythonCompiler {
 
 	static def getNewFilterName() {
 		return "filter" + filterCount++
+	}
+
+	static def getNewTmpVariable() {
+		return "tmp" + tmpVariableCount++
 	}
 
 	private def writeToFileAndExecute(String fileName, String pythonCode) {

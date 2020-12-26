@@ -43,6 +43,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="column" eType="#//ColumnIdentifier"
         containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SumColumns" eSuperTypes="#//Function">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="columns" upperBound="-1"
+        eType="#//ColumnIdentifier" containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Echo" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="#//VariableIdentifier"
         containment="true"/>

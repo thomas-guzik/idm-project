@@ -11,6 +11,7 @@ import idm.compiler.python.ConcreteValues
 class PrintAction implements Action {
 	Print print
 	String csvDataVariable
+	String printVariable
 	String code
 
 	extension LineFilters lineFiltering
@@ -19,6 +20,7 @@ class PrintAction implements Action {
 	new(Print p, String dataVariable) {
 		print = p
 		csvDataVariable = dataVariable
+		printVariable = PythonCompiler.newTmpVariable
 		lineFiltering = new LineFilters(csvDataVariable)
 		pythonValues = new ConcreteValues
 
@@ -26,6 +28,8 @@ class PrintAction implements Action {
 
 	override String compile() {
 		code = ""
+		code += '''«printVariable» = «csvDataVariable»'''
+		code += PythonCompiler.NEWLINE
 		if (print.selector !== null) {
 			val Lines lineSelection = print.selector.lineSelection
 			if (lineSelection !== null) {
@@ -36,15 +40,16 @@ class PrintAction implements Action {
 				code += columnSelection.select()
 			}
 		}
-		code += '''«PythonCompiler.PRINT_FUNCTION_NAME»(«csvDataVariable»)'''
+		code += '''«PythonCompiler.PRINT_FUNCTION_NAME»(«printVariable»)'''
+		code += PythonCompiler.NEWLINE
 		return code
 	}
 
 	private def String select(Columns selection) {
-		code += '''«csvDataVariable» = «csvDataVariable»[['''
+		code += '''«printVariable» = «printVariable»[['''
 		var columnNames = selection.columns.getPythonNames()
 		code += columnNames.join(',')
-		code += "]]\n"
+		code += "]]"
 		code += PythonCompiler.NEWLINE
 		return code
 	}
@@ -54,7 +59,7 @@ class PrintAction implements Action {
 		if (condition !== null) {
 			var filter = PythonCompiler.newFilterName
 			code += condition.createFilter(filter)
-			code += '''«csvDataVariable» = «csvDataVariable»[«filter»]'''
+			code += '''«printVariable» = «printVariable»[«filter»]'''
 			code += PythonCompiler.NEWLINE
 		}
 	}

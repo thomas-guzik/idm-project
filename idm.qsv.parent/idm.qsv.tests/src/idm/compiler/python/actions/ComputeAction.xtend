@@ -6,6 +6,7 @@ import idm.compiler.python.MissingConcreteImplementationException
 import idm.compiler.python.PythonCompiler
 import idm.qsv.Compute
 import idm.qsv.Function
+import idm.qsv.SumColumns
 import idm.qsv.SumLines
 
 class ComputeAction implements Action {
@@ -38,6 +39,11 @@ class ComputeAction implements Action {
 	private def dispatch compile(SumLines sumLines, String variable) {
 		val column = sumLines.column.pythonColumn
 		code += '''«variable» = «csvDataVariable»[«column»].sum()'''
+	}
+
+	private def dispatch compile(SumColumns sumLines, String variable) {
+		val columns = sumLines.columns.map[c|c.pythonColumn].join(", ")
+		code += '''«variable» = «csvDataVariable»[[«columns»]].sum(axis=1)'''
 	}
 
 }

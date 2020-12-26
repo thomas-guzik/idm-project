@@ -15,7 +15,7 @@ import org.junit.jupiter.api.^extension.ExtendWith
 
 @ExtendWith(InjectionExtension)
 @InjectWith(QsvInjectorProvider)
-class ComputeTests {
+class CombiningActionsTests {
 	@Inject
 	ParseHelper<QuerySeparatedValues> parseHelper
 	@Inject extension ValidationTestHelper
@@ -33,93 +33,36 @@ class ComputeTests {
 	}
 
 	@Test
-	def void sumLinesOfColumn() {
+	def void sumLinesThenUpdate() {
 		val parseTree = parseHelper.parse('''
 			using "foo_numbers.csv" with column names: yes
 			compute $sumCol0
 				:sumLines col0
 			echo $sumCol0
+			TODO
 		''')
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			21
+			TODO
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
 
 	@Test
-	def void sumLinesOfColumnNoHeaders() {
-		val parseTree = parseHelper.parse('''
-			using "foo_numbers_noheaders.csv" with column names: no
-			compute $sumCol0
-				:sumLines #0
-			echo $sumCol0
-		''')
-		parseTree.assertNoErrors
-
-		val expectedResult = '''
-			21
-		'''
-		assertPythonCompilesAndRuns(parseTree, expectedResult)
-	}
-
-	@Test
-	def void sumLinesOfColumnStrings() {
-		val parseTree = parseHelper.parse('''
-			using "foo2.csv" with column names: yes
-			compute $sumf2
-				:sumLines f2
-			echo $sumf2
-		''')
-		parseTree.assertNoErrors
-
-		val expectedResult = '''
-			v2v7
-		'''
-		assertPythonCompilesAndRuns(parseTree, expectedResult)
-	}
-
-	@Test
-	def void sumTwoColumns() {
+	def void sumTwoColumnsThenInsert() {
 		val parseTree = parseHelper.parse('''
 			using "foo_numbers.csv" with column names: yes
 			compute $sumCol0Col1
 				:sumColumns col0, col1
-			echo $sumCol0Col1
+			insert
+				:columns newcol $sumCol0Col1
+			print
 		''')
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			0     7
-			1     9
-			2     4
-			3     8
-			4     6
-			5    11
-			6     6
-		'''
-		assertPythonCompilesAndRuns(parseTree, expectedResult)
-	}
-	
-		@Test
-	def void sumTwoColumnsNoHeaders() {
-		val parseTree = parseHelper.parse('''
-			using "foo_numbers_noheaders.csv" with column names: no
-			compute $sumCol0Col1
-				:sumColumns #1, #0
-			echo $sumCol0Col1
-		''')
-		parseTree.assertNoErrors
-
-		val expectedResult = '''
-			0     7
-			1     9
-			2     4
-			3     8
-			4     6
-			5    11
-			6     6
+			TODO
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
