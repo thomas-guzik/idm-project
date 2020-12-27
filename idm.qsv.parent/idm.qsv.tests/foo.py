@@ -10,7 +10,9 @@ def printData(data):
     print(data)
 
 my_data = pd.read_csv("foo_numbers.csv", header='infer')
-sumCol0Col1 = my_data[["col0", "col1"]].sum(axis=1)
-my_data.insert(loc=len(my_data.columns), column="newcol", value=sumCol0Col1)
-tmp1 = my_data
-printData(tmp1)
+filter71 = my_data["col1"] < 5
+filter70 = filter71
+my_data = my_data.drop(my_data[filter70].index)
+
+tmp54 = my_data
+printData(tmp54)
