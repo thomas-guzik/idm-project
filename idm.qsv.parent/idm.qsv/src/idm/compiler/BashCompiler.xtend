@@ -10,8 +10,9 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import idm.qsv.Print
 import idm.qsv.Selector
-import idm.qsv.ColumnName
 import idm.qsv.Column
+import idm.qsv.ColumnNames
+import idm.qsv.ColumnNumbers
 
 class BashCompiler {
 	QuerySeparatedValues qsv
@@ -51,7 +52,7 @@ class BashCompiler {
 	def String compile(Header header) {
 		var code = ""
 		
-		var String nameFile = qsv.getHeader().getNameFile()
+		var String nameFile = header.getNameFile()
 		hasColumnName = header.isHasColumnName()
 		separator = ","
 		
@@ -70,35 +71,89 @@ class BashCompiler {
 	}
 	
 	def compile(Print print) {
+		initializeVariable()
 		print.getSelector().compile()
-		return "rien"
+		return generatePrintCode()
+		
 		
 	}
 	
+	def initializeVariable() {
+		cols = #[]
+		lines = #[]
+	}
+	
+
+	
 	def compile(Selector selector) {
+		var code = ""
 		var columnSelection =  selector.getColumnSelection()
 		var lineSelection = selector.getLineSelection()
 		
-		if(columnSelection === null) {
-			cols = #[]
-		} else {
-			columnSelection.columns.forEach[e |
-				e.compile()
-			]
+		if(columnSelection !==null) {
+			var columns = columnSelection.getColumns()
+			if(columns === null) {
+				cols = #[]
+			}
+			else {
+				columns.compile()
+			}
 		}
 		
-		if(lineSelection === null) {
-			
-		} else {
-			
+		if(lineSelection !== null) {
+			var range = lineSelection.getRange()
+			var line = lineSelection.getLine()
+			var cond = lineSelection.getCond()
 		}
+		return code
 	}
 	
 	def compile(Column c){
 		println("what happend ?")
 	} 
 	
-	def compile(ColumnName c) {
+	def compile(ColumnNames c) {
+		var names = c.getNames()
+		names.forEach[n | cols.add(n)]
+	}
+	
+	def compile(ColumnNumbers c) {
+		var numbers = c.getNumbers()
+		numbers.forEach[n |  cols.add(n)]
+	}
+	
+	def generatePrintCode() {
+		var code = "n=0\n"
+		code += "while read"
+		
+		var colCode = ""
+		if(cols.isEmpty()) {
+			code += " line\n"
+			colCode += "echo $line\n"
+		}
+		else {
+			colCode += ""
+		}
+		code += "do\n"
+		
+		if(lines.isEmpty()) {
+			code += colCode
+		}
+		else {
+			if(lines.size == 1) {
+				code += '''if[ $n -eq «lines.get(0)» ]'''
+			} else {
+				code += "if "
+				
+			//	lines.forEach[l | code +=  '''|| [ $n -eq «l» ] ''']
+			}
+			code += "then\n"
+			code += colCode
+			code += "fi\n"
+		}
+		code += "done"
+		return code
+		
 		
 	}
 
