@@ -33,18 +33,25 @@ class CombiningActionsTests {
 	}
 
 	@Test
-	def void sumLinesThenUpdate() {
+	def void sumLinesThenUpdateAndPrint() {
 		val parseTree = parseHelper.parse('''
 			using "foo_numbers.csv" with column names: yes
 			compute $sumCol0
 				:sumLines col0
-			echo $sumCol0
-			TODO
+			update
+				:set $sumCol0
+				:columns col0
+				:lines col0 = 1
+			print
+				:columns col1
+				:lines col0 = $sumCol0
 		''')
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			TODO
+			   col1
+			2     3
+			5    10
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -62,7 +69,14 @@ class CombiningActionsTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			TODO
+			   col0  col1  newcol
+			0     4     3       7
+			1     2     7       9
+			2     1     3       4
+			3     3     5       8
+			4     5     1       6
+			5     1    10      11
+			6     5     1       6
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}

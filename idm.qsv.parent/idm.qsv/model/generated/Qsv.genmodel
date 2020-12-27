@@ -73,6 +73,7 @@
     <genClasses ecoreClass="Qsv.ecore#//LineInsertion">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//LineInsertion/rows"/>
     </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//ContentDescription"/>
     <genClasses ecoreClass="Qsv.ecore#//ContentList">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//ContentList/values"/>
     </genClasses>

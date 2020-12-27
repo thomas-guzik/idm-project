@@ -36,7 +36,7 @@ class InsertAction implements Action {
 	private def dispatch insert(LineInsertion lineInsertion) {
 		val insertedLines = lineInsertion.rows
 		for (ContentList line : insertedLines) {
-			val content = '''[«line.pythonRowContent»]'''
+			val content = line.pythonRowContent
 			code += PythonCompiler.NEWLINE
 			code +=
 				'''«csvDataVariable» = «csvDataVariable».append(dict(zip(«csvDataVariable».columns,«content»)), ignore_index=True)'''
@@ -47,7 +47,7 @@ class InsertAction implements Action {
 	private def dispatch insert(ColumnInsertion columnInsertion) {
 		for (ColumnDescription description : columnInsertion.descriptions) {
 			val hasColumnName = description.columnName !== null
-			val content = '''[«description.content.pythonRowContent»]'''
+			val content = description.content.pythonRowContent
 			if (hasColumnName) {
 				val columnName = description.columnName.value
 				code +=

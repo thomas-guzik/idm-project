@@ -89,7 +89,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="rows" upperBound="-1" eType="#//ContentList"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ContentList">
+  <eClassifiers xsi:type="ecore:EClass" name="ContentDescription"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ContentList" eSuperTypes="#//ContentDescription">
     <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
         eType="#//Value" containment="true"/>
   </eClassifiers>
@@ -100,7 +101,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="ColumnDescription">
     <eStructuralFeatures xsi:type="ecore:EReference" name="columnName" eType="#//ColumnNameIdentifier"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="content" eType="#//ContentList"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="content" eType="#//ContentDescription"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Condition">
@@ -151,7 +152,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ColumnNumberIdentifier" eSuperTypes="#//ColumnIdentifier"/>
   <eClassifiers xsi:type="ecore:EClass" name="ColumnNameIdentifier" eSuperTypes="#//ColumnIdentifier"/>
-  <eClassifiers xsi:type="ecore:EClass" name="VariableIdentifier">
+  <eClassifiers xsi:type="ecore:EClass" name="VariableIdentifier" eSuperTypes="#//ContentDescription #//Value">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

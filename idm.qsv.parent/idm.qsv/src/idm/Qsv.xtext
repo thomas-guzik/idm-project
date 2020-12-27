@@ -99,6 +99,10 @@ LineInsertion:
 	':lines' rows+=ContentList (',' rows+=ContentList)*
 ;
 
+ContentDescription:
+	ContentList | VariableIdentifier
+;
+
 ContentList:
 	'(' values+=Value (',' values+=Value)* ')'
 ;
@@ -108,7 +112,7 @@ ColumnInsertion:
 ;
 
 ColumnDescription:
-	(columnName=ColumnNameIdentifier)? content=ContentList
+	(columnName=ColumnNameIdentifier)? content=ContentDescription
 ;
 
 Condition:
@@ -157,7 +161,7 @@ CompareGreaterOrEqual:
 ;
 
 Value:
-	IntegerValue | StringValue | BooleanValue 
+	IntegerValue | StringValue | BooleanValue | VariableIdentifier
 ;
 
 IntegerValue:

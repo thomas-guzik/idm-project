@@ -12,6 +12,7 @@ import idm.qsv.CompareGreaterOrEqual
 import idm.qsv.CompareLower
 import idm.qsv.CompareLowerOrEqual
 import idm.qsv.CompareNotEqual
+import idm.qsv.ContentDescription
 import idm.qsv.ContentList
 import idm.qsv.IntegerValue
 import idm.qsv.OpComp
@@ -90,7 +91,15 @@ class ConcreteValues {
 		return numbers.numbers.toList.map[n|n.replaceAll("[^0-9.]", "")]
 	}
 
-	def getPythonRowContent(ContentList contentList) {
-		return contentList.values.map[v|v.pythonValue].reduce[v1, v2|'''«v1», «v2»''']
+	def dispatch getPythonRowContent(ContentDescription contentDescription) {
+		throw new MissingConcreteImplementationException("ContentDescription")
+	}
+
+	def dispatch getPythonRowContent(ContentList contentList) {
+		return '''[«contentList.values.map[v|v.pythonValue].reduce[v1, v2|'''«v1», «v2»''']»]'''
+	}
+
+	def dispatch getPythonRowContent(VariableIdentifier id) {
+		return id.pythonValue
 	}
 }
