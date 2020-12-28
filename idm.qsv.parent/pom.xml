@@ -25,7 +25,6 @@
 		<module>idm.qsv.ide</module>
 		<module>idm.qsv.ui</module>
 		<module>idm.qsv.target</module>
-		<module>idm.qsv.tests</module>
 		<module>idm.qsv.ui.tests</module>
 	</modules>
 	<dependencyManagement>

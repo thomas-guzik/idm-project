@@ -1,0 +1,3 @@
+include 'idm.qsv'
+include 'idm.qsv.ide'
+include 'idm.qsv.tests'
