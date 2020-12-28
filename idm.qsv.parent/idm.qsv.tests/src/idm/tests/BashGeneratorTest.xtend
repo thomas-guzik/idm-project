@@ -20,7 +20,7 @@ class BashGeneratorTest {
 	InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
 	
 	@Test def test() {
-		'''using foo.csv with column names: yes'''.assertCompilesTo('''hello python''');
+		'''using foo.csv with column names: yes'''.assertCompilesTo('''hello bash''');
 	}
 
 }

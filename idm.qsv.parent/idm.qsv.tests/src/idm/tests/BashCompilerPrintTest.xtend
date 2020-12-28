@@ -5,35 +5,49 @@ package idm.tests
  */
 
 import com.google.inject.Inject
-import idm.compiler.python.PythonCompiler
 import idm.qsv.QuerySeparatedValues
-import org.eclipse.xtext.testing.InjectWith
-import org.eclipse.xtext.testing.extensions.InjectionExtension
 import org.eclipse.xtext.testing.util.ParseHelper
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import idm.tests.QsvInjectorProvider
+import org.eclipse.xtext.testing.InjectWith
+import org.eclipse.xtext.testing.extensions.InjectionExtension
 import org.junit.jupiter.api.^extension.ExtendWith
+import idm.compiler.bash.CompilerBashQsv
 
-
-
-class BashCompilerTest {
+@ExtendWith(InjectionExtension)
+@InjectWith(QsvInjectorProvider)
+class BashCompilerPrintTest {
 	@Inject
 	ParseHelper<QuerySeparatedValues> parseHelper
 
 	@Test
-	def void compileModel() {
+	def void generateBasicCode() {
 		val result = parseHelper.parse('''
 			using "foo1.csv" with column names: no
 			print
 		''')
+		val expectedResult = '''
+		#!/bin/bash
+		OLD_IFS=$IFS
+		IFS=","
+		exec < foo1.csv
+		n=0
+		while read line 
+		do
+		echo $line 
+		  n=$(( $n + 1 )))
+		done'''
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 
-		val PythonCompiler cmpPython = new PythonCompiler(result)
-		cmpPython.compileAndRun
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		val output = cmpBash.compile()
+		println(output)
+		Assertions.assertEquals(expectedResult, output)
 	}
-
+/*
 	@Test
 	def void withHeader() {
 		val result = parseHelper.parse('''
@@ -48,8 +62,8 @@ class BashCompilerTest {
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 
-		val PythonCompiler cmpPython = new PythonCompiler(result)
-		val outputResult = cmpPython.compileAndRun
+		val BashCompiler cmpBash = new BashCompiler(result)
+		val outputResult = cmpBash.compileAndRun
 		Assertions.assertEquals(expectedResult, outputResult.getOutput)
 		Assertions.assertEquals("", outputResult.getError)
 	}
@@ -69,8 +83,8 @@ class BashCompilerTest {
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 
-		val PythonCompiler cmpPython = new PythonCompiler(result)
-		val outputResult = cmpPython.compileAndRun
+		val BashCompiler cmpBash = new BashCompiler(result)
+		val outputResult = cmpBash.compileAndRun
 		Assertions.assertEquals(expectedResult, outputResult.getOutput)
 		Assertions.assertEquals("", outputResult.getError)
 	}
@@ -92,8 +106,8 @@ class BashCompilerTest {
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 
-		val PythonCompiler cmpPython = new PythonCompiler(result)
-		val outputResult = cmpPython.compileAndRun
+		val BashCompiler cmpBash = new BashCompiler(result)
+		val outputResult = cmpBash.compileAndRun
 		Assertions.assertEquals(expectedResult, outputResult.getOutput)
 		Assertions.assertEquals("", outputResult.getError)
 	}
@@ -115,9 +129,10 @@ class BashCompilerTest {
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 
-		val PythonCompiler cmpPython = new PythonCompiler(result)
-		val outputResult = cmpPython.compileAndRun
+		val BashCompiler cmpBash = new BashCompiler(result)
+		val outputResult = cmpBash.compileAndRun
 		Assertions.assertEquals(expectedResult, outputResult.getOutput)
 		Assertions.assertEquals("", outputResult.getError)
 	}
+	*/
 }

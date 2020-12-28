@@ -25,5 +25,6 @@ Export-Package: idm.qsv,
  idm.generator,
  idm.qsv.impl,
  idm.validation,
- idm.parser.antlr.internal
+ idm.parser.antlr.internal,
+ idm.compiler.bash
 Import-Package: org.apache.log4j
