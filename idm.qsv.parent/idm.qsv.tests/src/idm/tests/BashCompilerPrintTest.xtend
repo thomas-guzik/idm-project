@@ -44,8 +44,104 @@ class BashCompilerPrintTest {
 
 		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
 		val output = cmpBash.compile()
-		println(output)
+//		println(output)
 		Assertions.assertEquals(expectedResult, output)
+	}
+	
+	@Test
+	def void selectFirstLine() {
+		val result = parseHelper.parse('''
+			using "foo1.csv" with column names: no
+			print :lines # 1
+		''')
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		println("parsing okay")
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		val output = cmpBash.compile()
+		println(output)
+//		Assertions.assertEquals(expectedResult, output)
+	}
+	
+	@Test
+	def void selectRangeLine() {
+		val result = parseHelper.parse('''
+			using "foo1.csv" with column names: no
+			print :lines 1-2
+		''')
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		println("parsing okay")
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		val output = cmpBash.compile()
+		println(output)
+//		Assertions.assertEquals(expectedResult, output)
+	}
+	
+	@Test
+	def void selectColumnWithOneNumber() {
+		val result = parseHelper.parse('''
+			using "foo1.csv" with column names: no
+			print :columns #1
+		''')
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		println("parsing okay")
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		val output = cmpBash.compile()
+		println(output)
+//		Assertions.assertEquals(expectedResult, output)
+	}
+	
+	@Test
+	def void selectColumnWithMultipleNumber() {
+		val result = parseHelper.parse('''
+			using "foo1.csv" with column names: no
+			print :columns #1,#3
+		''')
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		println("parsing okay")
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		val output = cmpBash.compile()
+		println(output)
+//		Assertions.assertEquals(expectedResult, output)
+	}
+	
+		@Test
+	def void selectColumnWithOneName() {
+		val result = parseHelper.parse('''
+			using "foo1.csv" with column names: no
+			print :columns f1
+		''')
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		println("parsing okay")
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		val output = cmpBash.compile()
+		println(output)
+//		Assertions.assertEquals(expectedResult, output)
+	}
+	
+	@Test
+	def void selectColumnWithMultipleName() {
+		val result = parseHelper.parse('''
+			using "foo1.csv" with column names: no
+			print :columns f1,f3
+		''')
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		println("parsing okay")
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		val output = cmpBash.compile()
+		println(output)
+//		Assertions.assertEquals(expectedResult, output)
 	}
 /*
 	@Test

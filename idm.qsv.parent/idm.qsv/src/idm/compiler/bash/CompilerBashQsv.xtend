@@ -17,6 +17,7 @@ class CompilerBashQsv extends CompilerBash {
 	QuerySeparatedValues qsv
 	Boolean hasColumnName
 	String separator
+	String nameFile
 
 	new(QuerySeparatedValues q) {
 		qsv = q
@@ -40,6 +41,7 @@ class CompilerBashQsv extends CompilerBash {
 	def Header analyze(Header header) {
 		separator = "," // TODO Penser à ajouter la selection du separateur dans la grammaire
 		hasColumnName = header.isHasColumnName()
+		nameFile = header.nameFile
 		return header
 	}
 
@@ -48,10 +50,6 @@ class CompilerBashQsv extends CompilerBash {
 			#!/bin/bash
 			OLD_IFS=$IFS
 			IFS="«separator»"
-			exec < «header.getNameFile()»
-			«IF hasColumnName»
-				read -a header
-			«ENDIF»
 		'''
 	}
 
@@ -68,7 +66,7 @@ class CompilerBashQsv extends CompilerBash {
 	}
 
 	def dispatch String compile(Print print) {
-		return new CompilerBashPrint(print, hasColumnName).compile()
+		return new CompilerBashPrint(print, hasColumnName, nameFile, separator).compile()
 	}
 
 	def dispatch String compile(Update update) {
