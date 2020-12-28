@@ -16,10 +16,6 @@ import org.eclipse.xtext.generator.IGeneratorContext
 class QsvGenerator extends AbstractGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-//		fsa.generateFile('greetings.txt', 'People to greet: ' + 
-//			resource.allContents
-//				.filter(Greeting)
-//				.map[name]
-//				.join(', '))
+		fsa.generateFile('greetings.txt', 'Generator output!')
 	}
 }
