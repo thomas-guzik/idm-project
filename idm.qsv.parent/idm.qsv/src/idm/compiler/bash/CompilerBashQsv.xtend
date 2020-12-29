@@ -32,7 +32,6 @@ class CompilerBashQsv extends CompilerBash {
 		var String code = ""
 		code += qsv.getHeader().analyze().genCode();
 		for (Statement s : qsv.getStatements()) {
-			println("ici")
 			code += s.compile();
 		}
 		return code
@@ -83,7 +82,6 @@ class CompilerBashQsv extends CompilerBash {
 		var String output = ""
 		while ((o = stdInput.readLine()) !== null) {
 			output += o + "\n"
-			println(o)
 		}
 
 		var String err

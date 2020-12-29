@@ -8,6 +8,7 @@ import idm.qsv.ColumnNumbers
 import idm.qsv.LineRange
 import idm.qsv.Line
 import idm.qsv.Condition
+import java.util.ArrayList
 
 enum ColSelection {
 	ALL,
@@ -20,8 +21,8 @@ class CompilerBashPrint extends CompilerBash {
 	Print print
 	Boolean hasColumnName
 	ColSelection colSelection
-	String[] cols
-	String[] conditions
+	ArrayList<String> cols
+	ArrayList<String> conditions
 	String nameFile
 	String separator
 
@@ -31,8 +32,8 @@ class CompilerBashPrint extends CompilerBash {
 		this.nameFile = nameFile
 		this.separator = separator
 
-		cols = #[]
-		conditions = #[]
+		cols = newArrayList
+		conditions = newArrayList
 		colSelection = ColSelection.ALL
 	}
 
@@ -43,6 +44,7 @@ class CompilerBashPrint extends CompilerBash {
 	def Print analyse(Print print) {
 		var selector = print.getSelector()
 		if (selector !== null) {
+			println("debut analyse")
 			selector.analyse()
 		}
 		println("fin analyse")
@@ -51,54 +53,60 @@ class CompilerBashPrint extends CompilerBash {
 
 	def String genCode(Print print) {
 		println("gencode")
-		var colVariable = #[]
+		var colVariable = newArrayList
 		var input = ""
 		var beforeWhile = ""
-				
 		switch (colSelection) {
 			case ColSelection.ALL: {
 				colVariable.add("line")
-				
-				if(hasColumnName) {
+				if (hasColumnName) {
 					input = '''<(tail -n +2 «nameFile»)'''
-				}
-				else {
+					beforeWhile = '''echo "  "`head -1 «nameFile» | tr '«separator»' " "`'''
+				} else {
 					input = nameFile
+					beforeWhile = '''
+					nbCol=$(( `head -1 «nameFile» | tr '«separator»' '\n' | wc -l` - 1))
+					echo " " `seq -s "  " 0 $nbCol`'''
 				}
-				
 			}
 			case ColSelection.BYNAME: {
 				colVariable = cols
-				
 				input = '''<(cut -d "«separator»" -f '''
-				for(var i = 0; i < cols.size; i++) {
-					beforeWhile += '''loc«i»=`head -1 «nameFile» | tr '«separator»' '\n' | nl | grep -w "«cols.get(i)»" | tr -d " " |  awk -F " " '{print $1}'`'''
+				for (var i = 0; i < cols.size; i++) {
+					beforeWhile += '''loc«i»=`head -1 «nameFile» | tr '«separator»' '\n' | nl | grep -w "«cols.get(i)»" | tr -d " " |  awk -F " " '{print $1}'`
+					'''
 					input += '''${loc«i»}'''
-					if(i < cols.size -1) {
+					if (i < cols.size - 1) {
 						input += ","
-					}	
+					}
 				}
-				if(hasColumnName) {
-					input += " | tail -n +2)"
-				} else {
-					input += ")"
+				input += ''' «nameFile» | tail -n +2)'''
+				beforeWhile += '''echo " " `cut -d "«separator»" -f '''
+				for (var i = 0; i < cols.size; i++) {
+					beforeWhile += '''$loc«i»'''
+					if (i < cols.size - 1) {
+						beforeWhile += ","
+					}
 				}
+				beforeWhile += ''' «nameFile» | head -1`'''
 			}
 			case ColSelection.BYNUMBER: {
-				for(var i = 0; i < cols.size; i++) {
-					colVariable.add("c"+String.valueOf(i))
+				beforeWhile += '''echo "'''
+				for (var i = 0; i < cols.size; i++) {
+					colVariable.add("c" + String.valueOf(i))
+					beforeWhile += '''  «Integer.valueOf(cols.get(i)) - 1»'''
 				}
-				
+				beforeWhile += '''"'''
+
 				input = '''<(cut -d "«separator»" -f «String.join(",", cols)» «nameFile»'''
-				if(hasColumnName) {
-					input += " | tail -n +2)"
+				if (hasColumnName) {
+					input += ''' | tail -n +2)'''
 				} else {
-					input += ")"
+					input += ''')'''
 				}
 			}
 		}
-		
-		
+
 		return '''
 			«beforeWhile»
 			n=0
@@ -106,12 +114,12 @@ class CompilerBashPrint extends CompilerBash {
 			do
 			«IF conditions.length != 0»
 				if «String.join(" && ", conditions)» ; then
-				  echo «FOR c : colVariable»$«c» «ENDFOR»
+				  echo $n «FOR c : colVariable»$«c» «ENDFOR»
 				fi
 			«ELSE»
-				echo «FOR c : colVariable»$«c» «ENDFOR»
+				echo $n «FOR c : colVariable»$«c» «ENDFOR»
 			«ENDIF»
-			n=$(( $n + 1 )))
+			n=$(( $n + 1 ))
 			done < «input»
 		'''
 	}
@@ -148,20 +156,20 @@ class CompilerBashPrint extends CompilerBash {
 
 	def dispatch analyze(ColumnNames c) {
 		if (hasColumnName == false) {
-			throw new Exception()
+			throw new Exception("You select columns name but file hasn't columns name")
 		}
 		c.getNames().forEach[n|cols.add(n)]
 		colSelection = colSelection.BYNAME
 	}
 
 	def dispatch analyze(ColumnNumbers c) {
-		c.numbers.forEach[n | cols.add(n)]
+		c.numbers.forEach[n|cols.add(String.valueOf(Integer.valueOf(n.substring(1)) + 1))]
 		colSelection = colSelection.BYNUMBER
 	}
 
 	def analyse(LineRange range) {
 		conditions.add('''[ $n -ge «range.getStart()» ]''')
-		conditions.add('''[ $n -ge «range.getEnd()» ]''')
+		conditions.add('''[ $n -le «range.getEnd()» ]''')
 	}
 
 	def analyse(Line line) {
@@ -170,18 +178,17 @@ class CompilerBashPrint extends CompilerBash {
 
 	def analyse(Condition cond) {
 	}
-	
+
 	def addCondition(String a, String cond) {
 		var newConditon = a
-		if(newConditon.length != 0) {
+		if (newConditon.length != 0) {
 			newConditon += " && "
 		}
 		newConditon += cond
 		return newConditon
 	}
-	
+
 	def convertListTo(String a, String number) {
-		
 	}
 
 }
