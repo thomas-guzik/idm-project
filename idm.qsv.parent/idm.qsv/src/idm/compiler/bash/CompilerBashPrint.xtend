@@ -9,186 +9,458 @@ import idm.qsv.LineRange
 import idm.qsv.Line
 import idm.qsv.Condition
 import java.util.ArrayList
+import idm.qsv.MidPriority
+import idm.qsv.HighestPriority
+import idm.qsv.BinCond
+import idm.qsv.ColumnIdentifier
+import idm.qsv.ColumnNameIdentifier
+import idm.qsv.ColumnNumberIdentifier
+import idm.qsv.Lines
+import idm.qsv.OpComp
+import idm.qsv.CompareEqual
+import idm.qsv.CompareNotEqual
+import idm.qsv.CompareLower
+import idm.qsv.CompareGreater
+import idm.qsv.CompareLowerOrEqual
+import idm.qsv.CompareGreaterOrEqual
+import idm.qsv.Value
+import idm.qsv.IntegerValue
+import idm.qsv.StringValue
+import com.sun.jdi.BooleanValue
+import idm.qsv.VariableIdentifier
 
-enum ColSelection {
+enum ColSelectType {
 	ALL,
 	BYNAME,
 	BYNUMBER
+}
+
+enum ValueType {
+	INT,
+	STRING,
+	BOOL
 }
 
 class CompilerBashPrint extends CompilerBash {
 
 	Print print
 	Boolean hasColumnName
-	ColSelection colSelection
+	ColSelectType colSelectType
 	ArrayList<String> cols
-	ArrayList<String> conditions
 	String nameFile
-	String separator
+	String csvSep
+	String colSep
+
+	Lines lines
+	ArrayList<String> beforeCond
+	ArrayList<String> locName
 
 	new(Print p, Boolean hasColumnName, String nameFile, String separator) {
 		print = p
 		this.hasColumnName = hasColumnName
 		this.nameFile = nameFile
-		this.separator = separator
+		this.csvSep = separator
+		colSep = " "
 
+		colSelectType = ColSelectType.ALL
 		cols = newArrayList
-		conditions = newArrayList
-		colSelection = ColSelection.ALL
+		lines = null
+		beforeCond = newArrayList
+		locName = newArrayList
 	}
 
 	override String compile() {
-		return print.analyse().genCode()
+		return print.analyze().genCode()
 	}
 
-	def Print analyse(Print print) {
+	def Print analyze(Print print) {
 		var selector = print.getSelector()
 		if (selector !== null) {
-			println("debut analyse")
-			selector.analyse()
+			println("debut analyze")
+			selector.analyze()
 		}
-		println("fin analyse")
+		println("fin analyze")
 		return print
 	}
 
 	def String genCode(Print print) {
 		println("gencode")
-		var colVariable = newArrayList
-		var input = ""
-		var beforeWhile = ""
-		switch (colSelection) {
-			case ColSelection.ALL: {
-				colVariable.add("line")
-				if (hasColumnName) {
-					input = '''<(tail -n +2 «nameFile»)'''
-					beforeWhile = '''echo "  "`head -1 «nameFile» | tr '«separator»' " "`'''
-				} else {
-					input = nameFile
-					beforeWhile = '''
-					nbCol=$(( `head -1 «nameFile» | tr '«separator»' '\n' | wc -l` - 1))
-					echo " " `seq -s "  " 0 $nbCol`'''
-				}
-			}
-			case ColSelection.BYNAME: {
-				colVariable = cols
-				input = '''<(cut -d "«separator»" -f '''
-				for (var i = 0; i < cols.size; i++) {
-					beforeWhile += '''loc«i»=`head -1 «nameFile» | tr '«separator»' '\n' | nl | grep -w "«cols.get(i)»" | tr -d " " |  awk -F " " '{print $1}'`
-					'''
-					input += '''${loc«i»}'''
-					if (i < cols.size - 1) {
-						input += ","
-					}
-				}
-				input += ''' «nameFile» | tail -n +2)'''
-				beforeWhile += '''echo " " `cut -d "«separator»" -f '''
-				for (var i = 0; i < cols.size; i++) {
-					beforeWhile += '''$loc«i»'''
-					if (i < cols.size - 1) {
-						beforeWhile += ","
-					}
-				}
-				beforeWhile += ''' «nameFile» | head -1`'''
-			}
-			case ColSelection.BYNUMBER: {
-				beforeWhile += '''echo "'''
-				for (var i = 0; i < cols.size; i++) {
-					colVariable.add("c" + String.valueOf(i))
-					beforeWhile += '''  «Integer.valueOf(cols.get(i)) - 1»'''
-				}
-				beforeWhile += '''"'''
-
-				input = '''<(cut -d "«separator»" -f «String.join(",", cols)» «nameFile»'''
-				if (hasColumnName) {
-					input += ''' | tail -n +2)'''
-				} else {
-					input += ''')'''
-				}
-			}
+		var cond = ""
+		if (lines !== null) {
+			cond = lines.genCode()
 		}
-
 		return '''
-			«beforeWhile»
+			«genBeforeWhile()»
+			«genColTitle()»
 			n=0
-			while read «FOR c : colVariable»«c» «ENDFOR»
+			while read «genRead()»
 			do
-			«IF conditions.length != 0»
-				if «String.join(" && ", conditions)» ; then
-				  echo $n «FOR c : colVariable»$«c» «ENDFOR»
+			«IF !cond.isEmpty()»
+				«String.join("\n", beforeCond)»
+				if «cond» ; then
+				  echo $n «genEcho()»
 				fi
 			«ELSE»
-				echo $n «FOR c : colVariable»$«c» «ENDFOR»
+				echo $n «genEcho()»
 			«ENDIF»
 			n=$(( $n + 1 ))
-			done < «input»
+			done < «genInput()»
 		'''
 	}
 
-	def Selector analyse(Selector selector) {
+	def genBeforeWhile() {
+		return '''
+			«IF colSelectType == ColSelectType.ALL»
+				nbCol=$(( `head -1 «nameFile» | tr '«csvSep»' '\n' | wc -l` - 1))
+			«ENDIF»
+			«genLocVariable»
+		'''
+	}
+
+	def genLocVariable() {
+		switch (colSelectType) {
+			case ColSelectType.BYNAME: {
+				return '''
+					«FOR c : cols»
+						loc_«c»=`head -1 «nameFile» | tr '«csvSep»' '\n' | nl | grep -w "«c»" | tr -d " " |  awk -F " " '{print $1}'`
+					«ENDFOR»
+				'''
+			}
+			default: {
+				return '''
+					«FOR v : locName»
+						loc_«v»=`head -1 «nameFile» | tr '«csvSep»' '\n' | nl | grep -w "«v»" | tr -d " " |  awk -F " " '{print $1}'`
+					«ENDFOR»
+				'''
+			}
+		}
+	}
+
+	def genInput() {
+		switch (colSelectType) {
+			case ColSelectType.ALL: {
+				if (hasColumnName) {
+					return '''<(tail -n +2 «nameFile»)'''
+				} else {
+					return nameFile
+				}
+			}
+			case ColSelectType.BYNAME: {
+				return '''
+					<(cut -d "«csvSep»" -f $loc_«String.join(",$loc_", cols)»  «nameFile» | tail -n +2)
+				'''
+			}
+			case ColSelectType.BYNUMBER: {
+				return '''
+					<(cut -d "«csvSep»" -f «String.join(",", cols.map[c | String.valueOf(Integer.valueOf(c)+1)])» «nameFile» «IF hasColumnName»| tail -n +2 «ENDIF»)
+				'''
+			}
+		}
+	}
+
+	def genColTitle() {
+		switch (colSelectType) {
+			case ColSelectType.ALL: {
+				if (hasColumnName) {
+					return '''echo "  `head -1 «nameFile» | tr '«csvSep»' '«colSep»'`"'''
+				} else {
+					return '''echo "  `seq -s '«colSep»' 0 $nbCol`"'''
+				}
+			}
+			case ColSelectType.BYNAME: {
+				return '''
+					echo "  `cut -d "«csvSep»" -f $loc_«String.join(",$loc_", cols)» «nameFile» | head -1 | tr ',' ' '`"
+				'''
+			}
+			case ColSelectType.BYNUMBER: {
+				if (hasColumnName) {
+					return '''
+						echo "  `cut -d "«csvSep»" -f «String.join(",", cols)» «nameFile» | head -1 | tr ',' ' '`"
+					'''
+				} else {
+					return '''
+						echo "  «String.join(colSep, cols)»"
+					'''
+				}
+			}
+			default: {
+				return ""
+			}
+		}
+	}
+
+	def genRead() {
+		switch (colSelectType) {
+			case ColSelectType.ALL: {
+				return '''-a c'''
+			}
+			case ColSelectType.BYNAME: {
+				return '''c$loc_«String.join(" c$loc_", cols)»'''
+			}
+			case ColSelectType.BYNUMBER: {
+				return '''c«String.join(" c", cols)»'''
+			}
+		}
+	}
+
+	def genEcho() {
+		switch (colSelectType) {
+			case ColSelectType.ALL: {
+				return '''$(eval echo '${c['`seq -s ']} ${c[' 0 2`]'}')'''
+			}
+			case ColSelectType.BYNAME: {
+				return '''$(eval echo '$c'$loc_«String.join(" '$c'$loc_", cols)»)'''
+			}
+			case ColSelectType.BYNUMBER: {
+				return '''$c«String.join(" $c", cols)»'''
+			}
+		}
+	}
+
+	def Selector analyze(Selector selector) {
 		var columnSelection = selector.getColumnSelection()
-		var lineSelection = selector.getLineSelection()
 
 		if (columnSelection !== null) {
-			var columns = columnSelection.getColumns()
-			if (columns !== null) {
-				columns.analyze()
+			if (columnSelection.columns !== null) {
+				columnSelection.columns.analyzeColumn()
 			}
 		}
 
-		if (lineSelection !== null) {
-			var range = lineSelection.getRange()
-			var line = lineSelection.getLine()
-			var cond = lineSelection.getCond()
-			if (range !== null) {
-				range.analyse();
-			} else if (line !== null) {
-				line.analyse();
-			}
-
-			if (cond !== null) {
-				cond.analyse();
-			}
+		if (selector.lineSelection !== null) {
+			lines = selector.lineSelection
 		}
 		return selector
 	}
 
-	def dispatch analyze(Column c) {}
+	def dispatch analyzeColumn(Column c) {}
 
-	def dispatch analyze(ColumnNames c) {
+	def dispatch analyzeColumn(ColumnNames c) {
 		if (hasColumnName == false) {
 			throw new Exception("You select columns name but file hasn't columns name")
 		}
 		c.getNames().forEach[n|cols.add(n)]
-		colSelection = colSelection.BYNAME
+		colSelectType = ColSelectType.BYNAME
 	}
 
-	def dispatch analyze(ColumnNumbers c) {
-		c.numbers.forEach[n|cols.add(String.valueOf(Integer.valueOf(n.substring(1)) + 1))]
-		colSelection = colSelection.BYNUMBER
+	def dispatch analyzeColumn(ColumnNumbers c) {
+		c.numbers.forEach[n|cols.add(n.substring(1))]
+		colSelectType = ColSelectType.BYNUMBER
 	}
 
-	def analyse(LineRange range) {
-		conditions.add('''[ $n -ge «range.getStart()» ]''')
-		conditions.add('''[ $n -le «range.getEnd()» ]''')
-	}
-
-	def analyse(Line line) {
-		conditions.add('''[ $n -eq «line.number» ]''')
-	}
-
-	def analyse(Condition cond) {
-	}
-
-	def addCondition(String a, String cond) {
-		var newConditon = a
-		if (newConditon.length != 0) {
-			newConditon += " && "
+	def genCode(Lines lines) {
+		var code = ""
+		if (lines.range !== null) {
+			code += lines.range.genCode();
+		} else if (lines.line !== null) {
+			code += lines.line.genCode();
 		}
-		newConditon += cond
-		return newConditon
+		if (lines.cond !== null) {
+			if (!code.isEmpty) {
+				code += " && "
+			}
+			code += lines.cond.genCode();
+		}
+		code = "[[ " + code + " ]]"
+		return code
 	}
 
-	def convertListTo(String a, String number) {
+	def genCode(LineRange range) {
+		return ''' $n -ge «range.start» && $n -le «range.end» '''
 	}
 
+	def genCode(Line line) {
+		return ''' $n -eq «line.number» '''
+	}
+
+	def String genCode(Condition cond) {
+		var code = cond.mid.genCode()
+		if (cond.orCondition !== null) {
+			code += " || " + cond.orCondition.genCode()
+		}
+		return code
+	}
+
+	def String genCode(MidPriority mid) {
+		var code = mid.high.genCode()
+		if (mid.andCondition !== null) {
+			code += " && " + mid.andCondition.genCode()
+		}
+		return code
+	}
+
+	def String genCode(HighestPriority high) {
+		if (high.baseCondition !== null) {
+			return high.baseCondition.genCode()
+		} else if (high.nestedCondition !== null) {
+			return ''' ( «high.nestedCondition.genCode()» ) '''
+		} else {
+			throw new Exception("Error during conditions analyzing")
+		}
+	}
+
+	def genCode(BinCond bin) {
+		var type = bin.compValue.analyzeValue()
+
+		var code = bin.columnId.genCodeColumnIdentifier()
+		code += bin.operator.genCodeOperator(type)
+		code += bin.compValue.genCodeValue()
+		return code
+	}
+
+	def dispatch genCodeColumnIdentifier(ColumnIdentifier c) {}
+
+	def dispatch genCodeColumnIdentifier(ColumnNumberIdentifier c) {
+		var v = c.value.substring(1)
+
+		if (colSelectType === ColSelectType.ALL) {
+			return ''' ${c[«v»]} '''
+		} else {
+			return ''' $c«v» '''
+		}
+	}
+
+	def dispatch genCodeColumnIdentifier(ColumnNameIdentifier c) {
+		var v = c.value
+		var before = ""
+
+		if (!locName.contains(v)) {
+			locName.add(v)
+		}
+
+		if (colSelectType === ColSelectType.ALL) {
+			before = '''«v»=${c[$loc_«v»]}'''
+			if (!beforeCond.contains(before)) {
+				beforeCond.add(before)
+			}
+			return ''' «v» '''
+		} else {
+			before = '''«v»=$(eval echo '$c'$loc_«v»)'''
+			if (!beforeCond.contains(before)) {
+				beforeCond.add(before)
+			}
+			return ''' «v» '''
+		}
+	}
+
+	def dispatch analyzeValue(Value v) {}
+
+	def dispatch analyzeValue(IntegerValue v) { return ValueType.INT }
+
+	def dispatch analyzeValue(StringValue v) { return ValueType.STRING }
+
+	def dispatch analyzeValue(BooleanValue v) { return ValueType.BOOL }
+
+	def dispatch analyzeValue(VariableIdentifier v) {
+		throw new Exception("Variable not implemented")
+	}
+
+	def dispatch genCodeOperator(OpComp op, ValueType t) {}
+
+	def dispatch genCodeOperator(CompareEqual op, ValueType t) {
+		switch (t) {
+			case ValueType.INT: {
+				return " -eq "
+			}
+			case ValueType.STRING:
+				ValueType.BOOL
+			: {
+				return " = "
+			}
+			default: {
+				throw new Exception("Error during generating code for condition")
+			}
+		}
+	}
+
+	def dispatch genCodeOperator(CompareNotEqual op, ValueType t) {
+		switch (t) {
+			case ValueType.INT: {
+				return " -ne "
+			}
+			case ValueType.STRING:
+				ValueType.BOOL
+			: {
+				return " != "
+			}
+			default: {
+				throw new Exception("Error during generating code for condition")
+			}
+		}
+	}
+
+	def dispatch genCodeOperator(CompareLower op, ValueType t) {
+		switch (t) {
+			case ValueType.INT: {
+				return " -lt "
+			}
+			case ValueType.STRING:
+				ValueType.BOOL
+			: {
+				throw new Exception("Only integer can be compare with lower operator")
+			}
+			default: {
+				throw new Exception("Error during generating code for condition")
+			}
+		}
+	}
+
+	def dispatch genCodeOperator(CompareGreater op, ValueType t) {
+		switch (t) {
+			case ValueType.INT: {
+				return " -gt "
+			}
+			case ValueType.STRING:
+				ValueType.BOOL
+			: {
+				throw new Exception("Only integer can be compare with greater operator")
+			}
+			default: {
+				throw new Exception("Error during generating code for condition")
+			}
+		}
+	}
+
+	def dispatch genCodeOperator(CompareLowerOrEqual op, ValueType t) {
+		switch (t) {
+			case ValueType.INT: {
+				return " -le "
+			}
+			case ValueType.STRING:
+				ValueType.BOOL
+			: {
+				throw new Exception("Only integer can be compare with lower or equal operator")
+			}
+			default: {
+				throw new Exception("Error during generating code for condition")
+			}
+		}
+	}
+
+	def dispatch genCodeOperator(CompareGreaterOrEqual op, ValueType t) {
+		switch (t) {
+			case ValueType.INT: {
+				return " -ge "
+			}
+			case ValueType.STRING:
+				ValueType.BOOL
+			: {
+				throw new Exception("Only integer can be compare with greater or equal operator")
+			}
+			default: {
+				throw new Exception("Error during generating code for condition")
+			}
+		}
+	}
+
+	def dispatch genCodeValue(Value v) {}
+
+	def dispatch genCodeValue(IntegerValue v) { return ''' «v.value» ''' }
+
+	def dispatch genCodeValue(StringValue v) { return ''' «v.value» ''' }
+
+	def dispatch genCodeValue(BooleanValue v) { return v.value ? " 1 " : " 0 " }
+
+	def dispatch genCodeValue(VariableIdentifier v) {
+		throw new Exception("Variable not implemented")
+	}
 }
