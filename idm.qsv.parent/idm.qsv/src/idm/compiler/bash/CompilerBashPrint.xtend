@@ -110,8 +110,9 @@ class CompilerBashPrint extends CompilerBash {
 
 	def genBeforeWhile() {
 		return '''
+			header=`head -1 «nameFile»`
 			«IF colSelectType == ColSelectType.ALL»
-				nbCol=$(( `head -1 «nameFile» | tr '«csvSep»' '\n' | wc -l` - 1))
+				nbCol=$(( `echo "$header" | tr '«csvSep»' '\n' | wc -l` - 1))
 			«ENDIF»
 			«genLocVariable»
 		'''
@@ -122,14 +123,15 @@ class CompilerBashPrint extends CompilerBash {
 			case ColSelectType.BYNAME: {
 				return '''
 					«FOR c : cols»
-						loc_«c»=`head -1 «nameFile» | tr '«csvSep»' '\n' | nl | grep -w "«c»" | tr -d " " |  awk -F " " '{print $1}'`
+						cut_«c»=`echo "$header" | tr '«csvSep»' '\n' | nl | grep -w "«c»" | tr -d " " |  awk -F " " '{print $1}'`
+						loc_«c»=$(( $cut_«c» - 1))
 					«ENDFOR»
 				'''
 			}
 			default: {
 				return '''
 					«FOR v : locName»
-						loc_«v»=`head -1 «nameFile» | tr '«csvSep»' '\n' | nl | grep -w "«v»" | tr -d " " |  awk -F " " '{print $1}'`
+						loc_«v»=$(( `echo "$header" | tr '«csvSep»' '\n' | nl | grep -w "«v»" | tr -d " " |  awk -F " " '{print $1}'` - 1))
 					«ENDFOR»
 				'''
 			}
@@ -147,7 +149,7 @@ class CompilerBashPrint extends CompilerBash {
 			}
 			case ColSelectType.BYNAME: {
 				return '''
-					<(cut -d "«csvSep»" -f $loc_«String.join(",$loc_", cols)»  «nameFile» | tail -n +2)
+					<(cut -d "«csvSep»" -f $cut_«String.join(",$cut_", cols)»  «nameFile» | tail -n +2)
 				'''
 			}
 			case ColSelectType.BYNUMBER: {
@@ -162,20 +164,20 @@ class CompilerBashPrint extends CompilerBash {
 		switch (colSelectType) {
 			case ColSelectType.ALL: {
 				if (hasColumnName) {
-					return '''echo "  `head -1 «nameFile» | tr '«csvSep»' '«colSep»'`"'''
+					return '''echo "  `echo "$header" | tr '«csvSep»' '«colSep»'`"'''
 				} else {
 					return '''echo "  `seq -s '«colSep»' 0 $nbCol`"'''
 				}
 			}
 			case ColSelectType.BYNAME: {
 				return '''
-					echo "  `cut -d "«csvSep»" -f $loc_«String.join(",$loc_", cols)» «nameFile» | head -1 | tr ',' ' '`"
+					echo "  `echo "$header" | cut -d "«csvSep»" -f $cut_«String.join(",$cut_", cols)» | tr ',' ' '`"
 				'''
 			}
 			case ColSelectType.BYNUMBER: {
 				if (hasColumnName) {
 					return '''
-						echo "  `cut -d "«csvSep»" -f «String.join(",", cols)» «nameFile» | head -1 | tr ',' ' '`"
+						echo "  ``echo "$header" | cut -d "«csvSep»" -f «String.join(",", cols)» | tr ',' ' '`"
 					'''
 				} else {
 					return '''
@@ -206,7 +208,7 @@ class CompilerBashPrint extends CompilerBash {
 	def genEcho() {
 		switch (colSelectType) {
 			case ColSelectType.ALL: {
-				return '''$(eval echo '${c['`seq -s ']} ${c[' 0 2`]'}')'''
+				return '''$(eval echo '${c['`seq -s ']} ${c[' 0 $nbCol`]'}')'''
 			}
 			case ColSelectType.BYNAME: {
 				return '''$(eval echo '$c'$loc_«String.join(" '$c'$loc_", cols)»)'''
@@ -260,7 +262,7 @@ class CompilerBashPrint extends CompilerBash {
 			}
 			code += lines.cond.genCode();
 		}
-		code = "[[ " + code + " ]]"
+		code = "[[" + code + " ]]"
 		return code
 	}
 
@@ -292,7 +294,7 @@ class CompilerBashPrint extends CompilerBash {
 		if (high.baseCondition !== null) {
 			return high.baseCondition.genCode()
 		} else if (high.nestedCondition !== null) {
-			return ''' ( «high.nestedCondition.genCode()» ) '''
+			return ''' ( «high.nestedCondition.genCode()» )'''
 		} else {
 			throw new Exception("Error during conditions analyzing")
 		}
@@ -313,9 +315,9 @@ class CompilerBashPrint extends CompilerBash {
 		var v = c.value.substring(1)
 
 		if (colSelectType === ColSelectType.ALL) {
-			return ''' ${c[«v»]} '''
+			return ''' ${c[«v»]}'''
 		} else {
-			return ''' $c«v» '''
+			return ''' $c«v»'''
 		}
 	}
 
@@ -328,17 +330,17 @@ class CompilerBashPrint extends CompilerBash {
 		}
 
 		if (colSelectType === ColSelectType.ALL) {
-			before = '''«v»=${c[$loc_«v»]}'''
+			before = '''id_«v»=${c[$loc_«v»]}'''
 			if (!beforeCond.contains(before)) {
 				beforeCond.add(before)
 			}
-			return ''' «v» '''
+			return ''' $id_«v» '''
 		} else {
-			before = '''«v»=$(eval echo '$c'$loc_«v»)'''
+			before = '''id_«v»=$(eval echo '$c'$loc_«v»)'''
 			if (!beforeCond.contains(before)) {
 				beforeCond.add(before)
 			}
-			return ''' «v» '''
+			return ''' $id_«v»'''
 		}
 	}
 
@@ -359,12 +361,12 @@ class CompilerBashPrint extends CompilerBash {
 	def dispatch genCodeOperator(CompareEqual op, ValueType t) {
 		switch (t) {
 			case ValueType.INT: {
-				return " -eq "
+				return " -eq"
 			}
 			case ValueType.STRING:
 				ValueType.BOOL
 			: {
-				return " = "
+				return " ="
 			}
 			default: {
 				throw new Exception("Error during generating code for condition")
@@ -375,12 +377,12 @@ class CompilerBashPrint extends CompilerBash {
 	def dispatch genCodeOperator(CompareNotEqual op, ValueType t) {
 		switch (t) {
 			case ValueType.INT: {
-				return " -ne "
+				return " -ne"
 			}
 			case ValueType.STRING:
 				ValueType.BOOL
 			: {
-				return " != "
+				return " !="
 			}
 			default: {
 				throw new Exception("Error during generating code for condition")
@@ -391,7 +393,7 @@ class CompilerBashPrint extends CompilerBash {
 	def dispatch genCodeOperator(CompareLower op, ValueType t) {
 		switch (t) {
 			case ValueType.INT: {
-				return " -lt "
+				return " -lt"
 			}
 			case ValueType.STRING:
 				ValueType.BOOL
@@ -407,7 +409,7 @@ class CompilerBashPrint extends CompilerBash {
 	def dispatch genCodeOperator(CompareGreater op, ValueType t) {
 		switch (t) {
 			case ValueType.INT: {
-				return " -gt "
+				return " -gt"
 			}
 			case ValueType.STRING:
 				ValueType.BOOL
@@ -423,7 +425,7 @@ class CompilerBashPrint extends CompilerBash {
 	def dispatch genCodeOperator(CompareLowerOrEqual op, ValueType t) {
 		switch (t) {
 			case ValueType.INT: {
-				return " -le "
+				return " -le"
 			}
 			case ValueType.STRING:
 				ValueType.BOOL
@@ -439,7 +441,7 @@ class CompilerBashPrint extends CompilerBash {
 	def dispatch genCodeOperator(CompareGreaterOrEqual op, ValueType t) {
 		switch (t) {
 			case ValueType.INT: {
-				return " -ge "
+				return " -ge"
 			}
 			case ValueType.STRING:
 				ValueType.BOOL
