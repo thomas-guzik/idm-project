@@ -49,6 +49,7 @@ class CompilerBashQsv extends CompilerBash {
 			#!/bin/bash
 			OLD_IFS=$IFS
 			IFS="«separator»"
+			file=$(cat «nameFile»)
 		'''
 	}
 
