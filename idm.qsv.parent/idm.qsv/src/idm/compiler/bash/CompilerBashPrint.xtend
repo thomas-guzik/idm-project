@@ -26,8 +26,8 @@ import idm.qsv.CompareGreaterOrEqual
 import idm.qsv.Value
 import idm.qsv.IntegerValue
 import idm.qsv.StringValue
-import com.sun.jdi.BooleanValue
 import idm.qsv.VariableIdentifier
+import idm.qsv.BooleanValue
 
 enum ColSelectType {
 	ALL,
@@ -89,6 +89,7 @@ class CompilerBashPrint extends CompilerBash {
 		if (lines !== null) {
 			cond = lines.genCode()
 		}
+		println("fin line")
 		return '''
 			«genBeforeWhile()»
 			«genColTitle()»
@@ -109,6 +110,7 @@ class CompilerBashPrint extends CompilerBash {
 	}
 
 	def genBeforeWhile() {
+		println("before while")
 		return '''
 			header=`head -1 «nameFile»`
 			«IF colSelectType == ColSelectType.ALL»
@@ -161,6 +163,7 @@ class CompilerBashPrint extends CompilerBash {
 	}
 
 	def genColTitle() {
+		println("code title")
 		switch (colSelectType) {
 			case ColSelectType.ALL: {
 				if (hasColumnName) {
@@ -177,7 +180,7 @@ class CompilerBashPrint extends CompilerBash {
 			case ColSelectType.BYNUMBER: {
 				if (hasColumnName) {
 					return '''
-						echo "  ``echo "$header" | cut -d "«csvSep»" -f «String.join(",", cols)» | tr ',' ' '`"
+						echo "  `echo "$header" | cut -d "«csvSep»" -f «String.join(",", cols.map[c | String.valueOf(Integer.valueOf(c)+1)])» | tr ',' ' '`"
 					'''
 				} else {
 					return '''
@@ -256,6 +259,7 @@ class CompilerBashPrint extends CompilerBash {
 		} else if (lines.line !== null) {
 			code += lines.line.genCode();
 		}
+		println("cond")
 		if (lines.cond !== null) {
 			if (!code.isEmpty) {
 				code += " && "
@@ -275,6 +279,7 @@ class CompilerBashPrint extends CompilerBash {
 	}
 
 	def String genCode(Condition cond) {
+		println("cond 2")
 		var code = cond.mid.genCode()
 		if (cond.orCondition !== null) {
 			code += " || " + cond.orCondition.genCode()
@@ -301,8 +306,11 @@ class CompilerBashPrint extends CompilerBash {
 	}
 
 	def genCode(BinCond bin) {
+		println("binCond")
+		println(bin.compValue)
 		var type = bin.compValue.analyzeValue()
 
+		println(type)
 		var code = bin.columnId.genCodeColumnIdentifier()
 		code += bin.operator.genCodeOperator(type)
 		code += bin.compValue.genCodeValue()
@@ -350,7 +358,9 @@ class CompilerBashPrint extends CompilerBash {
 
 	def dispatch analyzeValue(StringValue v) { return ValueType.STRING }
 
-	def dispatch analyzeValue(BooleanValue v) { return ValueType.BOOL }
+	def dispatch analyzeValue(BooleanValue v) { println("BOOL")
+		return ValueType.BOOL
+	}
 
 	def dispatch analyzeValue(VariableIdentifier v) {
 		throw new Exception("Variable not implemented")
@@ -359,98 +369,62 @@ class CompilerBashPrint extends CompilerBash {
 	def dispatch genCodeOperator(OpComp op, ValueType t) {}
 
 	def dispatch genCodeOperator(CompareEqual op, ValueType t) {
-		switch (t) {
-			case ValueType.INT: {
-				return " -eq"
-			}
-			case ValueType.STRING:
-				ValueType.BOOL
-			: {
-				return " ="
-			}
-			default: {
-				throw new Exception("Error during generating code for condition")
-			}
+		if (t === ValueType.INT) {
+			return " -eq"
+		} else if (t === ValueType.STRING || t === ValueType.BOOL) {
+			return " ="
+		} else {
+			throw new Exception("Error during generating code for condition")
 		}
 	}
 
 	def dispatch genCodeOperator(CompareNotEqual op, ValueType t) {
-		switch (t) {
-			case ValueType.INT: {
-				return " -ne"
-			}
-			case ValueType.STRING:
-				ValueType.BOOL
-			: {
-				return " !="
-			}
-			default: {
-				throw new Exception("Error during generating code for condition")
-			}
+		if (t === ValueType.INT) {
+			return " -ne"
+		} else if (t === ValueType.STRING || t === ValueType.BOOL) {
+			return " !="
+		} else {
+			throw new Exception("Error during generating code for condition")
 		}
 	}
 
 	def dispatch genCodeOperator(CompareLower op, ValueType t) {
-		switch (t) {
-			case ValueType.INT: {
-				return " -lt"
-			}
-			case ValueType.STRING:
-				ValueType.BOOL
-			: {
-				throw new Exception("Only integer can be compare with lower operator")
-			}
-			default: {
-				throw new Exception("Error during generating code for condition")
-			}
+		if (t === ValueType.INT) {
+			return " -lt"
+		} else if (t === ValueType.STRING || t === ValueType.BOOL) {
+			throw new Exception("Only integer can be compare with lower operator")
+		} else {
+			throw new Exception("Error during generating code for condition")
 		}
 	}
 
 	def dispatch genCodeOperator(CompareGreater op, ValueType t) {
-		switch (t) {
-			case ValueType.INT: {
-				return " -gt"
-			}
-			case ValueType.STRING:
-				ValueType.BOOL
-			: {
-				throw new Exception("Only integer can be compare with greater operator")
-			}
-			default: {
-				throw new Exception("Error during generating code for condition")
-			}
+		if (t === ValueType.INT) {
+			return " -gt"
+		} else if (t === ValueType.STRING || t === ValueType.BOOL) {
+			throw new Exception("Only integer can be compare with greater operator")
+		} else {
+			throw new Exception("Error during generating code for condition")
 		}
 	}
 
 	def dispatch genCodeOperator(CompareLowerOrEqual op, ValueType t) {
-		switch (t) {
-			case ValueType.INT: {
-				return " -le"
-			}
-			case ValueType.STRING:
-				ValueType.BOOL
-			: {
-				throw new Exception("Only integer can be compare with lower or equal operator")
-			}
-			default: {
-				throw new Exception("Error during generating code for condition")
-			}
+		if (t === ValueType.INT) {
+			return " -le"
+		} else if (t === ValueType.STRING || t === ValueType.BOOL) {
+			throw new Exception("Only integer can be compare with lower or equal operator")
+		} else {
+			throw new Exception("Error during generating code for condition")
 		}
 	}
 
 	def dispatch genCodeOperator(CompareGreaterOrEqual op, ValueType t) {
-		switch (t) {
-			case ValueType.INT: {
-				return " -ge"
-			}
-			case ValueType.STRING:
-				ValueType.BOOL
-			: {
-				throw new Exception("Only integer can be compare with greater or equal operator")
-			}
-			default: {
-				throw new Exception("Error during generating code for condition")
-			}
+		if (t === ValueType.INT) {
+			return " -ge"
+		} else if (t === ValueType.STRING || t === ValueType.BOOL) {
+			throw new Exception("Only integer can be compare with greater or equal operator")
+		} else {
+			throw new Exception("Error during generating code for condition")
 		}
 	}
 
@@ -460,7 +434,7 @@ class CompilerBashPrint extends CompilerBash {
 
 	def dispatch genCodeValue(StringValue v) { return ''' «v.value» ''' }
 
-	def dispatch genCodeValue(BooleanValue v) { return v.value ? " 1 " : " 0 " }
+	def dispatch genCodeValue(BooleanValue v) { return v.truthy ? " 1 " : " 0 " }
 
 	def dispatch genCodeValue(VariableIdentifier v) {
 		throw new Exception("Variable not implemented")

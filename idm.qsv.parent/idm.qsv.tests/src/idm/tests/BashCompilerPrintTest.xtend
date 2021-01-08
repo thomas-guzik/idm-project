@@ -409,4 +409,240 @@ class BashCompilerPrintTest {
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
+
+	@Test
+	def void printConditionWithSelectLine() {
+		val result = parseHelper.parse('''
+			using "nb_with_header.csv" with column names: yes
+			print :lines #3 a = 1
+		''')
+		val expectedResult = '''
+			  a b c d
+			3 1 4 2 8
+		'''
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		println(errors)
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		val code = cmpBash.compile()
+		val execution = cmpBash.run(code)
+		Assertions.assertEquals(expectedResult, execution.output)
+	}
+
+	@Test
+	def void printConditionWithNumber() {
+		val result = parseHelper.parse('''
+			using "nb_with_header.csv" with column names: yes
+			print :lines #0 = 1
+		''')
+		val expectedResult = '''
+			  a b c d
+			0 1 1 1 1
+			3 1 4 2 8
+		'''
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		println(errors)
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		val code = cmpBash.compile()
+		val execution = cmpBash.run(code)
+		Assertions.assertEquals(expectedResult, execution.output)
+	}
+
+	@Test
+	def void printConditionWithNameWithSelectColumnName() {
+		val result = parseHelper.parse('''
+			using "nb_with_header.csv" with column names: yes
+			print :columns a,b,c :lines a = 1
+		''')
+		val expectedResult = '''
+			  a b c
+			0 1 1 1
+			3 1 4 2
+		'''
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		println(errors)
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		val code = cmpBash.compile()
+		val execution = cmpBash.run(code)
+		Assertions.assertEquals(expectedResult, execution.output)
+	}
+
+	@Test
+	def void printConditionWithNameWithSelectLineNumber() {
+		val result = parseHelper.parse('''
+			using "nb_with_header.csv" with column names: yes
+			print :columns #0,#1,#2 :lines a = 1
+		''')
+		val expectedResult = '''
+			  a b c
+			0 1 1 1
+			3 1 4 2
+		'''
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		println(errors)
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		val code = cmpBash.compile()
+		val execution = cmpBash.run(code)
+		Assertions.assertEquals(expectedResult, execution.output)
+	}
+
+	@Test
+	def void printConditionWithNumberWithSelectLineName() {
+		val result = parseHelper.parse('''
+			using "nb_with_header.csv" with column names: yes
+			print :columns a,b,c :lines #0 = 1
+		''')
+		val expectedResult = '''
+			  a b c
+			0 1 1 1
+			3 1 4 2
+		'''
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		println(errors)
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		val code = cmpBash.compile()
+		val execution = cmpBash.run(code)
+		Assertions.assertEquals(expectedResult, execution.output)
+	}
+
+	@Test
+	def void printConditionWithNumberWithSelectLineNumber() {
+		val result = parseHelper.parse('''
+			using "nb_with_header.csv" with column names: yes
+			print :columns #0,#1,#2 :lines #0 = 1
+		''')
+		val expectedResult = '''
+			  a b c
+			0 1 1 1
+			3 1 4 2
+		'''
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		println(errors)
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		val code = cmpBash.compile()
+		val execution = cmpBash.run(code)
+		Assertions.assertEquals(expectedResult, execution.output)
+	}
+
+	@Test
+	def void printConditionWithNumberWithSelectLineNumberNoHeader() {
+		val result = parseHelper.parse('''
+			using "nb_no_header.csv" with column names: no
+			print :columns #0,#1,#2 :lines #0 = 1
+		''')
+		val expectedResult = '''
+			  0 1 2
+			0 1 1 1
+			3 1 4 2
+		'''
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		println(errors)
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		val code = cmpBash.compile()
+		val execution = cmpBash.run(code)
+		Assertions.assertEquals(expectedResult, execution.output)
+	}
+
+	@Test
+	def void printConditionEqualBetwStr() {
+		val result = parseHelper.parse('''
+			using "str_with_header.csv" with column names: yes
+			print :lines d = "f"
+		''')
+		val expectedResult = '''
+			  a b c d
+			0 f f f f
+		'''
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		println(errors)
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		val code = cmpBash.compile()
+		val execution = cmpBash.run(code)
+		Assertions.assertEquals(expectedResult, execution.output)
+	}
+
+	@Test
+	def void printConditionNotEqualBetwStr() {
+		val result = parseHelper.parse('''
+			using "str_with_header.csv" with column names: yes
+			print :lines d != "f"
+		''')
+		val expectedResult = '''
+			  a b c d
+			1 e j k l
+			2 h n f e
+			3 f i g m
+			4 k j h i
+		'''
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		println(errors)
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		val code = cmpBash.compile()
+		val execution = cmpBash.run(code)
+		Assertions.assertEquals(expectedResult, execution.output)
+	}
+
+	@Test
+	def void printConditionBoolYes() {
+		val result = parseHelper.parse('''
+			using "bool_with_header.csv" with column names: yes
+			print :lines a = yes
+		''')
+		val expectedResult = '''
+			  a b c d
+			0 1 1 1 1
+			2 1 1 1 0
+			3 1 0 0 0
+		'''
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		println(errors)
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		val code = cmpBash.compile()
+		val execution = cmpBash.run(code)
+		println(execution.output)
+		Assertions.assertEquals(expectedResult, execution.output)
+	}
+	
+	@Test
+	def void printConditionBoolNo() {
+		val result = parseHelper.parse('''
+			using "bool_with_header.csv" with column names: yes
+			print :lines a = no
+		''')
+		val expectedResult = '''
+			  a b c d
+			1 0 1 0 1
+			4 0 1 1 0
+		'''
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		println(errors)
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		println("ICIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
+		val code = cmpBash.compile()
+		println(code)
+		val execution = cmpBash.run(code)
+		println(execution.output)
+		Assertions.assertEquals(expectedResult, execution.output)
+	}
 }
