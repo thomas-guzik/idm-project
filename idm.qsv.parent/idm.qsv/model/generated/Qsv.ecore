@@ -155,4 +155,13 @@
   <eClassifiers xsi:type="ecore:EClass" name="VariableIdentifier" eSuperTypes="#//ContentDescription #//Value">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Save" eSuperTypes="#//Statement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="method" eType="#//SaveMethod"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SaveMethod">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="filename" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SaveCsv" eSuperTypes="#//SaveMethod"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SaveJson" eSuperTypes="#//SaveMethod"/>
 </ecore:EPackage>

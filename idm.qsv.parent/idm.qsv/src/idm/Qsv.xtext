@@ -16,7 +16,7 @@ Header:
 ;
 
 Statement:
-	Print | Insert | Delete | Update | Compute | Echo
+	Print | Insert | Delete | Update | Compute | Echo | Save
 ;
 
 Print:
@@ -190,6 +190,22 @@ ColumnNameIdentifier:
 
 VariableIdentifier:
 	value = Variable
+;
+
+Save:
+	'save' method=SaveMethod
+;
+
+SaveMethod:
+	SaveCsv | SaveJson
+;
+
+SaveCsv:
+	{SaveCsv} ':csv' (filename=STRING)?
+;
+
+SaveJson:
+	{SaveJson} ':json' (filename=STRING)?
 ;
 
 SignedInt returns ecore::EInt: '-'? INT;
