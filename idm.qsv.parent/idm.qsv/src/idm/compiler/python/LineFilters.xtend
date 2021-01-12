@@ -6,7 +6,6 @@ import idm.qsv.MidPriority
 
 class LineFilters {
 
-	Integer filterCount = 0
 	String code
 	String csvDataVariable
 	extension ConcreteValues pythonValues

@@ -1,11 +1,6 @@
 package idm.compiler.python.actions
 
 import idm.compiler.python.MissingConcreteImplementationException
-import idm.compiler.python.PythonCompiler
-import idm.qsv.ColumnDescription
-import idm.qsv.ColumnInsertion
-import idm.qsv.ContentList
-import idm.qsv.LineInsertion
 import idm.qsv.Save
 import idm.qsv.SaveCsv
 import idm.qsv.SaveJson
@@ -34,34 +29,22 @@ class SaveAction implements Action {
 	}
 
 	private def dispatch saveFile(SaveJson jsonMethod) {
-		throw new MissingConcreteImplementationException("SaveJson")
+		val file = jsonMethod.filename === null ? nameToJson(originalFileName) : jsonMethod.filename
+		code += '''«csvDataVariable».to_json("«file»")'''
 	}
 
 	private def dispatch saveFile(SaveCsv csvMethod) {
 		val file = csvMethod.filename === null ? originalFileName : csvMethod.filename
 		code += '''«csvDataVariable».to_csv("«file»", index=False)'''
 	}
-
-	private def dispatch insert(LineInsertion lineInsertion) {
-		val insertedLines = lineInsertion.rows
-		for (ContentList line : insertedLines) {
-			code += PythonCompiler.NEWLINE
-			code +=
-				'''«csvDataVariable» = «csvDataVariable».append(dict(zip(«csvDataVariable».columns,«""»)), ignore_index=True)'''
-			code += PythonCompiler.NEWLINE
+	
+	private def String nameToJson(String filename) {
+		var jsonName = filename
+		if(filename.endsWith(".csv")) {
+			jsonName = filename.substring(0, filename.lastIndexOf(".csv"))
 		}
-	}
-
-	private def dispatch insert(ColumnInsertion columnInsertion) {
-		for (ColumnDescription description : columnInsertion.descriptions) {
-			val hasColumnName = description.columnName !== null
-			if (hasColumnName) {
-				val columnName = description.columnName.value
-				code +=
-					'''«csvDataVariable».insert(loc=len(«csvDataVariable».columns), column="«columnName»", value=«""»)'''
-			}
-			code += PythonCompiler.NEWLINE
-		}
+		jsonName += ".json"
+		return jsonName
 	}
 
 }

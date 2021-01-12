@@ -10,6 +10,7 @@ import java.io.FileWriter
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.util.List
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.extensions.InjectionExtension
 import org.eclipse.xtext.testing.util.ParseHelper
@@ -38,17 +39,31 @@ class SaveTests {
 		return outputResult
 	}
 
+	List<String> tempCsvNames = List.of("bla.csv", "yes.csv")
+	List<String> tempJsonNames = List.of("something.json", "foo3.json")
+
 	@AfterEach
-	def void cleanupFiles() {
+	def void resetFiles() {
 		val foo3Content = '''
-		f1,f2,f3
-		v1,v2,v3
-		v1,v7,v3
+			f1,f2,f3
+			v1,v2,v3
+			v1,v7,v3
 		'''
-		val File fnew = new File("foo3.csv");
-		val FileWriter f2 = new FileWriter(fnew, false);
-		f2.write(foo3Content);
-		f2.close();
+		val File foo3 = new File("foo3.csv");
+		val FileWriter f3 = new FileWriter(foo3, false);
+		f3.write(foo3Content);
+		f3.close();
+
+		for (String filename : tempCsvNames) {
+			val file = new File(filename);
+			file.delete()
+		}
+
+		for (String filename : tempJsonNames) {
+			val file = new File(filename);
+			file.delete()
+		}
+
 	}
 
 	def String getFileContent(String filename) {
@@ -58,7 +73,7 @@ class SaveTests {
 
 	@Test
 	def void saveToOtherCsv() {
-		val filename = "bla.csv"
+		val filename = tempCsvNames.get(0)
 		val parseTree = parseHelper.parse('''
 			using "foo3.csv" with column names: yes
 			insert
@@ -79,8 +94,8 @@ class SaveTests {
 
 		Assertions.assertEquals(expectedResult, getFileContent(filename))
 	}
-	
-		@Test
+
+	@Test
 	def void saveToSameCsv() {
 		val filename = "foo3.csv"
 		val parseTree = parseHelper.parse('''
@@ -104,208 +119,46 @@ class SaveTests {
 		Assertions.assertEquals(expectedResult, getFileContent(filename))
 	}
 
-//
-//	@Test
-//	def void insertOneStringLineNoHeaders() {
-//		val parseTree = parseHelper.parse('''
-//			using "foo2.csv" with column names: no
-//			insert
-//				:lines ("v4", "v1", "v0")
-//			print
-//		''')
-//		parseTree.assertNoErrors
-//
-//		val expectedResult = '''
-//			    0   1   2
-//			0  f1  f2  f3
-//			1  v1  v2  v3
-//			2  v1  v7  v3
-//			3  v4  v1  v0
-//		'''
-//		assertPythonCompilesAndRuns(parseTree, expectedResult)
-//	}
-//
-//	@Test
-//	def void insertThreeStringLines() {
-//		val parseTree = parseHelper.parse('''
-//			using "foo2.csv" with column names: yes
-//			insert
-//				:lines ("v6", "v5", "v4"), ("v8", "v0", "v5"), ("v3", "v9", "v6")
-//			print
-//		''')
-//		parseTree.assertNoErrors
-//
-//		val expectedResult = '''
-//			   f1  f2  f3
-//			0  v1  v2  v3
-//			1  v1  v7  v3
-//			2  v6  v5  v4
-//			3  v8  v0  v5
-//			4  v3  v9  v6
-//		'''
-//		assertPythonCompilesAndRuns(parseTree, expectedResult)
-//	}
-//
-//	@Test
-//	def void insertIntegerLines() {
-//		val parseTree = parseHelper.parse('''
-//			using "foo_numbers.csv" with column names: yes
-//			insert
-//				:lines (7, 2), (4, 8)
-//			print
-//		''')
-//		parseTree.assertNoErrors
-//
-//		val expectedResult = '''
-//			   col0  col1
-//			0     4     3
-//			1     2     7
-//			2     1     3
-//			3     3     5
-//			4     5     1
-//			5     1    10
-//			6     5     1
-//			7     7     2
-//			8     4     8
-//		'''
-//		assertPythonCompilesAndRuns(parseTree, expectedResult)
-//	}
-//
-//	@Test
-//	def void insertLinesIntegerAndString() {
-//		val parseTree = parseHelper.parse('''
-//			using "foo_mix_int_str.csv" with column names: yes
-//			insert
-//				:lines ("v0", 5, "v6"), ("v5", 4, "v9")
-//			print
-//		''')
-//		parseTree.assertNoErrors
-//
-//		val expectedResult = '''
-//			   f1  f2  f3
-//			0  v1   2  v3
-//			1  v6   7  v4
-//			2  v0   5  v6
-//			3  v5   4  v9
-//		'''
-//		assertPythonCompilesAndRuns(parseTree, expectedResult)
-//	}
-//
-//	@Test
-//	def void insertColumnAllString() {
-//		val parseTree = parseHelper.parse('''
-//			using "foo_mix_int_str.csv" with column names: yes
-//			insert
-//				:columns ef ("ar", "zt")
-//			print
-//		''')
-//		parseTree.assertNoErrors
-//
-//		val expectedResult = '''
-//			   f1  f2  f3  ef
-//			0  v1   2  v3  ar
-//			1  v6   7  v4  zt
-//		'''
-//		assertPythonCompilesAndRuns(parseTree, expectedResult)
-//	}
-//
-//	@Test
-//	def void insertThreeColumnsAllString() {
-//		val parseTree = parseHelper.parse('''
-//			using "foo_mix_int_str.csv" with column names: yes
-//			insert
-//				:columns ef ("ar", "zt"), th ("gb", "hn"), il ("ol", "pm")
-//			print
-//		''')
-//		parseTree.assertNoErrors
-//
-//		val expectedResult = '''
-//			   f1  f2  f3  ef  th  il
-//			0  v1   2  v3  ar  gb  ol
-//			1  v6   7  v4  zt  hn  pm
-//		'''
-//		assertPythonCompilesAndRuns(parseTree, expectedResult)
-//	}
-//
-//	@Test
-//	def void insertColumnAllInt() {
-//		val parseTree = parseHelper.parse('''
-//			using "foo_mix_int_str.csv" with column names: yes
-//			insert
-//				:columns ef (8, 6)
-//			print
-//		''')
-//		parseTree.assertNoErrors
-//
-//		val expectedResult = '''
-//			   f1  f2  f3  ef
-//			0  v1   2  v3   8
-//			1  v6   7  v4   6
-//		'''
-//		assertPythonCompilesAndRuns(parseTree, expectedResult)
-//	}
-//
-//	@Test
-//	def void insertColumnAllIntNoHeaders() {
-//		val parseTree = parseHelper.parse('''
-//			using "foo_numbers_noheaders.csv" with column names: no
-//			insert
-//				:columns (7, 6, 5, 4, 3, 2, 1)
-//			print
-//		''')
-//		parseTree.assertNoErrors
-//
-//		val expectedResult = '''
-//			   0   1  2
-//			0  4   3  7
-//			1  2   7  6
-//			2  1   3  5
-//			3  3   5  4
-//			4  5   1  3
-//			5  1  10  2
-//			6  5   1  1
-//		'''
-//		assertPythonCompilesAndRuns(parseTree, expectedResult)
-//	}
-//
-//	@Test
-//	def void insertTwoColumnsAllIntNoHeaders() {
-//		val parseTree = parseHelper.parse('''
-//			using "foo_numbers_noheaders.csv" with column names: no
-//			insert
-//				:columns (7, 6, 5, 4, 3, 2, 1), (6, 8, 1, 3, 5, 7, 9)
-//			print
-//		''')
-//		parseTree.assertNoErrors
-//
-//		val expectedResult = '''
-//			   0   1  2  3
-//			0  4   3  7  6
-//			1  2   7  6  8
-//			2  1   3  5  1
-//			3  3   5  4  3
-//			4  5   1  3  5
-//			5  1  10  2  7
-//			6  5   1  1  9
-//		'''
-//		assertPythonCompilesAndRuns(parseTree, expectedResult)
-//	}
-//
-//	@Test
-//	def void insertColumnMixIntString() {
-//		val parseTree = parseHelper.parse('''
-//			using "foo_mix_int_str.csv" with column names: yes
-//			insert
-//				:columns ef (8, "e")
-//			print
-//		''')
-//		parseTree.assertNoErrors
-//
-//		val expectedResult = '''
-//			   f1  f2  f3 ef
-//			0  v1   2  v3  8
-//			1  v6   7  v4  e
-//		'''
-//		assertPythonCompilesAndRuns(parseTree, expectedResult)
-//	}
+	@Test
+	def void saveToJsonFile() {
+		val filename = tempJsonNames.get(0)
+		val parseTree = parseHelper.parse('''
+			using "foo3.csv" with column names: yes
+			insert
+				:lines ("v8", "v0", "v5")
+			save
+				:json "«filename»"
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+		{"f1":{"0":"v1","1":"v1","2":"v8"},"f2":{"0":"v2","1":"v7","2":"v0"},"f3":{"0":"v3","1":"v3","2":"v5"}}'''
+		val result = pythonCompileAndRun(parseTree)
+		Assertions.assertEquals("", result.output.strip)
+		Assertions.assertEquals("", result.getError)
+
+		Assertions.assertEquals(expectedResult, getFileContent(filename))
+	}
+
+	@Test
+	def void saveToJsonNoFilename() {
+		val filename = tempJsonNames.get(1)
+		val parseTree = parseHelper.parse('''
+			using "foo3.csv" with column names: yes
+			insert
+				:lines ("v8", "v0", "v5")
+			save
+				:json
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+		{"f1":{"0":"v1","1":"v1","2":"v8"},"f2":{"0":"v2","1":"v7","2":"v0"},"f3":{"0":"v3","1":"v3","2":"v5"}}'''
+		val result = pythonCompileAndRun(parseTree)
+		Assertions.assertEquals("", result.output.strip)
+		Assertions.assertEquals("", result.getError)
+
+		Assertions.assertEquals(expectedResult, getFileContent(filename))
+	}
+
 }
