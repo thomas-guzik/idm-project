@@ -2,7 +2,7 @@ package idm.compiler.bash
 
 import idm.qsv.Echo
 
-class CompilerBashEcho extends CompilerBash {
+class CompilerBashEcho implements CompilerBash {
 
 	Echo echo
 

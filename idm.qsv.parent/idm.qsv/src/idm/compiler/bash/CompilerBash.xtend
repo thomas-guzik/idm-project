@@ -1,5 +1,5 @@
 package idm.compiler.bash
 
-abstract class CompilerBash {
+interface CompilerBash {
 	def String compile() {}
 }

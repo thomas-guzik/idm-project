@@ -2,7 +2,7 @@ package idm.compiler.bash
 
 import idm.qsv.Update
 
-class CompilerBashUpdate extends CompilerBash {
+class CompilerBashUpdate implements CompilerBash {
 
 	Update update
 

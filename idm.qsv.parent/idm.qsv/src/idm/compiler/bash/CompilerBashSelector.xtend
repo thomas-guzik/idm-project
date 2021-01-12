@@ -40,7 +40,7 @@ enum ValueType {
 	BOOL
 }
 
-class CompilerBashSelector extends CompilerBash {
+class CompilerBashSelector implements CompilerBash {
 
 	Selector selector
 	Boolean hasColumnName
@@ -71,7 +71,7 @@ class CompilerBashSelector extends CompilerBash {
 
 	def genBeforeWhile() {
 		return '''
-			header=`head -1 «nameFile»`
+			header=`echo "$file" | head -1`
 			«IF colSelectType == ColSelectType.ALL»
 				nbCol=$(( `echo "$header" | tr '«csvSep»' '\n' | wc -l` - 1))
 			«ENDIF»
@@ -100,23 +100,21 @@ class CompilerBashSelector extends CompilerBash {
 	}
 
 	def genInput() {
+		var code = '''echo "$file" |'''
+		
+		if(hasColumnName) {
+			code += ''' tail -n +2 |'''
+		}
+		
 		switch (colSelectType) {
 			case ColSelectType.ALL: {
-				if (hasColumnName) {
-					return '''<(tail -n +2 «nameFile»)'''
-				} else {
-					return nameFile
-				}
+				return code
 			}
 			case ColSelectType.BYNAME: {
-				return '''
-					<(cut -d "«csvSep»" -f $cut_«String.join(",$cut_", cols)»  «nameFile» | tail -n +2)
-				'''
+				return '''«code» cut -d "«csvSep»" -f $cut_«String.join(",$cut_", cols)» |'''
 			}
 			case ColSelectType.BYNUMBER: {
-				return '''
-					<(cut -d "«csvSep»" -f «String.join(",", cols.map[c | String.valueOf(Integer.valueOf(c)+1)])» «nameFile» «IF hasColumnName»| tail -n +2 «ENDIF»)
-				'''
+				return '''«code» cut -d "«csvSep»" -f «String.join(",", cols.map[c | String.valueOf(Integer.valueOf(c)+1)])» |'''
 			}
 		}
 	}

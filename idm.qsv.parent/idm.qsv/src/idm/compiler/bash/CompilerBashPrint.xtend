@@ -29,15 +29,14 @@ import idm.qsv.StringValue
 import idm.qsv.VariableIdentifier
 import idm.qsv.BooleanValue
 
-
-class CompilerBashPrint extends CompilerBash {
+class CompilerBashPrint implements CompilerBash {
 
 	Print print
 	Boolean hasColumnName
 	String nameFile
 	String csvSep
 	String colSep
-	
+
 	CompilerBashSelector c
 
 	new(Print p, Boolean hasColumnName, String nameFile, String separator) {
@@ -46,7 +45,7 @@ class CompilerBashPrint extends CompilerBash {
 		this.nameFile = nameFile
 		this.csvSep = separator
 		colSep = " "
-		
+
 		c = new CompilerBashSelector(print.selector, hasColumnName, nameFile, separator)
 	}
 
@@ -58,10 +57,11 @@ class CompilerBashPrint extends CompilerBash {
 	def String genCode(Print print) {
 		var cond = c.analyzeAndgenCodeLines()
 		return '''
+			
 			«c.genBeforeWhile()»
 			«c.genColTitle()»
 			n=0
-			while read «c.genRead()»
+			«c.genInput()» while read «c.genRead()»
 			do
 			«IF !cond.isEmpty()»
 				«String.join("\n", c.beforeCond)»
@@ -72,7 +72,7 @@ class CompilerBashPrint extends CompilerBash {
 				echo $n «c.genEcho()»
 			«ENDIF»
 			n=$(( $n + 1 ))
-			done < «c.genInput()»
+			done
 		'''
 	}
 

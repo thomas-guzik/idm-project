@@ -2,7 +2,7 @@ package idm.compiler.bash
 
 import idm.qsv.Compute
 
-class CompilerBashCompute extends CompilerBash {
+class CompilerBashCompute implements CompilerBash {
 
 	Compute compute
 

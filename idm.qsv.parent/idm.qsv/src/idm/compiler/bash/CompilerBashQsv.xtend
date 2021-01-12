@@ -12,8 +12,9 @@ import idm.qsv.Compute
 import idm.qsv.Echo
 import idm.qsv.Print
 import idm.qsv.Update
+import idm.qsv.Insert
 
-class CompilerBashQsv extends CompilerBash {
+class CompilerBashQsv implements CompilerBash {
 	QuerySeparatedValues qsv
 	Boolean hasColumnName
 	String separator
@@ -63,6 +64,10 @@ class CompilerBashQsv extends CompilerBash {
 
 	def dispatch String compile(Echo echo) {
 		return new CompilerBashEcho(echo).compile()
+	}
+	
+	def dispatch String compile(Insert insert) {
+		return new CompilerBashInsert(insert).compile()
 	}
 
 	def dispatch String compile(Print print) {
