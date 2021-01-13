@@ -8,6 +8,7 @@ import java.io.IOException
 import java.util.List
 import java.util.Scanner
 import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.util.CancelIndicator
@@ -33,18 +34,14 @@ class Interpreter {
 	}
 
 	def private void prompt() {
-		println(set)
-		println(validator)
-		println("ok")
 		showInitial()
-		var something = scanner.next()
+		var something = scanner.nextLine()
 		while (something.endsWith("\\")) {
 			showNext()
-			val next = scanner.next()
+			val next = scanner.nextLine()
 			something += "\n" + next
 		}
-		
-
+		// should interpret code here
 		val compiler = new PythonCompiler(something.toResource)
 		println(compiler.compile())
 	}
@@ -73,8 +70,20 @@ class Interpreter {
 			return null
 		}
 		val qsv = resource.allContents.filter(QuerySeparatedValues).last
-		
+
 		return qsv
+	}
+
+	def String dump(EObject mod_, String indent) {
+		var res = indent + mod_.toString.replaceFirst('.*[.]impl[.](.*)Impl[^(]*', '$1 ')
+
+		for (a : mod_.eCrossReferences)
+			res += ' ->' + a.toString().replaceFirst('.*[.]impl[.](.*)Impl[^(]*', '$1 ')
+		res += "\n"
+		for (f : mod_.eContents) {
+			res += f.dump(indent + "    ")
+		}
+		return res
 	}
 
 }
