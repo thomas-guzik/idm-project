@@ -26,6 +26,7 @@ import idm.qsv.Save
 class PythonCompiler {
 	QuerySeparatedValues qsv
 	String csvDataVariable
+	String columnIndexVariable = "columnIndex"
 	String csvFileName
 	public static String NEWLINE = "\n"
 	public static String PRINT_FUNCTION_NAME = "printData"
@@ -98,6 +99,9 @@ class PythonCompiler {
 		var String code = ""
 		code += '''«csvDataVariable» = pd.read_csv("«csvFileName»", header=«hasColumnName? "'infer'" : "None"»)
 '''
+		code += NEWLINE
+		code += '''«columnIndexVariable» = len(«csvDataVariable».columns)'''
+		code += NEWLINE
 		return code
 	}
 
@@ -112,13 +116,13 @@ class PythonCompiler {
 	}
 
 	private def dispatch compile(Delete delete) {
-		var deleter = new DeleteAction(delete, csvDataVariable)
+		var deleter = new DeleteAction(delete, csvDataVariable, columnIndexVariable)
 		var code = deleter.compile
 		return code
 	}
 
 	private def dispatch compile(Insert delete) {
-		var inserter = new InsertAction(delete, csvDataVariable)
+		var inserter = new InsertAction(delete, csvDataVariable, columnIndexVariable)
 		var code = inserter.compile
 		return code
 	}

@@ -473,4 +473,94 @@ class PrintOnlyTests {
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
 
+	@Test
+	def void printOneLine() {
+		val parseTree = parseHelper.parse('''
+			using "foo2.csv" with column names: no
+			print
+				:lines #1
+		''')
+		val expectedResult = '''
+			    0   1   2
+			1  v1  v2  v3
+		'''
+
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printOneLineWithTrueCondition() {
+		val parseTree = parseHelper.parse('''
+			using "foo2.csv" with column names: no
+			print
+				:lines #1 #0 = "v1"
+		''')
+		val expectedResult = '''
+			    0   1   2
+			1  v1  v2  v3
+		'''
+
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printOneLineWithFalseCondition() {
+		val parseTree = parseHelper.parse('''
+			using "foo2.csv" with column names: no
+			print
+				:lines #1 #2 = 5
+		''')
+		val result = pythonCompileAndRun(parseTree)
+		Assertions.assertEquals("", result.output.strip)
+		Assertions.assertEquals("", result.getError)
+	}
+
+	@Test
+	def void printLineRange() {
+		val parseTree = parseHelper.parse('''
+			using "foo2.csv" with column names: no
+			print
+				:lines #1-2
+		''')
+		val expectedResult = '''
+			    0   1   2
+			1  v1  v2  v3
+			2  v1  v7  v3
+		'''
+
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void combineLineRangeAndConditionNoHeader() {
+		val parseTree = parseHelper.parse('''
+			using "foo2.csv" with column names: no
+			print
+				:lines #1-2 #1 = "v7"
+		''')
+		val expectedResult = '''
+			    0   1   2
+			2  v1  v7  v3
+		'''
+
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void combineLineRangeAndCondition() {
+		val parseTree = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines #2-5 col1 > 2
+		''')
+		val expectedResult = '''
+			   col0  col1
+			2     1     3
+			3     3     5
+			5     1    10
+		'''
+
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
 }

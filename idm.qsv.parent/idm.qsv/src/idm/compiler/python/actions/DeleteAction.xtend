@@ -12,13 +12,15 @@ class DeleteAction implements Action {
 	Delete delete
 	String csvDataVariable
 	String code
+	String columnIndexVariable
 
 	extension LineFilters lineFiltering
 	extension ConcreteValues pythonValues
 
-	new(Delete d, String dataVariable) {
+	new(Delete d, String dataVariable, String columnIndex) {
 		delete = d
 		csvDataVariable = dataVariable
+		columnIndexVariable = columnIndex
 		lineFiltering = new LineFilters(csvDataVariable)
 		pythonValues = new ConcreteValues
 	}

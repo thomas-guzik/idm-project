@@ -81,4 +81,49 @@ class CombiningActionsTests {
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
 
+	@Test
+	def void deleteThenInsertColumnNoHeaderDoesNotRenumber() {
+		val parseTree = parseHelper.parse('''
+			using "foo2.csv" with column names: no
+			delete
+				:columns #2
+			insert
+				:columns ("f5", "v8", "v1")
+			print
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+			    0   1   3
+			0  f1  f2  f5
+			1  v1  v2  v8
+			2  v1  v7  v1
+		'''
+
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void deleteThenInsertColumnNoHeaderDoesNotRenumber2() {
+		val parseTree = parseHelper.parse('''
+			using "foo_6cols.csv" with column names: no
+			delete
+				:columns #0, #2, #4, #5
+			insert
+				:columns ("f1", "v2", "v3"), ("f4", "v5", "v6"),
+				("f7", "v8", "v9"), ("f9", "v8", "v7"), ("f6", "v5", "v4")
+			print
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+			   1   3   6   7   8   9   10
+			0  f2  f4  f1  f4  f7  f9  f6
+			1  v2  v5  v2  v5  v8  v8  v5
+			2  v7  v4  v3  v6  v9  v7  v4
+		'''
+
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
 }
