@@ -1,13 +1,15 @@
-## Build the compiler in docker:
+**Build the compiler in docker**
 
 ```
 cd idm.qsv.parent/
 docker build -t qsv .
 ```
 
-## Compiling QSV and running generated code:
 
-### bash
+**Compiling and running generated code**
+
+
+**1. Using bash**
 
 ```
 cd idm.qsv.parent/qsv-code/
@@ -15,7 +17,7 @@ cd idm.qsv.parent/qsv-code/
 ./run-sh test.sh
 ```
 
-### for python
+**2. Using python**
 
 ```
 cd idm.qsv.parent/qsv-code/
