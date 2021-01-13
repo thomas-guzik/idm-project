@@ -105,7 +105,7 @@ class BashCompilerPrintTest {
 	def void selectRangeLine() {
 		val result = parseHelper.parse('''
 			using "foo2.csv" with column names: no
-			print :lines 1-2
+			print :lines #1-2
 		''')
 		val expectedResult = '''
 			  0 1 2

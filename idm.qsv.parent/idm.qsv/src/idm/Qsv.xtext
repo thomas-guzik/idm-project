@@ -84,7 +84,7 @@ Lines:
 ;
 
 LineRange:
-	start=INT '-' end=INT
+	'#' start=INT '-' end=INT
 ;
 
 Line:
