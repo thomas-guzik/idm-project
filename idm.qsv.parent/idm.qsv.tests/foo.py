@@ -9,10 +9,7 @@ def printData(data):
     	return
     print(data)
 
-my_data = pd.read_csv("foo_numbers.csv", header='infer')
-filter71 = my_data["col1"] < 5
-filter70 = filter71
-my_data = my_data.drop(my_data[filter70].index)
+my_data = pd.read_csv("foo3.csv", header='infer')
 
-tmp54 = my_data
-printData(tmp54)
+my_data = my_data.append(dict(zip(my_data.columns,["v8", "v0", "v5"])), ignore_index=True)
+my_data.to_csv("bla.csv", index=False)

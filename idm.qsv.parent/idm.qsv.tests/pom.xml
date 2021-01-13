@@ -7,8 +7,8 @@
 		<version>1.0.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>idm.qsv.ide</artifactId>
-	<packaging>eclipse-plugin</packaging>
+	<artifactId>idm.qsv.tests</artifactId>
+	<packaging>eclipse-test-plugin</packaging>
 
 	<build>
 		<plugins>

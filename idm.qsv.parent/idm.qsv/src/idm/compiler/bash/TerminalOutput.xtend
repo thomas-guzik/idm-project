@@ -1,4 +1,4 @@
-package idm.compiler
+package idm.compiler.bash
 
 class TerminalOutput {
 	String output

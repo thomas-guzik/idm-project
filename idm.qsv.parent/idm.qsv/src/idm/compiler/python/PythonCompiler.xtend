@@ -20,10 +20,13 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
+import idm.compiler.python.actions.SaveAction
+import idm.qsv.Save
 
 class PythonCompiler {
 	QuerySeparatedValues qsv
 	String csvDataVariable
+	String csvFileName
 	public static String NEWLINE = "\n"
 	public static String PRINT_FUNCTION_NAME = "printData"
 	static Integer filterCount = 0
@@ -39,6 +42,31 @@ class PythonCompiler {
     print(data)
 	    '''
 
+//	String printIfNotEmptyFunction = '''def «PRINT_FUNCTION_NAME»(data):
+//    if type(data) is pd.DataFrame:
+//        if data.empty:
+//            print()
+//            return
+//        print_data_frame(data)
+//        return
+//    if type(data) is pd.Series:
+//    	print(data.to_string())
+//    	return
+//    print(data)
+//	    '''
+//	    
+//	String printDataFrameFunction = '''def print_data_frame(data):
+//	    table_to_print = "\t"
+//	    table_to_print += "\t".join(map(str, data.columns))
+//	    table_to_print += "\n"
+//	    lines_to_print = []
+//	    for i, line in zip(range(0, len(data.values)), data.values):
+//	        line_to_print = str(i) + "\t"
+//	        line_to_print += "\t".join(map(str, line))
+//	        lines_to_print.append(line_to_print)
+//	    table_to_print += "\n".join(lines_to_print)
+//	    print(table_to_print)
+//	    '''
 	new(QuerySeparatedValues q) {
 		qsv = q
 	}
@@ -65,7 +93,7 @@ class PythonCompiler {
 	}
 
 	private def dispatch compile(Header header) {
-		var String csvFileName = qsv.getHeader().getNameFile()
+		csvFileName = qsv.getHeader().getNameFile()
 		var Boolean hasColumnName = header.isHasColumnName()
 		var String code = ""
 		code += '''«csvDataVariable» = pd.read_csv("«csvFileName»", header=«hasColumnName? "'infer'" : "None"»)
@@ -110,6 +138,12 @@ class PythonCompiler {
 	private def dispatch compile(Echo echo) {
 		var echoer = new EchoAction(echo)
 		var code = echoer.compile
+		return code
+	}
+
+	private def dispatch compile(Save save) {
+		var saver = new SaveAction(save, csvDataVariable, csvFileName)
+		var code = saver.compile
 		return code
 	}
 

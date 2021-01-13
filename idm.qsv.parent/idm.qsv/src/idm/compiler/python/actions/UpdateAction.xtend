@@ -2,9 +2,7 @@ package idm.compiler.python.actions
 
 import idm.compiler.python.ConcreteValues
 import idm.compiler.python.LineFilters
-import idm.compiler.python.MissingConcreteImplementationException
 import idm.compiler.python.PythonCompiler
-import idm.qsv.Insertion
 import idm.qsv.Update
 
 class UpdateAction implements Action {

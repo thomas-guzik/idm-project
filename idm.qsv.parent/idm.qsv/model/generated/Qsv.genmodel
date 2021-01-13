@@ -126,5 +126,13 @@
     <genClasses ecoreClass="Qsv.ecore#//VariableIdentifier">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//VariableIdentifier/value"/>
     </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//Save">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Save/method"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//SaveMethod">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//SaveMethod/filename"/>
+    </genClasses>
+    <genClasses ecoreClass="Qsv.ecore#//SaveCsv"/>
+    <genClasses ecoreClass="Qsv.ecore#//SaveJson"/>
   </genPackages>
 </genmodel:GenModel>
