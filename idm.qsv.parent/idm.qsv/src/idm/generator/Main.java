@@ -26,7 +26,7 @@ public class Main {
 	public static void main(String[] args) {
 		Injector injector = new QsvStandaloneSetup().createInjectorAndDoEMFRegistration();
 		Main main = injector.getInstance(Main.class);
-		main.runInterpreter();
+//		main.runInterpreter();
 		
 		System.exit(0);
 		if (args.length < 2) {
