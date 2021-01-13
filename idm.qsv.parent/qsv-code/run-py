@@ -1,0 +1,11 @@
+#!/bin/bash
+
+docker image inspect qsv-py &> /dev/null
+image_exists=$?
+if [ $image_exists -ne 0 ];then
+    docker build -t qsv-py -f Dockerfile.python .
+fi
+
+for file in "$@"; do
+    docker run -it --rm -v $PWD:/qsv-code qsv-py "$file"
+done

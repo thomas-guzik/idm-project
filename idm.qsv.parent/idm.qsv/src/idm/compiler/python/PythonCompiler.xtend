@@ -72,14 +72,14 @@ class PythonCompiler {
 	}
 
 	def PythonCompilerOutput compileAndRun() throws IOException {
-		csvDataVariable = "my_data"
 		var pythonCode = compile()
 		println(pythonCode)
 		var String PYTHON_OUTPUT = "foo.py"
 		return writeToFileAndExecute(PYTHON_OUTPUT, pythonCode)
 	}
 
-	private def String compile() {
+	def String compile() {
+		csvDataVariable = "my_data"
 		var String pythonCode = ""
 		pythonCode += "import pandas as pd"
 		pythonCode += NEWLINE

@@ -22,16 +22,16 @@ import org.eclipse.xtext.validation.Issue;
 public class Main {
 
 	public static void main(String[] args) {
-		if (args.length == 0) {
-			System.err.println("Aborting: no path to EMF resource provided!");
+		if (args.length < 2) {
+			System.err.println("Aborting: no path to EMF resource provided or no target language!");
 			return;
 		}
 		Injector injector = new QsvStandaloneSetup().createInjectorAndDoEMFRegistration();
 		Main main = injector.getInstance(Main.class);
 		System.out.println("");
 		System.out.println("******");
-		System.out.println("Code generation for: " + args[0] + " ...");
-		main.runGenerator(args[0]);
+		System.out.println("Code generation for: " + args[1] + " to " + args[0] + "...");
+		main.runGenerator(args[1], args[0]);
 	}
 
 	@Inject
@@ -46,7 +46,7 @@ public class Main {
 	@Inject 
 	private JavaIoFileSystemAccess fileAccess;
 
-	protected void runGenerator(String string) {
+	protected void runGenerator(String string, String target) {
 		// Load the resource
 		ResourceSet set = resourceSetProvider.get();
 		Resource resource = set.getResource(URI.createFileURI(string), true);
@@ -61,6 +61,7 @@ public class Main {
 		}
 
 		// Configure and start the generator
+		QsvGenerator.setTargetLanguage(target);
 		fileAccess.setOutputPath("/");
 		GeneratorContext context = new GeneratorContext();
 		context.setCancelIndicator(CancelIndicator.NullImpl);

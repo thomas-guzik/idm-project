@@ -1,4 +1,20 @@
-#! /bin/bash
+#!/bin/bash
+
+target_language=$1
+case "$target_language" in
+    sh | py)
+        # it's a valid target language
+        ;;
+    *)
+        # it's not
+        echo "Please provide a valid target language first: either sh or py"
+        exit 1
+        ;;
+esac
+
+
+# remove first parameter
+set -- "${@:2}"
 
 if [ $# -lt 1 ];then
     echo "Please provide at least one QSV file"
@@ -29,7 +45,7 @@ echo "Found all QSV files."
 for file in "$@"; do
     echo "Processing $file ..."
     echo
-    java -jar idm.qsv/build/libs/idm.qsv-1.0.0-SNAPSHOT.jar "$FILES_LOCATION/$file"
+    java -jar idm.qsv/build/libs/idm.qsv-1.0.0-SNAPSHOT.jar "$target_language" "$FILES_LOCATION/$file"
     echo
     echo
 done
