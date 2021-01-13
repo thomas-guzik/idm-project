@@ -25,3 +25,9 @@ cd idm.qsv.parent/qsv-code/
 ./run-py test.py
 ```
 
+NB: if you need to run docker using `sudo`, you can first update the necessary files using:
+
+```
+sed -i 's/docker/sudo docker/g' qsv-code/compile-py qsv-code/compile-sh qsv-code/run-py
+```
+(also in the `idm.qsv.parent` directory)
