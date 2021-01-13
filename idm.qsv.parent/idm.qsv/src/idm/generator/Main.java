@@ -28,6 +28,9 @@ public class Main {
 		}
 		Injector injector = new QsvStandaloneSetup().createInjectorAndDoEMFRegistration();
 		Main main = injector.getInstance(Main.class);
+		System.out.println("");
+		System.out.println("******");
+		System.out.println("Code generation for: " + args[0] + " ...");
 		main.runGenerator(args[0]);
 	}
 
@@ -58,11 +61,9 @@ public class Main {
 		}
 
 		// Configure and start the generator
-		fileAccess.setOutputPath("src-gen/");
+		fileAccess.setOutputPath("/");
 		GeneratorContext context = new GeneratorContext();
 		context.setCancelIndicator(CancelIndicator.NullImpl);
 		generator.generate(resource, fileAccess, context);
-
-		System.out.println("Code generation finished.");
 	}
 }

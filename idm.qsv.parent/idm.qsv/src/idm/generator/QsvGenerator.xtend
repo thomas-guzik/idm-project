@@ -3,6 +3,8 @@
  */
 package idm.generator
 
+import idm.compiler.bash.CompilerBashQsv
+import idm.qsv.QuerySeparatedValues
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
@@ -15,7 +17,17 @@ import org.eclipse.xtext.generator.IGeneratorContext
  */
 class QsvGenerator extends AbstractGenerator {
 
+	String target = "bash"
+
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-		fsa.generateFile('greetings.txt', 'Generator output!')
+		if (target == "bash") {
+			val CompilerBashQsv bashCompiler = new CompilerBashQsv(
+				resource.allContents.filter(QuerySeparatedValues).last)
+			val location = resource.URI.trimFileExtension.path + ".sh"
+			println("Saving output to: " + location)
+			fsa.generateFile(location, bashCompiler.compile())
+		} else {
+			fsa.generateFile('greetings.txt', 'Generator output!')
+		}
 	}
 }

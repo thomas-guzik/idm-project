@@ -3,10 +3,16 @@
  */
 package idm.generator;
 
+import com.google.common.base.Objects;
+import com.google.common.collect.Iterators;
+import idm.compiler.bash.CompilerBashQsv;
+import idm.qsv.QuerySeparatedValues;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.generator.AbstractGenerator;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.generator.IGeneratorContext;
+import org.eclipse.xtext.xbase.lib.InputOutput;
+import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 
 /**
  * Generates code from your model files on save.
@@ -15,7 +21,20 @@ import org.eclipse.xtext.generator.IGeneratorContext;
  */
 @SuppressWarnings("all")
 public class QsvGenerator extends AbstractGenerator {
+  private String target = "bash";
+  
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
+    boolean _equals = Objects.equal(this.target, "bash");
+    if (_equals) {
+      QuerySeparatedValues _last = IteratorExtensions.<QuerySeparatedValues>last(Iterators.<QuerySeparatedValues>filter(resource.getAllContents(), QuerySeparatedValues.class));
+      final CompilerBashQsv bashCompiler = new CompilerBashQsv(_last);
+      String _path = resource.getURI().trimFileExtension().path();
+      final String location = (_path + ".sh");
+      InputOutput.<String>println(("Saving output to: " + location));
+      fsa.generateFile(location, bashCompiler.compile());
+    } else {
+      fsa.generateFile("greetings.txt", "Generator output!");
+    }
   }
 }
