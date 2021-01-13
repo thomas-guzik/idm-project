@@ -4,5 +4,5 @@ COPY . .
 
 RUN gradle shadowJar
 
-CMD ["./run-generator.sh"]
+ENTRYPOINT ["./run-generator.sh"]
 
