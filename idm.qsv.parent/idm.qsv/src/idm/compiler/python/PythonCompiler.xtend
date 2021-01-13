@@ -6,6 +6,7 @@ import idm.compiler.python.actions.DeleteAction
 import idm.compiler.python.actions.EchoAction
 import idm.compiler.python.actions.InsertAction
 import idm.compiler.python.actions.PrintAction
+import idm.compiler.python.actions.SaveAction
 import idm.compiler.python.actions.UpdateAction
 import idm.qsv.Compute
 import idm.qsv.Delete
@@ -14,14 +15,13 @@ import idm.qsv.Header
 import idm.qsv.Insert
 import idm.qsv.Print
 import idm.qsv.QuerySeparatedValues
+import idm.qsv.Save
 import idm.qsv.Statement
 import idm.qsv.Update
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
-import idm.compiler.python.actions.SaveAction
-import idm.qsv.Save
 
 class PythonCompiler {
 	QuerySeparatedValues qsv
@@ -116,7 +116,7 @@ class PythonCompiler {
 	}
 
 	private def dispatch compile(Delete delete) {
-		var deleter = new DeleteAction(delete, csvDataVariable, columnIndexVariable)
+		var deleter = new DeleteAction(delete, csvDataVariable)
 		var code = deleter.compile
 		return code
 	}
