@@ -17,7 +17,8 @@ import idm.qsv.Insert
 class CompilerBashQsv implements CompilerBash {
 	QuerySeparatedValues qsv
 	Boolean hasColumnName
-	String separator
+	String csvSep
+	String colSep
 	String nameFile
 
 	new(QuerySeparatedValues q) {
@@ -39,7 +40,8 @@ class CompilerBashQsv implements CompilerBash {
 	}
 
 	def Header analyze(Header header) {
-		separator = "," // TODO Penser à ajouter la selection du separateur dans la grammaire
+		csvSep = "," // TODO Penser à ajouter la selection du separateur dans la grammaire
+		colSep = " "
 		hasColumnName = header.isHasColumnName()
 		nameFile = header.nameFile
 		return header
@@ -49,8 +51,10 @@ class CompilerBashQsv implements CompilerBash {
 		return '''
 			#!/bin/bash
 			OLD_IFS=$IFS
-			IFS="«separator»"
+			IFS="«csvSep»"
 			file=$(cat «nameFile»)
+			lastColIndex=$(( $(head -1 <(echo "$file") | tr '«csvSep»' '\n' | wc -l) - 1))
+			index=$(seq -s ',' 0 $lastColIndex)
 		'''
 	}
 
@@ -67,11 +71,11 @@ class CompilerBashQsv implements CompilerBash {
 	}
 	
 	def dispatch String compile(Insert insert) {
-		return new CompilerBashInsert(insert).compile()
+		return new CompilerBashInsert(insert, hasColumnName, csvSep, colSep).compile()
 	}
 
 	def dispatch String compile(Print print) {
-		return new CompilerBashPrint(print, hasColumnName, nameFile, separator).compile()
+		return new CompilerBashPrint(print, hasColumnName, csvSep, colSep).compile()
 	}
 
 	def dispatch String compile(Update update) {

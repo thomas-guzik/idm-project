@@ -18,16 +18,14 @@ class CompilerBashInsert implements CompilerBash {
 
 	Insert insert
 	Boolean hasColumnName
-	Boolean addColumn
 	String csvSep
 	String colSep
 
-	new(Insert i) {
+	new(Insert i, Boolean hasColumnName, String csvSep, String colSep) {
 		insert = i
 		this.hasColumnName = hasColumnName
-		this.csvSep = ","
-		colSep = " "
-		addColumn = null
+		this.csvSep = csvSep
+		this.colSep = colSep
 	}
 
 	override String compile() {
@@ -41,7 +39,8 @@ class CompilerBashInsert implements CompilerBash {
 	def dispatch String genCodeInsertion(Insertion i) {}
 
 	def dispatch String genCodeInsertion(LineInsertion l) {
-		return '''file=$(echo -e "$file«FOR r : l.rows»\n«r.genCode()»«ENDFOR»")'''
+		return '''file=$(echo -e "$file«FOR r : l.rows»\n«r.genCode()»«ENDFOR»")
+		'''
 	}
 
 	def String genCode(ContentList l) {
@@ -53,9 +52,16 @@ class CompilerBashInsert implements CompilerBash {
 	}
 
 	def dispatch String genCodeInsertion(ColumnInsertion c) {
+		var code = ""
 		var list = new ArrayList<ArrayList<String>>()
 		for (d : c.descriptions) {
 			list.add(d.genCode())
+		}
+		for(var i = 0; i < list.size(); i++ ) {
+			code += '''
+			lastColIndex=$((lastColIndex + 1))
+			index="$index«csvSep»$lastColIndex"
+			'''
 		}
 		var newList = new ArrayList<ArrayList<String>>()
 		for (var i = 0; i < list.get(0).size(); i++) {
@@ -72,8 +78,11 @@ class CompilerBashInsert implements CompilerBash {
 			newnewList.add(String.join(",", l))
 		}
 
-		return '''add=$(echo -e "«String.join("\n", newnewList)»")
-		file=$(paste -d«csvSep» <(echo "$file") <(echo "$add"))'''
+		return '''
+		«code»
+		add=$(echo -e "«String.join("\n", newnewList)»")
+		file=$(paste -d«csvSep» <(echo "$file") <(echo "$add"))
+		'''
 	}
 
 	def genCode(ColumnDescription d) {

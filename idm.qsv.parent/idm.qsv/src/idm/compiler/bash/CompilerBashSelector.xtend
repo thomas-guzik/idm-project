@@ -27,6 +27,7 @@ import idm.qsv.IntegerValue
 import idm.qsv.StringValue
 import idm.qsv.VariableIdentifier
 import idm.qsv.BooleanValue
+import java.util.HashMap
 
 enum ColSelectType {
 	ALL,
@@ -45,137 +46,130 @@ class CompilerBashSelector implements CompilerBash {
 	Selector selector
 	Boolean hasColumnName
 	ColSelectType colSelectType
-	ArrayList<String> cols
-	String nameFile
+	ArrayList<String> colOfColumns
+	HashMap<String, ArrayList<String>> colOfConditions
 	String csvSep
 	String colSep
 
-	Lines lines
 	ArrayList<String> beforeCond
-	ArrayList<String> locName
+	Boolean withCondition
 
-	new(Selector s, Boolean hasColumnName, String nameFile, String separator) {
+	new(Selector s, Boolean hasColumnName, String csvSep, String colSep) {
 		selector = s
 		this.hasColumnName = hasColumnName
-		this.nameFile = nameFile
-		this.csvSep = separator
-		colSep = " "
+		this.csvSep = csvSep
+		this.colSep = colSep
 
 		colSelectType = ColSelectType.ALL
-		cols = newArrayList
-		lines = null
+		colOfColumns = newArrayList
 		beforeCond = newArrayList
-		locName = newArrayList
+		colOfConditions = new HashMap<String, ArrayList<String>>()
+		colOfConditions.put("number", new ArrayList<String>())
+		colOfConditions.put("name", new ArrayList<String>())
+		withCondition = false
 
 	}
 
 	def genBeforeWhile() {
 		return '''
-			header=`echo "$file" | head -1`
+			header=$(echo "$file" | head -1)
 			«IF colSelectType == ColSelectType.ALL»
-				nbCol=$(( `echo "$header" | tr '«csvSep»' '\n' | wc -l` - 1))
+				nbCol=$(( $(echo "$header" | tr '«csvSep»' '\n' | wc -l) - 1))
 			«ENDIF»
+			«genCutVariable»
 			«genLocVariable»
 		'''
 	}
 
-	def genLocVariable() {
-		switch (colSelectType) {
-			case ColSelectType.BYNAME: {
-				return '''
-					«FOR c : cols»
-						cut_«c»=`echo "$header" | tr '«csvSep»' '\n' | nl | grep -w "«c»" | tr -d " " |  awk -F " " '{print $1}'`
-						loc_«c»=$(( $cut_«c» - 1))
-					«ENDFOR»
+	def genCutVariable() {
+		var code = ""
+		if (colSelectType !== ColSelectType.ALL) {
+			var echoVar = ""
+			if (colSelectType === ColSelectType.BYNAME) {
+				echoVar = "$header"
+			} else if (colSelectType === ColSelectType.BYNUMBER) {
+				echoVar = "$index"
+			}
+			code += '''
+				«FOR c : colOfColumns»
+					cut_«c»=$(echo "«echoVar»" | tr '«csvSep»' '\n' | grep -n -w "^«c»" |  awk -F ":" '{print $1}')
+				«ENDFOR»
+			'''
+
+			if (hasColumnName) {
+				code += '''
+					header_cut=$(echo "$header" | cut -d '«csvSep»' -f $cut_«String.join(',$cut_',colOfColumns)»)
 				'''
 			}
-			default: {
-				return '''
-					«FOR v : locName»
-						loc_«v»=$(( `echo "$header" | tr '«csvSep»' '\n' | nl | grep -w "«v»" | tr -d " " |  awk -F " " '{print $1}'` - 1))
-					«ENDFOR»
-				'''
-			}
+			code += '''
+				index_cut=$(echo "$index" | cut -d '«csvSep»' -f $cut_«String.join(',$cut_',colOfColumns)»)
+				nbCol=$(( $(echo "$index_cut" | tr '«csvSep»' '\n' | wc -l) - 1))
+			'''
 		}
+		return code
+	}
+
+	def genLocVariable() {
+		var echoVarForName = ""
+		var echoVarForNumber = ""
+		if (colSelectType == ColSelectType.ALL) {
+			echoVarForName = "$header"
+			echoVarForNumber = "$index"
+		} else {
+			echoVarForName = "$header_cut"
+			echoVarForNumber = "$index_cut"
+		}
+		return '''
+			«FOR v : colOfConditions.get("name")»
+				loc_«v»=$(( $(echo "«echoVarForName»" | tr '«csvSep»' '\n' | grep -n -w "^«v»" |  awk -F ":" '{print $1}') - 1))
+			«ENDFOR»
+			«FOR v : colOfConditions.get("number")»
+				loc_«v»=$(( $(echo "«echoVarForNumber»" | tr '«csvSep»' '\n'| grep -n -w "^«v»" |  awk -F ":" '{print $1}') - 1))
+			«ENDFOR»
+		'''
 	}
 
 	def genInput() {
 		var code = '''echo "$file" |'''
-		
-		if(hasColumnName) {
+
+		if (hasColumnName) {
 			code += ''' tail -n +2 |'''
 		}
-		
-		switch (colSelectType) {
-			case ColSelectType.ALL: {
-				return code
-			}
-			case ColSelectType.BYNAME: {
-				return '''«code» cut -d "«csvSep»" -f $cut_«String.join(",$cut_", cols)» |'''
-			}
-			case ColSelectType.BYNUMBER: {
-				return '''«code» cut -d "«csvSep»" -f «String.join(",", cols.map[c | String.valueOf(Integer.valueOf(c)+1)])» |'''
-			}
+
+		if (colSelectType !== ColSelectType.ALL) {
+			code += ''' cut -d "«csvSep»" -f $cut_«String.join(",$cut_", colOfColumns)» |'''
 		}
+		return code
 	}
 
 	def genColTitle() {
-		switch (colSelectType) {
-			case ColSelectType.ALL: {
-				if (hasColumnName) {
-					return '''echo "  `echo "$header" | tr '«csvSep»' '«colSep»'`"'''
-				} else {
-					return '''echo "  `seq -s '«colSep»' 0 $nbCol`"'''
-				}
-			}
-			case ColSelectType.BYNAME: {
-				return '''
-					echo "  `echo "$header" | cut -d "«csvSep»" -f $cut_«String.join(",$cut_", cols)» | tr ',' ' '`"
-				'''
-			}
-			case ColSelectType.BYNUMBER: {
-				if (hasColumnName) {
-					return '''
-						echo "  `echo "$header" | cut -d "«csvSep»" -f «String.join(",", cols.map[c | String.valueOf(Integer.valueOf(c)+1)])» | tr ',' ' '`"
-					'''
-				} else {
-					return '''
-						echo "  «String.join(colSep, cols)»"
-					'''
-				}
-			}
-			default: {
-				return ""
-			}
-		}
-	}
+		var echoVar = ""
 
-	def genRead() {
 		switch (colSelectType) {
 			case ColSelectType.ALL: {
-				return '''-a c'''
+				if (hasColumnName) {
+					echoVar = "$header"
+				} else {
+					echoVar = "$index"
+				}
 			}
 			case ColSelectType.BYNAME: {
-				return '''c$loc_«String.join(" c$loc_", cols)»'''
+				echoVar = "$header_cut"
 			}
 			case ColSelectType.BYNUMBER: {
-				return '''c«String.join(" c", cols)»'''
+				if (hasColumnName) {
+					echoVar = "$header_cut"
+				} else {
+					echoVar = "$index_cut"
+				}
 			}
 		}
+
+		return '''echo "  $(echo "«echoVar»" | tr '«csvSep»' '«colSep»')"'''
 	}
 
 	def genEcho() {
-		switch (colSelectType) {
-			case ColSelectType.ALL: {
-				return '''$(eval echo '${c['`seq -s ']} ${c[' 0 $nbCol`]'}')'''
-			}
-			case ColSelectType.BYNAME: {
-				return '''$(eval echo '$c'$loc_«String.join(" '$c'$loc_", cols)»)'''
-			}
-			case ColSelectType.BYNUMBER: {
-				return '''$c«String.join(" $c", cols)»'''
-			}
-		}
+		return '''$(eval echo '${c['`seq -s ']}«colSep»${c[' 0 $nbCol`]'}')'''
 	}
 
 	def analyze() {
@@ -194,7 +188,8 @@ class CompilerBashSelector implements CompilerBash {
 		}
 
 		if (selector.lineSelection !== null) {
-			lines = selector.lineSelection
+			selector.lineSelection.analyze()
+			withCondition = true
 		}
 		return this
 	}
@@ -205,18 +200,61 @@ class CompilerBashSelector implements CompilerBash {
 		if (hasColumnName == false) {
 			throw new Exception("You select columns name but file hasn't columns name")
 		}
-		c.getNames().forEach[n|cols.add(n)]
+		c.getNames().forEach[n|colOfColumns.add(n)]
 		colSelectType = ColSelectType.BYNAME
 	}
 
 	def dispatch analyzeColumn(ColumnNumbers c) {
-		c.numbers.forEach[n|cols.add(n.substring(1))]
+		c.numbers.forEach[n|colOfColumns.add(n.substring(1))]
 		colSelectType = ColSelectType.BYNUMBER
 	}
 
-	def analyzeAndgenCodeLines() {
-		if (lines !== null) {
-			return lines.genCode()
+	def void analyze(Lines l) {
+		if (l.cond !== null) {
+			l.cond.analyze()
+		}
+	}
+
+	def void analyze(Condition c) {
+		c.mid.analyze()
+		if (c.orCondition !== null) {
+			c.orCondition.analyze()
+		}
+	}
+
+	def void analyze(MidPriority m) {
+		m.high.analyze()
+		if (m.andCondition !== null) {
+			m.andCondition.analyze()
+		}
+	}
+
+	def void analyze(HighestPriority h) {
+		if (h.nestedCondition !== null) {
+			h.nestedCondition.analyze()
+		}
+		else if(h.baseCondition !== null) {
+			h.baseCondition.analyze()
+		}
+	}
+
+	def void analyze(BinCond b) {
+			b.columnId.analyzeColumnIdentifier()
+	}
+
+	def dispatch void analyzeColumnIdentifier(ColumnIdentifier c) {	}
+
+	def dispatch void analyzeColumnIdentifier(ColumnNumberIdentifier c) {
+		colOfConditions.get("number").add(c.value.substring(1))
+	}
+
+	def dispatch void analyzeColumnIdentifier(ColumnNameIdentifier c) {
+		colOfConditions.get("name").add(c.value)
+	}
+
+	def genCond() {
+		if (selector.lineSelection !== null) {
+			return selector.lineSelection.genCode()
 		} else {
 			return ""
 		}
@@ -285,36 +323,11 @@ class CompilerBashSelector implements CompilerBash {
 	def dispatch genCodeColumnIdentifier(ColumnIdentifier c) {}
 
 	def dispatch genCodeColumnIdentifier(ColumnNumberIdentifier c) {
-		var v = c.value.substring(1)
-
-		if (colSelectType === ColSelectType.ALL) {
-			return ''' ${c[«v»]}'''
-		} else {
-			return ''' $c«v»'''
-		}
+		return ''' ${c[$loc_«c.value.substring(1)»]}'''
 	}
 
 	def dispatch genCodeColumnIdentifier(ColumnNameIdentifier c) {
-		var v = c.value
-		var before = ""
-
-		if (!locName.contains(v)) {
-			locName.add(v)
-		}
-
-		if (colSelectType === ColSelectType.ALL) {
-			before = '''id_«v»=${c[$loc_«v»]}'''
-			if (!beforeCond.contains(before)) {
-				beforeCond.add(before)
-			}
-			return ''' $id_«v» '''
-		} else {
-			before = '''id_«v»=$(eval echo '$c'$loc_«v»)'''
-			if (!beforeCond.contains(before)) {
-				beforeCond.add(before)
-			}
-			return ''' $id_«v»'''
-		}
+		return ''' ${c[$loc_«c.value»]}'''
 	}
 
 	def dispatch analyzeValue(Value v) {}
@@ -407,6 +420,10 @@ class CompilerBashSelector implements CompilerBash {
 
 	def getBeforeCond() {
 		return beforeCond
+	}
+
+	def Boolean isWithCondition() {
+		return withCondition
 	}
 
 }

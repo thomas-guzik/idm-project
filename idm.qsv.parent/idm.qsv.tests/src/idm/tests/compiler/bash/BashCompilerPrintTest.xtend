@@ -37,8 +37,8 @@ class BashCompilerPrintTest {
 		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
-		
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -59,6 +59,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -79,6 +80,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -99,6 +101,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -120,6 +123,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -141,13 +145,14 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
 	def void selectColumnWithMultipleNumber() {
 		val result = parseHelper.parse('''
 			using "foo1.csv" with column names: no
-			print :columns #0,#2
+			print :columns #2,#0
 		''')
 		val expectedResult = '''
 			  0 2
@@ -162,6 +167,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -182,6 +188,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -202,6 +209,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -222,6 +230,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -245,6 +254,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -265,6 +275,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -286,6 +297,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -306,6 +318,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -327,6 +340,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -347,6 +361,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -368,6 +383,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -389,13 +405,14 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
 	def void printConditionParentheses() {
 		val result = parseHelper.parse('''
 			using "nb_with_header.csv" with column names: yes
-			print :lines (a = 1 or b = 4) and d = 8
+			print :lines ( a = 1 or b = 4 ) and d = 8
 		''')
 		val expectedResult = '''
 			  a b c d
@@ -409,6 +426,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -429,6 +447,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -450,6 +469,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -471,6 +491,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -492,6 +513,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -513,6 +535,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -534,6 +557,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -555,6 +579,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -575,6 +600,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -598,6 +624,7 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 
 	@Test
@@ -620,8 +647,9 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
-	
+
 	@Test
 	def void printConditionBoolNo() {
 		val result = parseHelper.parse('''
@@ -641,5 +669,6 @@ class BashCompilerPrintTest {
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
+		Assertions.assertEquals("", execution.error)
 	}
 }

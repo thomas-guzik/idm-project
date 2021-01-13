@@ -28,23 +28,24 @@ class CompilerBashDelete implements CompilerBash {
 	}
 
 	def String genCode(Delete delete) {
-		var cond = c.analyzeAndgenCodeLines()
-		return '''
-			«c.genBeforeWhile()»
-			n=0
-			file=$(«c.genInput()» while read «c.genRead()»
-			do
-			«IF !cond.isEmpty()»
-				«String.join("\n", c.beforeCond)»
-				if [[ ! ( «cond» ) ]] ; then
-				  echo «c.genEcho()»
-				fi
-			«ELSE»
-				echo «c.genEcho()»
-			«ENDIF»
-			n=$(( $n + 1 ))
-			done)
-		'''
+//		var cond = c.analyzeAndgenCodeLines()
+//		return '''
+//			«c.genBeforeWhile()»
+//			n=0
+//			file=$(«c.genInput()» while read «c.genRead()»
+//			do
+//			«IF !cond.isEmpty()»
+//				«String.join("\n", c.beforeCond)»
+//				if [[ ! ( «cond» ) ]] ; then
+//				  echo «c.genEcho()»
+//				fi
+//			«ELSE»
+//				echo «c.genEcho()»
+//			«ENDIF»
+//			n=$(( $n + 1 ))
+//			done)
+//		'''
+		return ""
 	}
 
 }
