@@ -37,6 +37,29 @@ class BashCompilerDeleteTest {
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 	
+		@Test
+	def void deleteMultipleLine() {
+		val result = parseHelper.parse('''
+			using "nb_with_header.csv" with column names: yes
+			delete :lines #1-3
+			print
+		''')
+		val expectedResult = '''
+			  a b c d
+			0 1 1 1 1
+			4 6 5 3 4
+		'''
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		println("*****************************************")
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		val code = cmpBash.compile()
+		println(code)
+		val execution = cmpBash.run(code)
+		Assertions.assertEquals(expectedResult, execution.output)
+	}
+	
 	@Test
 	def void deleteOneColumn() {
 		val result = parseHelper.parse('''
@@ -58,4 +81,25 @@ class BashCompilerDeleteTest {
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 
+
+	@Test
+	def void deleteTwoColumns() {
+		val result = parseHelper.parse('''
+			using "foo1.csv" with column names: no
+			delete :columns #1,#0
+			print
+		''')
+		val expectedResult = '''
+			  2
+			0 f3
+			1 v3
+		'''
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		val code = cmpBash.compile()
+		val execution = cmpBash.run(code)
+		Assertions.assertEquals(expectedResult, execution.output)
+	}
 }

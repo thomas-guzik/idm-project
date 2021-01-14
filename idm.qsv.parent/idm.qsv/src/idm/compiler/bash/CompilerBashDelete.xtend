@@ -24,7 +24,10 @@ class CompilerBashDelete implements CompilerBash {
 	}
 
 	override String compile() {
+		println("analyse")
+		println(delete.selector)
 		c.analyze()
+		println("fin analyse")
 		withCondition = c.isWithCondition()
 		return delete.genCode()
 	}
@@ -33,7 +36,7 @@ class CompilerBashDelete implements CompilerBash {
 		return '''
 			«c.genBeforeWhileDelete()»
 			n=0
-			«c.genInput()» while read -a c
+			file=$(«c.genInput()» while read -a c
 			do
 			«IF withCondition»
 				if [[ ! ( «c.genCond()» ) ]] ; then
@@ -43,7 +46,7 @@ class CompilerBashDelete implements CompilerBash {
 				echo «c.genEcho()»
 			«ENDIF»
 			n=$(( $n + 1 ))
-			done
+			done)
 		'''
 	}
 

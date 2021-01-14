@@ -13,6 +13,7 @@ import idm.qsv.Echo
 import idm.qsv.Print
 import idm.qsv.Update
 import idm.qsv.Insert
+import idm.qsv.Delete
 
 class CompilerBashQsv implements CompilerBash {
 	QuerySeparatedValues qsv
@@ -33,6 +34,7 @@ class CompilerBashQsv implements CompilerBash {
 	override String compile() {
 		var String code = ""
 		code += qsv.getHeader().analyze().genCode();
+		
 		for (Statement s : qsv.getStatements()) {
 			code += s.compile();
 		}
@@ -64,6 +66,10 @@ class CompilerBashQsv implements CompilerBash {
 
 	def dispatch String compile(Compute compute) {
 		return new CompilerBashCompute(compute).compile()
+	}
+	
+	def dispatch String compile(Delete delete) {
+		return new CompilerBashDelete(delete, hasColumnName, csvSep, colSep).compile()
 	}
 
 	def dispatch String compile(Echo echo) {

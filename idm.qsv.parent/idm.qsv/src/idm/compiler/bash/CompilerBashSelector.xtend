@@ -74,7 +74,7 @@ class CompilerBashSelector implements CompilerBash {
 		return '''
 			header=$(echo "$file" | head -1)
 			«IF colSelectType == ColSelectType.ALL»
-				nbCol=$(( $(echo "$header" | tr '«csvSep»' '\n' | wc -l) - 1))
+				nbCol=$(( $(echo "$index" | tr '«csvSep»' '\n' | wc -l) - 1))
 			«ENDIF»
 			«genCutVariable»
 			«genLocVariable»
@@ -82,41 +82,49 @@ class CompilerBashSelector implements CompilerBash {
 	}
 
 	def genBeforeWhileDelete() {
-		var keyword = ""
-		if (colSelectType === ColSelectType.BYNAME) {
-			keyword = "header"
-
-		} else if (colSelectType === ColSelectType.BYNUMBER) {
-			keyword = "index"
-		}
-		return
+		var code = '''nbCol=$(( $(echo "$index" | tr ',' '\n' | wc -l) -1))
 		'''
-		«IF hasColumnName»
-		header_cut=""
-		header_array=($(echo "$header" | tr ',' ' '))
-		«ENDIF»
-		index_cut=""
-		index_array=($(echo "$index" | tr ',' ' '))
-		nbCol=$(echo "$index" | tr ',' '\n' | wc -l)
-		for((i=0 ; i < $nbCol ; i++ ))
-		do
-		if [[ ${«keyword»_array[$i]} != "«String.join('''" && ${«keyword»_array[$i]} != "''', colOfColumns)»" ]]
-		then
-		«IF hasColumnName»
-		header_cut=$header_cut${header_array[$i]},
-		«ENDIF»
-		index_cut=$index_cut$i{index_array[$i]},
-		nb_cut=$nb_cut$(($i+1))
-		fi
-		done
-		«IF hasColumnName»
-		header=${header_cut::-1}
-		«ENDIF»
-		index=${index_cut::-1}
-		nb_cut=${nb_cut::-1}
+		if (colSelectType !== ColSelectType.ALL) {
+
+			var keyword = ""
+			if (colSelectType === ColSelectType.BYNAME) {
+				keyword = '''header'''
+
+			} else if (colSelectType === ColSelectType.BYNUMBER) {
+				keyword = '''index'''
+			}
+			println(keyword)
+			code += '''
+				«IF hasColumnName»
+					header_cut=""
+					header_array=($(echo "$header" | tr ',' ' '))
+				«ENDIF»
+				index_cut=""
+				index_array=($(echo "$index"))
+				for((i=0 ; i <= $nbCol ; i++ ))
+				do
+				if [[ ${«keyword»_array[$i]} != "«String.join('''" && ${«keyword»_array[$i]} != "''', colOfColumns)»" ]]
+				then
+				«IF hasColumnName»
+					header_cut=$header_cut${header_array[$i]},
+				«ENDIF»
+				index_cut=$index_cut${index_array[$i]},
+				nb_cut=$nb_cut$(($i+1)),
+				fi
+				done
+				«IF hasColumnName»
+					header=${header_cut::-1}
+				«ENDIF»
+				index=${index_cut::-1}
+				nb_cut=${nb_cut::-1}
+				nbCol=$(( $(echo "$index" | tr ',' '\n' | wc -l) -1))
+			'''
+		}
+		
+		code += '''
 		«genLocVariable()»
 		'''
-
+		return code
 //		var code = ""
 //		var echoVar = ""
 //		if(colSelectType === ColSelectType.BYNAME) {
@@ -187,7 +195,7 @@ class CompilerBashSelector implements CompilerBash {
 		}
 
 		if (colSelectType !== ColSelectType.ALL) {
-			code += ''' cut -d "«csvSep»" -f $nb_cut |'''
+			code += ''' cut -d "«csvSep»" -f "$nb_cut" |'''
 		}
 		return code
 	}
@@ -225,6 +233,7 @@ class CompilerBashSelector implements CompilerBash {
 	def analyze() {
 		if (selector !== null) {
 			selector.analyze()
+			println("ok")
 		}
 	}
 
