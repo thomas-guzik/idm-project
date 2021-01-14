@@ -81,6 +81,55 @@ class CompilerBashSelector implements CompilerBash {
 		'''
 	}
 
+	def genBeforeWhileDelete() {
+		var keyword = ""
+		if (colSelectType === ColSelectType.BYNAME) {
+			keyword = "header"
+
+		} else if (colSelectType === ColSelectType.BYNUMBER) {
+			keyword = "index"
+		}
+		return
+		'''
+		«IF hasColumnName»
+		header_cut=""
+		header_array=($(echo "$header" | tr ',' ' '))
+		«ENDIF»
+		index_cut=""
+		index_array=($(echo "$index" | tr ',' ' '))
+		nbCol=$(echo "$index" | tr ',' '\n' | wc -l)
+		for((i=0 ; i < $nbCol ; i++ ))
+		do
+		if [[ ${«keyword»_array[$i]} != "«String.join('''" && ${«keyword»_array[$i]} != "''', colOfColumns)»" ]]
+		then
+		«IF hasColumnName»
+		header_cut=$header_cut${header_array[$i]},
+		«ENDIF»
+		index_cut=$index_cut$i{index_array[$i]},
+		nb_cut=$nb_cut$(($i+1))
+		fi
+		done
+		«IF hasColumnName»
+		header=${header_cut::-1}
+		«ENDIF»
+		index=${index_cut::-1}
+		nb_cut=${nb_cut::-1}
+		«genLocVariable()»
+		'''
+
+//		var code = ""
+//		var echoVar = ""
+//		if(colSelectType === ColSelectType.BYNAME) {
+//			echoVar = "$header"
+//			'''
+//			index_cut=$(echo "$header" | tr ',' '\n' | nl -n ln | grep -v -w "«String.join('''$" | grep -v -w "''',colOfColumns)»" | awk -F " " '{print $1}')
+//			index_cut=$(echo "$index_cut" | tr '\n' ';p' 
+//			'''
+//		} else if(colSelectType == ColSelectType.BYNUMBER) {
+//			echoVar = "$index"
+//		}
+	}
+
 	def genCutVariable() {
 		var code = ""
 		if (colSelectType !== ColSelectType.ALL) {
@@ -94,6 +143,7 @@ class CompilerBashSelector implements CompilerBash {
 				«FOR c : colOfColumns»
 					cut_«c»=$(echo "«echoVar»" | tr '«csvSep»' '\n' | grep -n -w "^«c»" |  awk -F ":" '{print $1}')
 				«ENDFOR»
+				nb_cut=$cut_c«String.join(',$cut_',colOfColumns)»
 			'''
 
 			if (hasColumnName) {
@@ -137,7 +187,7 @@ class CompilerBashSelector implements CompilerBash {
 		}
 
 		if (colSelectType !== ColSelectType.ALL) {
-			code += ''' cut -d "«csvSep»" -f $cut_«String.join(",$cut_", colOfColumns)» |'''
+			code += ''' cut -d "«csvSep»" -f $nb_cut |'''
 		}
 		return code
 	}
@@ -232,17 +282,16 @@ class CompilerBashSelector implements CompilerBash {
 	def void analyze(HighestPriority h) {
 		if (h.nestedCondition !== null) {
 			h.nestedCondition.analyze()
-		}
-		else if(h.baseCondition !== null) {
+		} else if (h.baseCondition !== null) {
 			h.baseCondition.analyze()
 		}
 	}
 
 	def void analyze(BinCond b) {
-			b.columnId.analyzeColumnIdentifier()
+		b.columnId.analyzeColumnIdentifier()
 	}
 
-	def dispatch void analyzeColumnIdentifier(ColumnIdentifier c) {	}
+	def dispatch void analyzeColumnIdentifier(ColumnIdentifier c) {}
 
 	def dispatch void analyzeColumnIdentifier(ColumnNumberIdentifier c) {
 		colOfConditions.get("number").add(c.value.substring(1))

@@ -9,6 +9,7 @@ class CompilerBashDelete implements CompilerBash {
 	String nameFile
 	String csvSep
 	String colSep
+	Boolean withCondition
 
 	CompilerBashSelector c
 
@@ -24,28 +25,26 @@ class CompilerBashDelete implements CompilerBash {
 
 	override String compile() {
 		c.analyze()
+		withCondition = c.isWithCondition()
 		return delete.genCode()
 	}
 
 	def String genCode(Delete delete) {
-//		var cond = c.analyzeAndgenCodeLines()
-//		return '''
-//			«c.genBeforeWhile()»
-//			n=0
-//			file=$(«c.genInput()» while read «c.genRead()»
-//			do
-//			«IF !cond.isEmpty()»
-//				«String.join("\n", c.beforeCond)»
-//				if [[ ! ( «cond» ) ]] ; then
-//				  echo «c.genEcho()»
-//				fi
-//			«ELSE»
-//				echo «c.genEcho()»
-//			«ENDIF»
-//			n=$(( $n + 1 ))
-//			done)
-//		'''
-		return ""
+		return '''
+			«c.genBeforeWhileDelete()»
+			n=0
+			«c.genInput()» while read -a c
+			do
+			«IF withCondition»
+				if [[ ! ( «c.genCond()» ) ]] ; then
+				  echo «c.genEcho()»
+				fi
+			«ELSE»
+				echo «c.genEcho()»
+			«ENDIF»
+			n=$(( $n + 1 ))
+			done
+		'''
 	}
 
 }
