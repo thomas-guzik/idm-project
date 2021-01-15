@@ -77,7 +77,7 @@ class CompilerBashQsv implements CompilerBash {
 	}
 	
 	def dispatch String compile(Insert insert) {
-		return new CompilerBashInsert(insert, hasColumnName, csvSep, colSep).compile()
+		return new CompilerBashInsert(insert, hasColumnName, csvSep).compile()
 	}
 
 	def dispatch String compile(Print print) {
@@ -85,7 +85,7 @@ class CompilerBashQsv implements CompilerBash {
 	}
 
 	def dispatch String compile(Update update) {
-		return new CompilerBashUpdate(update).compile()
+		return new CompilerBashUpdate(update, hasColumnName, csvSep).compile()
 	}
 
 	def TerminalOutput executeOnFile(String code, String filename) {

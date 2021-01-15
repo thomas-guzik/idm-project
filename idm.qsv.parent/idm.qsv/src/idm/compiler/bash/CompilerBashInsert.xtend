@@ -19,13 +19,11 @@ class CompilerBashInsert implements CompilerBash {
 	Insert insert
 	Boolean hasColumnName
 	String csvSep
-	String colSep
 
-	new(Insert i, Boolean hasColumnName, String csvSep, String colSep) {
+	new(Insert i, Boolean hasColumnName, String csvSep) {
 		insert = i
 		this.hasColumnName = hasColumnName
 		this.csvSep = csvSep
-		this.colSep = colSep
 	}
 
 	override String compile() {
