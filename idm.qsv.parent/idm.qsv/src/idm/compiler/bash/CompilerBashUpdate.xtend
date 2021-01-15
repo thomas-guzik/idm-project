@@ -61,11 +61,11 @@ class CompilerBashUpdate implements CompilerBash {
 	def String genCode(Update u) {
 		return '''
 			nbCol=$(( $(echo "$index" | tr '«csvSep»' '\n' | wc -l) - 1))
-			«CompilerBashHelper.genLocVariable(colSelectedByNumber, "index", csvSep)»
-			«CompilerBashHelper.genLocVariable(colSelectedByName, "header", csvSep)»
+			«CompilerBashHelper.genLocVariable(colSelectedByNumber, "index")»
+			«CompilerBashHelper.genLocVariable(colSelectedByName, "header")»
 			file=$( «genInput()» while read -a c
 			do
-			«IF withCondition»if [[ «cmpCond.genBashConditon()» ]] ; then«ENDIF»
+			«IF withCondition»if [[ «cmpCond.genBashCondition()» ]] ; then«ENDIF»
 			«FOR v : cols»
 			  c[$loc_«v»]="«value»"
 			«ENDFOR»

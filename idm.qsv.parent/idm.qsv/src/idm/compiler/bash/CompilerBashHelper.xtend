@@ -1,66 +1,62 @@
 package idm.compiler.bash
 
-import java.util.Map
-import java.util.ArrayList
-import idm.analyzer.ColumnSelectType
-import java.util.List
 import java.util.Set
+import idm.analyzer.ColumnSelectType
 
 class CompilerBashHelper {
+	
+	static String csvSep = ""
+	static Boolean hasColumnName
+	
+	def static setCsvSep(String sep) {
+		idm.compiler.bash.CompilerBashHelper.csvSep = sep
+	}
+	
+	def static setHasColumnName(Boolean b) {
+		hasColumnName = b
+	}
 
-	def static String genStart(String csvSep) {
+	def static String genStart() {
 		return '''
 			n=0
-			nbCol=$(( $(echo "$index" | tr '«csvSep»' '\n' | wc -l) - 1))
+			nbCol=$(( $(echo "$index" | tr '«idm.compiler.bash.CompilerBashHelper.csvSep»' '\n' | wc -l) - 1))
 		'''
 	}
 
-	def static String genLocVariable(Map<String, ArrayList<String>> map, ColumnSelectType colSelectType,
-		String csvSep) {
-		if (map !== null) {
-			var echoVarForName = ""
-			var echoVarForNumber = ""
-			if (colSelectType == ColumnSelectType.ALL) {
-				echoVarForName = "$header"
-				echoVarForNumber = "$index"
-			} else {
-				echoVarForName = "$header_cut"
-				echoVarForNumber = "$index_cut"
-			}
-			println("genLoc")
+	def static String genNbCol() {
+		return '''
+			nbCol=$(( $(echo "$index" | tr '«idm.compiler.bash.CompilerBashHelper.csvSep»' '\n' | wc -l) - 1))
+		'''
+	}
+
+	def static String genLocVariable(Set<String> s, String echoVar) {
+		if (s !== null) {
 			return '''
-				«IF map.get("name") !== null»
-					«genLocVariable(map.get("number"), echoVarForName, csvSep)»
-				«ENDIF»
-				«IF map.get("number") !== null»
-					«genLocVariable(map.get("number"), echoVarForNumber, csvSep)»
-				«ENDIF»
+				«FOR v : s»
+					loc_«v»=$(( $(echo "$«echoVar»" | tr '«idm.compiler.bash.CompilerBashHelper.csvSep»' '\n' | grep -n -w "^«v»" |  awk -F ":" '{print $1}') - 1))
+				«ENDFOR»
 			'''
 		} else {
 			return ""
 		}
 	}
-	
-	def static String genLocVariable(List<String> l, String echoVarForName, String csvSep) {
-		return '''
-		«FOR v : l»
-			loc_«v»=$(( $(echo "«echoVarForName»" | tr '«csvSep»' '\n' | grep -n -w "^«v»" |  awk -F ":" '{print $1}') - 1))
-		«ENDFOR»
-		'''
-	}
-	
-	def static String genLocVariable(Set<String> s, String echoVar, String csvSep) {
-		return '''
-		«FOR v : s»
-			loc_«v»=$(( $(echo "$«echoVar»" | tr '«csvSep»' '\n' | grep -n -w "^«v»" |  awk -F ":" '{print $1}') - 1))
-		«ENDFOR»
-		'''
+
+	def static genInput(ColumnSelectType colSelectType) {
+		var code = '''echo "$file" |'''
+
+		if (hasColumnName) {
+			code += ''' tail -n +2 |'''
+		}
+
+		if (colSelectType !== ColumnSelectType.ALL) {
+			code += ''' cut -d "«idm.compiler.bash.CompilerBashHelper.csvSep»" -f "$nb_cut" |'''
+		}
+		return code
 	}
 
 	def static genEcho(String colSep) {
-		println("genEcho")
 		return '''
-			$(eval echo '${c['`seq -s ']}«colSep»${c[' 0 $nbCol`]'}')
+			$(eval echo '${c['$(seq -s ']}«colSep»${c[' 0 $nbCol)]'}')
 		'''
 	}
 

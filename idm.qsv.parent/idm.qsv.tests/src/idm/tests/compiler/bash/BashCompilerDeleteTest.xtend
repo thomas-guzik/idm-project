@@ -52,10 +52,8 @@ class BashCompilerDeleteTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println("*****************************************")
 		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
 		val code = cmpBash.compile()
-		println(code)
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}

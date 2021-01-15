@@ -46,6 +46,8 @@ class CompilerBashQsv implements CompilerBash {
 		colSep = " "
 		hasColumnName = header.isHasColumnName()
 		nameFile = header.nameFile
+		CompilerBashHelper.setCsvSep(csvSep)
+		CompilerBashHelper.setHasColumnName(hasColumnName)
 		return header
 	}
 
@@ -69,7 +71,7 @@ class CompilerBashQsv implements CompilerBash {
 	}
 	
 	def dispatch String compile(Delete delete) {
-		return new CompilerBashDelete(delete, hasColumnName, csvSep, colSep).compile()
+		return new CompilerBashDelete(delete, hasColumnName, csvSep).compile()
 	}
 
 	def dispatch String compile(Echo echo) {
@@ -77,7 +79,7 @@ class CompilerBashQsv implements CompilerBash {
 	}
 	
 	def dispatch String compile(Insert insert) {
-		return new CompilerBashInsert(insert, hasColumnName, csvSep).compile()
+		return new CompilerBashInsert(insert, csvSep).compile()
 	}
 
 	def dispatch String compile(Print print) {

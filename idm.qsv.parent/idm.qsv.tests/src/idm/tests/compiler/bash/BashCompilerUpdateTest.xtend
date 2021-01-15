@@ -13,12 +13,12 @@ import idm.compiler.bash.CompilerBashQsv
 
 @ExtendWith(InjectionExtension)
 @InjectWith(QsvInjectorProvider)
-class BashCompilerUpdatetTest {
+class BashCompilerUpdateTest {
 	@Inject
 	ParseHelper<QuerySeparatedValues> parseHelper
 
 	@Test
-	def void insertOneLine() {
+	def void updateOneColumn() {
 		val result = parseHelper.parse('''
 			using "foo1.csv" with column names: no
 			update :set "w" :columns #1
@@ -34,9 +34,28 @@ class BashCompilerUpdatetTest {
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
 		val code = cmpBash.compile()
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
+		Assertions.assertEquals(expectedResult, execution.output)
+	}
+
+	@Test
+	def void updateOneColumnWithCondition() {
+		val result = parseHelper.parse('''
+			using "foo1.csv" with column names: no
+			update :set "w" :columns #1 :lines #1 = "f2"
+			print
+		''')
+		val expectedResult = '''
+			  0 1 2
+			0 f1 w f3
+			1 v1 v2 v3
+		'''
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
+		val code = cmpBash.compile()
+		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 }

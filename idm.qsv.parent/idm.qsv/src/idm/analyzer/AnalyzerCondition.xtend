@@ -3,18 +3,18 @@ package idm.analyzer
 import idm.qsv.Condition
 import idm.qsv.MidPriority
 import idm.qsv.HighestPriority
-import java.util.ArrayList
 import idm.qsv.BinCond
 import idm.qsv.ColumnIdentifier
 import idm.qsv.ColumnNumberIdentifier
 import idm.qsv.ColumnNameIdentifier
-import java.util.List
+import java.util.Set
+import java.util.HashSet
 
 class AnalyzerCondition {
 
 	Condition condition
-	List<String> colSelectedByNumber = new ArrayList<String>()
-	List<String> colSelectedByName = new ArrayList<String>()
+	Set<String> colSelectedByNumber = new HashSet<String>()
+	Set<String> colSelectedByName = new HashSet<String>()
 
 	new(Condition c) {
 		condition = c

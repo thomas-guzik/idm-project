@@ -23,7 +23,7 @@ class CompilerBashCondition {
 		return analyzer.colSelectedByName
 	}
 
-	def genBashConditon() {
+	def genBashCondition() {
 		return condition.genCode()
 	}
 

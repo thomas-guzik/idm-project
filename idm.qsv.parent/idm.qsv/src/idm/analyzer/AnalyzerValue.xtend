@@ -9,7 +9,7 @@ import idm.qsv.IntegerValue
 
 
 class AnalyzerValue {
-enum ValueType2 {
+enum ValueType {
 	INT,
 	STRING,
 	BOOL,
@@ -44,19 +44,19 @@ enum ValueType2 {
 	def dispatch getValueType(Value v) {}
 
 	def dispatch getValueType(IntegerValue v) {
-		return ValueType2.INT
+		return ValueType.INT
 	}
 
 	def dispatch getValueType(StringValue v) {
-		return ValueType2.STRING
+		return ValueType.STRING
 	}
 
 	def dispatch getValueType(BooleanValue v) {
-		return ValueType2.BOOL
+		return ValueType.BOOL
 	}
 
 	def dispatch getValueType(VariableIdentifier v) {
-		return ValueType2.VAR
+		return ValueType.VAR
 	}
 
 }
