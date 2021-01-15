@@ -1,9 +1,11 @@
 package idm.interpreter
 
 import idm.compiler.python.MissingConcreteImplementationException
+import idm.interpreter.actions.DeleteAction
 import idm.interpreter.actions.InsertAction
 import idm.interpreter.actions.PrintAction
 import idm.interpreter.csv.CsvData
+import idm.qsv.Delete
 import idm.qsv.Header
 import idm.qsv.Insert
 import idm.qsv.Print
@@ -52,6 +54,11 @@ class QsvXtendInterpreter {
 	private def dispatch void interpret(Insert statement) {
 		var inserter = new InsertAction(statement, csvData)
 		inserter.interpret
+	}
+	
+		private def dispatch void interpret(Delete statement) {
+		var deleter = new DeleteAction(statement, csvData)
+		deleter.interpret
 	}
 
 	def List<String> getFileContent(String filename) {

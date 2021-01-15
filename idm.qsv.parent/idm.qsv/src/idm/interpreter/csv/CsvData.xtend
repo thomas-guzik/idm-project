@@ -4,6 +4,7 @@ import java.util.ArrayList
 import java.util.List
 import java.util.stream.Collectors
 import java.util.stream.IntStream
+import java.util.Collections
 
 class CsvData {
 
@@ -44,7 +45,7 @@ class CsvData {
 
 	def private void initTable(List<String> data) {
 		table = new ArrayList<List<String>>()
-		for(String row : data) {
+		for (String row : data) {
 			table.add(new ArrayList<String>(row.split(separator)))
 		}
 	}
@@ -110,20 +111,40 @@ class CsvData {
 	def void insertLine(List<Object> row) {
 		val line = new ArrayList<String>()
 		line.addAll(row.map[o|o + ""].toList)
-		println(table.get(0).class)
-		println(line.class)
 		table.add(line)
 	}
-	
+
 	def void insertColumn(String name, List<Object> column) {
-		if(header) {
+		if (header) {
 			columns.add(name)
 		} else {
 			columns.add(nbColumns + "")
 		}
-			IntStream.range(0, column.size()).forEach [ i |
+		IntStream.range(0, column.size()).forEach [ i |
 			table.get(i).add(column.get(i) + "")
 		]
+	}
+
+	def void deleteColumn(String name) {
+		val indexToDelete = columns.indexOf(name)
+		columns.remove(indexToDelete)
+		table.forEach [ row |
+			row.remove(indexToDelete)
+		]
+	}
+
+	def void deleteSelectedLines() {
+		if (filtered) {
+			selectedRows.sort(Collections.reverseOrder)
+			for (int rowIndex : selectedRows) {
+				table.remove(rowIndex)
+			}
+		}
+	}
+
+	def void deleteAllData() {
+		columns = new ArrayList<String>()
+		table = new ArrayList<List<String>>()
 	}
 
 	def Integer nbRows() {
