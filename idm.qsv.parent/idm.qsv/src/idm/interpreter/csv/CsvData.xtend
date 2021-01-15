@@ -142,6 +142,14 @@ class CsvData {
 		}
 	}
 
+	def void update(String name, Object value) {
+		val indexToUpdate = columns.indexOf(name)
+		IntStream.range(0, nbRows).filter[i|!filtered || selectedRows.contains(i)].forEach [ i |
+			table.get(i).set(indexToUpdate, value + "")
+		]
+
+	}
+
 	def void deleteAllData() {
 		columns = new ArrayList<String>()
 		table = new ArrayList<List<String>>()

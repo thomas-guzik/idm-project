@@ -11,10 +11,12 @@ import idm.qsv.Insert
 import idm.qsv.Print
 import idm.qsv.QuerySeparatedValues
 import idm.qsv.Statement
+import idm.qsv.Update
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.List
+import idm.interpreter.actions.UpdateAction
 
 class QsvXtendInterpreter {
 	QuerySeparatedValues qsv
@@ -55,10 +57,15 @@ class QsvXtendInterpreter {
 		var inserter = new InsertAction(statement, csvData)
 		inserter.interpret
 	}
-	
-		private def dispatch void interpret(Delete statement) {
+
+	private def dispatch void interpret(Delete statement) {
 		var deleter = new DeleteAction(statement, csvData)
 		deleter.interpret
+	}
+
+	private def dispatch void interpret(Update statement) {
+		var updater = new UpdateAction(statement, csvData)
+		updater.interpret
 	}
 
 	def List<String> getFileContent(String filename) {
