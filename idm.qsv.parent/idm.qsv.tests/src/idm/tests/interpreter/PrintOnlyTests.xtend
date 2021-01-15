@@ -27,8 +27,8 @@ class PrintOnlyTests {
 	}
 
 	def InterpreterOutput interpret(QuerySeparatedValues qsv) {
-		val QsvXtendInterpreter cmpPython = new QsvXtendInterpreter(qsv)
-		val outputResult = cmpPython.interpret
+		val QsvXtendInterpreter interpreter = new QsvXtendInterpreter(qsv)
+		val outputResult = interpreter.interpret
 		return outputResult
 	}
 
@@ -63,95 +63,95 @@ class PrintOnlyTests {
 
 	}
 
-//	@Test
-//	def void printAllLinesAndColumns() {
-//		val parseTree = parseHelper.parse('''
-//			using "foo2.csv" with column names: yes
-//			print
-//				:lines
-//				:columns
-//		''')
-//		parseTree.assertNoErrors
-//		val expectedResult = '''
-//			   f1  f2  f3
-//			0  v1  v2  v3
-//			1  v1  v7  v3
-//		'''
-//		assertInterpretation(parseTree, expectedResult)
-//
-//	}
-//
-//	@Test
-//	def void printAllColumnsAndLines() {
-//		val parseTree = parseHelper.parse('''
-//			using "foo2.csv" with column names: yes
-//			print
-//				:columns
-//				:lines
-//		''')
-//		parseTree.assertNoErrors
-//
-//		val expectedResult = '''
-//			   f1  f2  f3
-//			0  v1  v2  v3
-//			1  v1  v7  v3
-//		'''
-//		assertInterpretation(parseTree, expectedResult)
-//	}
-//
-//	@Test
-//	def void printColumnsWithSingleNameSelection() {
-//		val parseTree = parseHelper.parse('''
-//			using "foo2.csv" with column names: yes
-//			print
-//				:columns f2
-//		''')
-//		parseTree.assertNoErrors
-//
-//		val expectedResult = '''
-//			   f2
-//			0  v2
-//			1  v7
-//		'''
-//		assertInterpretation(parseTree, expectedResult)
-//	}
-//
-//	@Test
-//	def void printColumnsWithSingleNumberSelection() {
-//		val parseTree = parseHelper.parse('''
-//			using "foo2.csv" with column names: no
-//			print
-//				:columns #1
-//		''')
-//		parseTree.assertNoErrors
-//
-//		val expectedResult = '''
-//			    1
-//			0  f2
-//			1  v2
-//			2  v7
-//		'''
-//		assertInterpretation(parseTree, expectedResult)
-//	}
-//
-//	@Test
-//	def void printColumnsWithSingleSelectionAllLines() {
-//		val parseTree = parseHelper.parse('''
-//			using "foo2.csv" with column names: yes
-//			print
-//				:columns f2
-//				:lines
-//		''')
-//		parseTree.assertNoErrors
-//
-//		val expectedResult = '''
-//			   f2
-//			0  v2
-//			1  v7
-//		'''
-//		assertInterpretation(parseTree, expectedResult)
-//	}
-//
+	@Test
+	def void printAllLinesAndColumns() {
+		val parseTree = parseHelper.parse('''
+			using "foo2.csv" with column names: yes
+			print
+				:lines
+				:columns
+		''')
+		parseTree.assertNoErrors
+		val expectedResult = '''
+				f1	f2	f3
+			0	v1	v2	v3
+			1	v1	v7	v3
+		'''
+		assertInterpretation(parseTree, expectedResult)
+
+	}
+
+	@Test
+	def void printAllColumnsAndLines() {
+		val parseTree = parseHelper.parse('''
+			using "foo2.csv" with column names: yes
+			print
+				:columns
+				:lines
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+				f1	f2	f3
+			0	v1	v2	v3
+			1	v1	v7	v3
+		'''
+		assertInterpretation(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printColumnsWithSingleNameSelection() {
+		val parseTree = parseHelper.parse('''
+			using "foo2.csv" with column names: yes
+			print
+				:columns f2
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+				f2
+			0	v2
+			1	v7
+		'''
+		assertInterpretation(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printColumnsWithSingleNumberSelection() {
+		val parseTree = parseHelper.parse('''
+			using "foo2.csv" with column names: no
+			print
+				:columns #1
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+				1
+			0	f2
+			1	v2
+			2	v7
+		'''
+		assertInterpretation(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printColumnsWithSingleSelectionAllLines() {
+		val parseTree = parseHelper.parse('''
+			using "foo2.csv" with column names: yes
+			print
+				:columns f2
+				:lines
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+				f2
+			0	v2
+			1	v7
+		'''
+		assertInterpretation(parseTree, expectedResult)
+	}
+
 //	@Test
 //	def void printColumnsWithMultipleNameSelectionKeepsOrder() {
 //		val parseTree = parseHelper.parse('''
@@ -168,7 +168,6 @@ class PrintOnlyTests {
 //		'''
 //		assertInterpretation(parseTree, expectedResult)
 //	}
-//
 //	@Test
 //	def void printColumnsWithMultipleNumberSelectionKeepsOrder() {
 //		val parseTree = parseHelper.parse('''
@@ -187,183 +186,183 @@ class PrintOnlyTests {
 //		assertInterpretation(parseTree, expectedResult)
 //	}
 //
-//	@Test
-//	def void printLinesWhereColumnsEqualInt() {
-//		val parseTree = parseHelper.parse('''
-//			using "foo_numbers.csv" with column names: yes
-//			print
-//				:lines col0 = 1
-//		''')
-//		parseTree.assertNoErrors
-//
-//		val expectedResult = '''
-//			   col0  col1
-//			2     1     3
-//			5     1    10
-//		'''
-//		assertInterpretation(parseTree, expectedResult)
-//	}
-//
-//	@Test
-//	def void printTwice() {
-//		val parseTree = parseHelper.parse('''
-//			using "foo_numbers.csv" with column names: yes
-//			print
-//				:lines col0 = 1
-//			print
-//		''')
-//		parseTree.assertNoErrors
-//
-//		val expectedResult = '''
-//			   col0  col1
-//			2     1     3
-//			5     1    10
-//			   col0  col1
-//			0     4     3
-//			1     2     7
-//			2     1     3
-//			3     3     5
-//			4     5     1
-//			5     1    10
-//			6     5     1
-//		'''
-//		assertInterpretation(parseTree, expectedResult)
-//	}
-//
-//	@Test
-//	def void printLinesWhereColumnsEqualIntNoHeaders() {
-//		val parseTree = parseHelper.parse('''
-//			using "foo_numbers_noheaders.csv" with column names: no
-//			print
-//				:lines #0 = 5
-//		''')
-//		parseTree.assertNoErrors
-//
-//		val expectedResult = '''
-//			   0  1
-//			4  5  1
-//			6  5  1
-//		'''
-//		assertInterpretation(parseTree, expectedResult)
-//	}
-//
-//	@Test
-//	def void printLinesWhereColumnsEqualString() {
-//		val parseTree = parseHelper.parse('''
-//			using "foo2.csv" with column names: yes
-//			print
-//				:lines f2 = "v7"
-//		''')
-//		parseTree.assertNoErrors
-//
-//		val expectedResult = '''
-//			   f1  f2  f3
-//			1  v1  v7  v3
-//		'''
-//		assertInterpretation(parseTree, expectedResult)
-//	}
-//
-//	@Test
-//	def void printLinesWhereColumnsIntegerComparison() {
-//		// CompareEqual
-//		val parseTreeEqual = parseHelper.parse('''
-//			using "foo_numbers.csv" with column names: yes
-//			print
-//				:lines col0 = 2
-//		''')
-//		parseTreeEqual.assertNoErrors
-//
-//		val expectedResultEqual = '''
-//			   col0  col1
-//			1     2     7
-//		'''
-//		assertInterpretation(parseTreeEqual, expectedResultEqual)
-//
-//		// CompareNotEqual
-//		val parseTreeNotEqual = parseHelper.parse('''
-//			using "foo_numbers.csv" with column names: yes
-//			print
-//				:lines col0 != 5
-//		''')
-//		parseTreeNotEqual.assertNoErrors
-//
-//		val expectedResultNotEqual = '''
-//			   col0  col1
-//			0     4     3
-//			1     2     7
-//			2     1     3
-//			3     3     5
-//			5     1    10
-//		'''
-//		assertInterpretation(parseTreeNotEqual, expectedResultNotEqual)
-//
-//		// CompareLower
-//		val parseTreeLower = parseHelper.parse('''
-//			using "foo_numbers.csv" with column names: yes
-//			print
-//				:lines col0 < 4
-//		''')
-//		parseTreeLower.assertNoErrors
-//
-//		val expectedResultLower = '''
-//			   col0  col1
-//			1     2     7
-//			2     1     3
-//			3     3     5
-//			5     1    10
-//		'''
-//		assertInterpretation(parseTreeLower, expectedResultLower)
-//
-//		// CompareGreater
-//		val parseTreeGreater = parseHelper.parse('''
-//			using "foo_numbers.csv" with column names: yes
-//			print
-//				:lines col1 > 3
-//		''')
-//		parseTreeGreater.assertNoErrors
-//
-//		val expectedResultGreater = '''
-//			   col0  col1
-//			1     2     7
-//			3     3     5
-//			5     1    10
-//		'''
-//		assertInterpretation(parseTreeGreater, expectedResultGreater)
-//
-//		// CompareLowerOrEqual
-//		val parseTreeLowerOrEqual = parseHelper.parse('''
-//			using "foo_numbers.csv" with column names: yes
-//			print
-//				:lines col0 <= 3
-//		''')
-//		parseTreeLowerOrEqual.assertNoErrors
-//
-//		val expectedResultLowerOrEqual = '''
-//			   col0  col1
-//			1     2     7
-//			2     1     3
-//			3     3     5
-//			5     1    10
-//		'''
-//		assertInterpretation(parseTreeLowerOrEqual, expectedResultLowerOrEqual)
-//
-//		// CompareGreaterOrEqual
-//		val parseTreeGreaterOrEqual = parseHelper.parse('''
-//			using "foo_numbers.csv" with column names: yes
-//			print
-//				:lines col1 >= 5
-//		''')
-//		parseTreeGreaterOrEqual.assertNoErrors
-//
-//		val expectedResultGreaterOrEqual = '''
-//			   col0  col1
-//			1     2     7
-//			3     3     5
-//			5     1    10
-//		'''
-//		assertInterpretation(parseTreeGreaterOrEqual, expectedResultGreaterOrEqual)
-//	}
-//
+	@Test
+	def void printLinesWhereColumnsEqualInt() {
+		val parseTree = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines col0 = 1
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+				col0	col1
+			2	1	3
+			5	1	10
+		'''
+		assertInterpretation(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printTwice() {
+		val parseTree = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines col0 = 1
+			print
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+				col0	col1
+			2	1	3
+			5	1	10
+				col0	col1
+			0	4	3
+			1	2	7
+			2	1	3
+			3	3	5
+			4	5	1
+			5	1	10
+			6	5	1
+		'''
+		assertInterpretation(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printLinesWhereColumnsEqualIntNoHeaders() {
+		val parseTree = parseHelper.parse('''
+			using "foo_numbers_noheaders.csv" with column names: no
+			print
+				:lines #0 = 5
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+				0	1
+			4	5	1
+			6	5	1
+		'''
+		assertInterpretation(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printLinesWhereColumnsEqualString() {
+		val parseTree = parseHelper.parse('''
+			using "foo2.csv" with column names: yes
+			print
+				:lines f2 = "v7"
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+				f1	f2	f3
+			1	v1	v7	v3
+		'''
+		assertInterpretation(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printLinesWhereColumnsIntegerComparison() {
+		// CompareEqual
+		val parseTreeEqual = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines col0 = 2
+		''')
+		parseTreeEqual.assertNoErrors
+
+		val expectedResultEqual = '''
+				col0	col1
+			1	2	7
+		'''
+		assertInterpretation(parseTreeEqual, expectedResultEqual)
+
+		// CompareNotEqual
+		val parseTreeNotEqual = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines col0 != 5
+		''')
+		parseTreeNotEqual.assertNoErrors
+
+		val expectedResultNotEqual = '''
+				col0	col1
+			0	4	3
+			1	2	7
+			2	1	3
+			3	3	5
+			5	1	10
+		'''
+		assertInterpretation(parseTreeNotEqual, expectedResultNotEqual)
+
+		// CompareLower
+		val parseTreeLower = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines col0 < 4
+		''')
+		parseTreeLower.assertNoErrors
+
+		val expectedResultLower = '''
+				col0	col1
+			1	2	7
+			2	1	3
+			3	3	5
+			5	1	10
+		'''
+		assertInterpretation(parseTreeLower, expectedResultLower)
+
+		// CompareGreater
+		val parseTreeGreater = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines col1 > 3
+		''')
+		parseTreeGreater.assertNoErrors
+
+		val expectedResultGreater = '''
+				col0	col1
+			1	2	7
+			3	3	5
+			5	1	10
+		'''
+		assertInterpretation(parseTreeGreater, expectedResultGreater)
+
+		// CompareLowerOrEqual
+		val parseTreeLowerOrEqual = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines col0 <= 3
+		''')
+		parseTreeLowerOrEqual.assertNoErrors
+
+		val expectedResultLowerOrEqual = '''
+				col0	col1
+			1	2	7
+			2	1	3
+			3	3	5
+			5	1	10
+		'''
+		assertInterpretation(parseTreeLowerOrEqual, expectedResultLowerOrEqual)
+
+		// CompareGreaterOrEqual
+		val parseTreeGreaterOrEqual = parseHelper.parse('''
+			using "foo_numbers.csv" with column names: yes
+			print
+				:lines col1 >= 5
+		''')
+		parseTreeGreaterOrEqual.assertNoErrors
+
+		val expectedResultGreaterOrEqual = '''
+				col0	col1
+			1	2	7
+			3	3	5
+			5	1	10
+		'''
+		assertInterpretation(parseTreeGreaterOrEqual, expectedResultGreaterOrEqual)
+	}
+
 //	@Test
 //	def void printEmptyData() {
 //		val parseTree = parseHelper.parse('''
@@ -559,5 +558,4 @@ class PrintOnlyTests {
 //
 //		assertInterpretation(parseTree, expectedResult)
 //	}
-
 }

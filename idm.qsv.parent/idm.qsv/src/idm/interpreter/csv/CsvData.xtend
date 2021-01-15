@@ -5,12 +5,14 @@ import java.util.Arrays
 import java.util.List
 import java.util.stream.Collectors
 import java.util.stream.IntStream
+import java.util.stream.Collector.Characteristics
 
 class CsvData {
 
 	List<String> columns
-	int nbColumns
+	List<Integer> selectedColumns
 	List<List<String>> table
+	List<Integer> selectedRows
 	boolean header
 	String separator
 	final String NEWLINE = "\n"
@@ -19,6 +21,8 @@ class CsvData {
 	new(List<String> data, boolean h, String s) {
 		header = h
 		separator = s
+		selectedColumns = new ArrayList<Integer>()
+		selectedRows = new ArrayList<Integer>()
 		if (data.isEmpty) {
 			columns = List.of()
 			table = List.of()
@@ -29,33 +33,71 @@ class CsvData {
 	}
 
 	def private void initColumns(List<String> data) {
-		nbColumns = data.get(0).split(separator).size()
+		val number = data.get(0).split(separator).size()
 		if (header) {
 			columns = Arrays.asList(data.get(0).split(separator))
 			data.remove(0)
 		} else {
-			columns = IntStream.range(0, nbColumns).mapToObj[i|i + ""].collect(Collectors.toList)
+			columns = IntStream.range(0, number).mapToObj[i|i + ""].collect(Collectors.toList)
 		}
 	}
-	
+
 	def private void initTable(List<String> data) {
-		table = data.map[row | Arrays.asList(row.split(separator))]
+		table = data.map[row|Arrays.asList(row.split(separator))]
 	}
-	
+
 	override String toString() {
 		var data = ""
-		
+
 		val printedColumns = new ArrayList<String>()
 		printedColumns.add("")
-		printedColumns.addAll(columns)
-		
+		if (selectedColumns.isEmpty) {
+			printedColumns.addAll(columns)
+		} else {
+			selectedColumns.forEach[i|printedColumns.add(columns.get(i))]
+		}
+
 		val printedRows = new ArrayList<List<String>>()
-		val nbRows = table.size()
-		IntStream.range(0, nbRows).forEach[i | printedRows.add(new ArrayList<String>()) ; printedRows.get(i).add(i + "") ; printedRows.get(i).addAll(table.get(i))]
-		
+		IntStream.range(0, nbRows).filter[i|selectedRows.isEmpty || selectedRows.contains(i)].forEach [ i |
+			val newRow = new ArrayList<String>()
+			printedRows.add(newRow)
+			newRow.add(i + "")
+
+			if (selectedColumns.isEmpty) {
+				newRow.addAll(table.get(i))
+			} else {
+				selectedColumns.forEach[columnIndex|newRow.add(table.get(i).get(columnIndex))]
+			}
+		]
+
 		data += printedColumns.join(PRINT_SEPARATOR)
 		data += NEWLINE
-		data += printedRows.map[row | row.join(PRINT_SEPARATOR)].join(NEWLINE)
+		data += printedRows.map[row|row.join(PRINT_SEPARATOR)].join(NEWLINE)
 		data += NEWLINE
+	}
+
+	def void selectColumns(List<String> selected) {
+		if (!selected.isEmpty) {
+			selectedColumns = IntStream.range(0, nbColumns).filter(i|selected.contains(columns.get(i))).boxed.collect(
+				Collectors.toList)
+		}
+	}
+
+	def void apply(Filter filter) {
+		selectedRows = IntStream.range(0, nbRows).filter(i|filter.eval(columns, table.get(i))).boxed.collect(
+			Collectors.toList)
+	}
+
+	def Integer nbRows() {
+		table.size()
+	}
+
+	def Integer nbColumns() {
+		columns.size()
+	}
+
+	def resetFilters() {
+		selectedColumns = new ArrayList<Integer>()
+		selectedRows = new ArrayList<Integer>()
 	}
 }
