@@ -1,10 +1,12 @@
 package idm.interpreter.csv
 
+import java.io.File
+import java.io.FileWriter
 import java.util.ArrayList
+import java.util.Collections
 import java.util.List
 import java.util.stream.Collectors
 import java.util.stream.IntStream
-import java.util.Collections
 
 class CsvData {
 
@@ -17,6 +19,7 @@ class CsvData {
 	String separator
 	final String NEWLINE = "\n"
 	final String PRINT_SEPARATOR = "\t"
+	final String WRITE_SEPARATOR = ","
 
 	new(List<String> data, boolean h, String s) {
 		header = h
@@ -147,7 +150,6 @@ class CsvData {
 		IntStream.range(0, nbRows).filter[i|!filtered || selectedRows.contains(i)].forEach [ i |
 			table.get(i).set(indexToUpdate, value + "")
 		]
-
 	}
 
 	def void deleteAllData() {
@@ -167,5 +169,29 @@ class CsvData {
 		selectedColumns = new ArrayList<Integer>()
 		selectedRows = new ArrayList<Integer>()
 		filtered = false
+	}
+
+	def void saveTo(String filename) {
+		var content = columns.join(WRITE_SEPARATOR)
+		content += NEWLINE
+		content += table.map[row|row.join(WRITE_SEPARATOR)].join(NEWLINE)
+		val File file = new File(filename);
+		val FileWriter writer = new FileWriter(file, false);
+		writer.write(content);
+		writer.close();
+	}
+
+	def void saveJsonTo(String filename) {
+		var content = IntStream.range(0, nbColumns).mapToObj [ columnIndex |
+			'''"«columns.get(columnIndex)»":
+			{«IntStream.range(0, nbRows).mapToObj[rowIndex|
+					'''"«rowIndex»":"«table.get(rowIndex).get(columnIndex)»"'''
+				].collect(Collectors.toList).join(",")»}'''
+		].collect(Collectors.toList).join(",")
+		content = '''{«content»}'''
+		val File file = new File(filename);
+		val FileWriter writer = new FileWriter(file, false);
+		writer.write(content.replaceAll("\\s+",""));
+		writer.close();
 	}
 }
