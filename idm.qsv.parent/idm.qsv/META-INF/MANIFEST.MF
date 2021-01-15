@@ -28,5 +28,6 @@ Export-Package: idm.qsv,
  idm.parser.antlr.internal,
  idm.compiler.bash,
  idm.compiler.python,
- idm.compiler.python.actions
+ idm.compiler.python.actions,
+ idm.interpreter
 Import-Package: org.apache.log4j
