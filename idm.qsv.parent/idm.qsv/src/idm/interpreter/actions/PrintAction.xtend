@@ -5,8 +5,13 @@ import idm.interpreter.LineFilters
 import idm.interpreter.csv.CsvData
 import idm.qsv.Columns
 import idm.qsv.Condition
+import idm.qsv.Line
+import idm.qsv.LineRange
 import idm.qsv.Lines
 import idm.qsv.Print
+import java.util.List
+import java.util.stream.Collectors
+import java.util.stream.IntStream
 
 class PrintAction implements Action {
 
@@ -45,25 +50,20 @@ class PrintAction implements Action {
 
 	private def select(Lines selection) {
 		val Condition condition = selection.cond
-//		val Line line = selection.line
-//		val LineRange lineRange = selection.range
-//		if (line !== null) {
-//			val index = line.number
-//			code += '''«printVariable» = «printVariable».iloc[[«index»]]'''
-//			code += PythonCompiler.NEWLINE
-//		}
-//		if (lineRange !== null) {
-//			val start = lineRange.start
-//			val end = lineRange.end
-//			code += '''«printVariable» = «printVariable».iloc[range(«start»,«end» + 1)]'''
-//			code += PythonCompiler.NEWLINE
-//		}
+		val Line line = selection.line
+		val LineRange lineRange = selection.range
+		if (line !== null) {
+			val index = line.number
+			csvData.selectLines(List.of(index))
+		}
+		if (lineRange !== null) {
+			val start = lineRange.start
+			val end = lineRange.end
+			val range = IntStream.range(start, end + 1).boxed.collect(Collectors.toList)
+			csvData.selectLines(range)
+		}
 		if (condition !== null) {
-			
-//			val filter = PythonCompiler.newFilterName
 			condition.createFilter()
-//			code += '''«printVariable» = «printVariable»[«filter»]'''
-//			code += PythonCompiler.NEWLINE
 		}
 	}
 

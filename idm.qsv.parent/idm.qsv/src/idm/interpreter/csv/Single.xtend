@@ -20,9 +20,13 @@ class Single implements Filter {
 		val comparisonValue = condition.compValue.value
 		var Object actualValue = values.get(names.indexOf(columnName))
 		if (actualValue.class !== comparisonValue.class) {
-			actualValue = Integer.parseInt(actualValue + "")
+			try {
+				actualValue = Integer.parseInt(actualValue + "")
+			} catch (NumberFormatException exception) {
+				return false
+			}
 		}
 		return function.apply(actualValue, comparisonValue)
 	}
-	
+
 }

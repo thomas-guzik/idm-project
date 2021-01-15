@@ -5,7 +5,6 @@ import java.util.Arrays
 import java.util.List
 import java.util.stream.Collectors
 import java.util.stream.IntStream
-import java.util.stream.Collector.Characteristics
 
 class CsvData {
 
@@ -14,6 +13,7 @@ class CsvData {
 	List<List<String>> table
 	List<Integer> selectedRows
 	boolean header
+	boolean filtered = false
 	String separator
 	final String NEWLINE = "\n"
 	final String PRINT_SEPARATOR = "\t"
@@ -58,7 +58,7 @@ class CsvData {
 		}
 
 		val printedRows = new ArrayList<List<String>>()
-		IntStream.range(0, nbRows).filter[i|selectedRows.isEmpty || selectedRows.contains(i)].forEach [ i |
+		IntStream.range(0, nbRows).filter[i|!filtered || selectedRows.contains(i)].forEach [ i |
 			val newRow = new ArrayList<String>()
 			printedRows.add(newRow)
 			newRow.add(i + "")
@@ -73,7 +73,10 @@ class CsvData {
 		data += printedColumns.join(PRINT_SEPARATOR)
 		data += NEWLINE
 		data += printedRows.map[row|row.join(PRINT_SEPARATOR)].join(NEWLINE)
-		data += NEWLINE
+		if (!printedRows.isEmpty) {
+			data += NEWLINE
+		}
+		return data
 	}
 
 	def void selectColumns(List<String> selected) {
@@ -83,9 +86,21 @@ class CsvData {
 		}
 	}
 
+	def void selectLines(List<Integer> lines) {
+		filtered = true
+		if (selectedRows.isEmpty) {
+			selectedRows = new ArrayList<Integer>()
+			selectedRows.addAll(lines)
+		} else {
+			selectedRows = selectedRows.filter[i|lines.contains(i)].toList
+		}
+	}
+
 	def void apply(Filter filter) {
-		selectedRows = IntStream.range(0, nbRows).filter(i|filter.eval(columns, table.get(i))).boxed.collect(
-			Collectors.toList)
+		filtered = true
+		selectedRows = IntStream.range(0, nbRows).filter( i |
+			filter.eval(columns, table.get(i)) && (selectedRows.isEmpty || selectedRows.contains(i))
+		).boxed.collect(Collectors.toList)
 	}
 
 	def Integer nbRows() {
@@ -99,5 +114,6 @@ class CsvData {
 	def resetFilters() {
 		selectedColumns = new ArrayList<Integer>()
 		selectedRows = new ArrayList<Integer>()
+		filtered = false
 	}
 }
