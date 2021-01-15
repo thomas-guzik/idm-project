@@ -1,8 +1,11 @@
 package idm.interpreter
 
 import idm.compiler.python.MissingConcreteImplementationException
+import idm.interpreter.actions.InsertAction
+import idm.interpreter.actions.PrintAction
 import idm.interpreter.csv.CsvData
 import idm.qsv.Header
+import idm.qsv.Insert
 import idm.qsv.Print
 import idm.qsv.QuerySeparatedValues
 import idm.qsv.Statement
@@ -10,7 +13,6 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.List
-import idm.interpreter.actions.PrintAction
 
 class QsvXtendInterpreter {
 	QuerySeparatedValues qsv
@@ -45,6 +47,11 @@ class QsvXtendInterpreter {
 	private def dispatch void interpret(Print statement) {
 		var printer = new PrintAction(statement, csvData)
 		printed += printer.interpret
+	}
+
+	private def dispatch void interpret(Insert statement) {
+		var inserter = new InsertAction(statement, csvData)
+		inserter.interpret
 	}
 
 	def List<String> getFileContent(String filename) {

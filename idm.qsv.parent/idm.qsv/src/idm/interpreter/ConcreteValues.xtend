@@ -105,7 +105,7 @@ class ConcreteValues {
 	}
 
 	def dispatch getRowContent(ContentList contentList) {
-		return '''[«contentList.values.map[v|v.value].reduce[v1, v2|'''«v1», «v2»''']»]'''
+		return contentList.values.map[v|v.value]
 	}
 
 	def dispatch getPythonRowContent(VariableIdentifier id) {

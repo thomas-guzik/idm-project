@@ -1,7 +1,6 @@
 package idm.interpreter.csv
 
 import java.util.ArrayList
-import java.util.Arrays
 import java.util.List
 import java.util.stream.Collectors
 import java.util.stream.IntStream
@@ -24,8 +23,8 @@ class CsvData {
 		selectedColumns = new ArrayList<Integer>()
 		selectedRows = new ArrayList<Integer>()
 		if (data.isEmpty) {
-			columns = List.of()
-			table = List.of()
+			columns = new ArrayList<String>()
+			table = new ArrayList<List<String>>()
 		} else {
 			initColumns(data)
 			initTable(data)
@@ -35,7 +34,8 @@ class CsvData {
 	def private void initColumns(List<String> data) {
 		val number = data.get(0).split(separator).size()
 		if (header) {
-			columns = Arrays.asList(data.get(0).split(separator))
+			columns = new ArrayList<String>()
+			columns.addAll(data.get(0).split(separator))
 			data.remove(0)
 		} else {
 			columns = IntStream.range(0, number).mapToObj[i|i + ""].collect(Collectors.toList)
@@ -43,7 +43,10 @@ class CsvData {
 	}
 
 	def private void initTable(List<String> data) {
-		table = data.map[row|Arrays.asList(row.split(separator))]
+		table = new ArrayList<List<String>>()
+		for(String row : data) {
+			table.add(new ArrayList<String>(row.split(separator)))
+		}
 	}
 
 	override String toString() {
@@ -98,9 +101,29 @@ class CsvData {
 
 	def void apply(Filter filter) {
 		filtered = true
-		selectedRows = IntStream.range(0, nbRows).filter( i |
-			filter.eval(columns, table.get(i)) && (selectedRows.isEmpty || selectedRows.contains(i))
+		selectedRows = IntStream.range(0, nbRows).filter(
+			i |
+				filter.eval(columns, table.get(i)) && (selectedRows.isEmpty || selectedRows.contains(i))
 		).boxed.collect(Collectors.toList)
+	}
+
+	def void insertLine(List<Object> row) {
+		val line = new ArrayList<String>()
+		line.addAll(row.map[o|o + ""].toList)
+		println(table.get(0).class)
+		println(line.class)
+		table.add(line)
+	}
+	
+	def void insertColumn(String name, List<Object> column) {
+		if(header) {
+			columns.add(name)
+		} else {
+			columns.add(nbColumns + "")
+		}
+			IntStream.range(0, column.size()).forEach [ i |
+			table.get(i).add(column.get(i) + "")
+		]
 	}
 
 	def Integer nbRows() {
