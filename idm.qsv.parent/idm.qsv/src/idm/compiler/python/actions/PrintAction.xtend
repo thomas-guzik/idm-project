@@ -48,10 +48,20 @@ class PrintAction implements Action {
 
 	private def String select(Columns selection) {
 		if (selection.columns !== null) {
-			code += '''«printVariable» = «printVariable»[['''
+			val columnsVariable = "printCols"
 			val columnNames = selection.columns.getPythonNames()
-			code += columnNames.join(',')
-			code += "]]"
+			code += '''«columnsVariable» = [«columnNames.join(',')»]'''
+			code += PythonCompiler.NEWLINE
+
+			code += '''
+				if «csvDataVariable».columns.is_object():
+					«columnsVariable».sort(key=lambda x: «csvDataVariable».columns.tolist().index(x))
+				else:
+					«columnsVariable».sort()
+			'''
+
+			code += PythonCompiler.NEWLINE
+			code += '''«printVariable» = «printVariable»[«columnsVariable»]'''
 			code += PythonCompiler.NEWLINE
 		}
 		return code

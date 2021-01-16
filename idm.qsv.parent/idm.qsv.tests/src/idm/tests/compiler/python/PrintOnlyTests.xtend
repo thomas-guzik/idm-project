@@ -156,7 +156,7 @@ class PrintOnlyTests {
 	}
 
 	@Test
-	def void printColumnsWithMultipleNameSelectionKeepsOrder() {
+	def void printColumnsWithMultipleNameSelectionKeepsOriginalOrder() {
 		val parseTree = parseHelper.parse('''
 			using "foo2.csv" with column names: yes
 			print
@@ -165,9 +165,9 @@ class PrintOnlyTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   f3  f1
-			0  v3  v1
-			1  v3  v1
+			   f1  f3
+			0  v1  v3
+			1  v1  v3
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -182,10 +182,10 @@ class PrintOnlyTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			    2   0
-			0  f3  f1
-			1  v3  v1
-			2  v3  v1
+			    0   2
+			0  f1  f3
+			1  v1  v3
+			2  v1  v3
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
