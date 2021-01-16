@@ -64,7 +64,7 @@ Selector:
 ;
 
 Columns:
-	':columns' (columns=Column)?
+	{Columns} ':columns' (columns=Column)?
 ;
 
 Column:
@@ -80,11 +80,11 @@ ColumnNumbers:
 ;
 
 Lines:
-	':lines' (range=LineRange | line=Line | '*')? cond=Condition?
+	{Lines} ':lines' (range=LineRange | line=Line | '*')? cond=Condition?
 ;
 
 LineRange:
-	start=INT '-' end=INT
+	'#' start=INT '-' end=INT
 ;
 
 Line:

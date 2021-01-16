@@ -1,79 +1,146 @@
 package idm.compiler.bash
 
 import idm.qsv.Print
-import idm.qsv.Selector
-import idm.qsv.Column
-import idm.qsv.ColumnNames
-import idm.qsv.ColumnNumbers
-import idm.qsv.LineRange
-import idm.qsv.Line
-import idm.qsv.Condition
-import java.util.ArrayList
-import idm.qsv.MidPriority
-import idm.qsv.HighestPriority
-import idm.qsv.BinCond
-import idm.qsv.ColumnIdentifier
-import idm.qsv.ColumnNameIdentifier
-import idm.qsv.ColumnNumberIdentifier
-import idm.qsv.Lines
-import idm.qsv.OpComp
-import idm.qsv.CompareEqual
-import idm.qsv.CompareNotEqual
-import idm.qsv.CompareLower
-import idm.qsv.CompareGreater
-import idm.qsv.CompareLowerOrEqual
-import idm.qsv.CompareGreaterOrEqual
-import idm.qsv.Value
-import idm.qsv.IntegerValue
-import idm.qsv.StringValue
-import idm.qsv.VariableIdentifier
-import idm.qsv.BooleanValue
+import idm.analyzer.ColumnSelectType
+import java.util.List
+import java.util.Set
 
 class CompilerBashPrint implements CompilerBash {
 
 	Print print
 	Boolean hasColumnName
-	String nameFile
 	String csvSep
 	String colSep
 
+	Boolean withCondition
+	ColumnSelectType colSelectType
+	List<String> colSelected
+
+	Set<String> colNameInCond
+	Set<String> colNumberInCond
+
 	CompilerBashSelector c
 
-	new(Print p, Boolean hasColumnName, String nameFile, String separator) {
+	new(Print p, Boolean hasColumnName, String csvSep, String colSep) {
 		print = p
 		this.hasColumnName = hasColumnName
-		this.nameFile = nameFile
-		this.csvSep = separator
-		colSep = " "
+		this.csvSep = csvSep
+		this.colSep = colSep
 
-		c = new CompilerBashSelector(print.selector, hasColumnName, nameFile, separator)
+		if (print.selector !== null) {
+			c = new CompilerBashSelector(print.selector)
+			colSelectType = c.colSelectType
+			colSelected = c.colSelected
+			withCondition = c.isWithCondition()
+			colNameInCond = c.colNameInCondition
+			colNumberInCond = c.colNumberInCondition
+		} else {
+			c = null
+			colSelectType = ColumnSelectType.ALL
+			colSelected = null
+			withCondition = false
+			colNameInCond = null
+			colNumberInCond = null
+		}
 	}
 
 	override String compile() {
-		c.analyze()
 		return print.genCode()
 	}
 
 	def String genCode(Print print) {
-		var cond = c.analyzeAndgenCodeLines()
 		return '''
-			
-			«c.genBeforeWhile()»
-			«c.genColTitle()»
+			«genBeforeWhile()»
 			n=0
-			«c.genInput()» while read «c.genRead()»
+			«genColTitle()»
+			«CompilerBashHelper.genInput(colSelectType)» while read -a c
 			do
-			«IF !cond.isEmpty()»
-				«String.join("\n", c.beforeCond)»
-				if [[ «cond» ]] ; then
-				  echo $n «c.genEcho()»
-				fi
-			«ELSE»
-				echo $n «c.genEcho()»
-			«ENDIF»
+			«IF withCondition»if [[ «c.genCond()» ]] ; then«ENDIF»
+			echo $n «CompilerBashHelper.genEcho(colSep)»
+			«IF withCondition»fi«ENDIF»
 			n=$(( $n + 1 ))
 			done
 		'''
+	}
+
+	def genBeforeWhile() {
+		return '''
+			header=$(echo "$file" | head -1)
+			«IF colSelectType == ColumnSelectType.ALL»
+				nbCol=$(( $(echo "$index" | tr '«csvSep»' '\n' | wc -l) - 1))
+			«ENDIF»
+			«genCutVariable»
+			«genLocVariable»
+		'''
+	}
+
+	def genCutVariable() {
+		var code = ""
+		if (colSelectType !== ColumnSelectType.ALL) {
+			var echoVar = ""
+			if (colSelectType === ColumnSelectType.NAME) {
+				echoVar = "$header"
+			} else if (colSelectType === ColumnSelectType.NUMBER) {
+				echoVar = "$index"
+			}
+			code += '''
+				«FOR c : colSelected»
+					cut_«c»=$(echo "«echoVar»" | tr '«csvSep»' '\n' | grep -n -w "^«c»" |  awk -F ":" '{print $1}')
+				«ENDFOR»
+				nb_cut="$cut_«String.join(',$cut_',colSelected)»"
+			'''
+
+			if (hasColumnName) {
+				code += '''
+					header_cut=$(echo "$header" | cut -d '«csvSep»' -f "$nb_cut")
+				'''
+			}
+			code += '''
+				index_cut=$(echo "$index" | cut -d '«csvSep»' -f "$nb_cut")
+				nbCol=$(( $(echo "$index_cut" | tr '«csvSep»' '\n' | wc -l) - 1))
+			'''
+		}
+		return code
+	}
+
+	def genLocVariable() {
+		var echoVarForName = ""
+		var echoVarForNumber = ""
+		if (colSelectType == ColumnSelectType.ALL) {
+			echoVarForName = "header"
+			echoVarForNumber = "index"
+		} else {
+			echoVarForName = "header_cut"
+			echoVarForNumber = "index_cut"
+		}
+		return '''
+			«CompilerBashHelper.genLocVariable(colNameInCond, echoVarForName)»
+			«CompilerBashHelper.genLocVariable(colNumberInCond, echoVarForNumber)»
+		'''
+	}
+
+	def genColTitle() {
+		var echoVar = ""
+		switch (colSelectType) {
+			case ColumnSelectType.ALL: {
+				if (hasColumnName) {
+					echoVar = "$header"
+				} else {
+					echoVar = "$index"
+				}
+			}
+			case ColumnSelectType.NAME: {
+				echoVar = "$header_cut"
+			}
+			case ColumnSelectType.NUMBER: {
+				if (hasColumnName) {
+					echoVar = "$header_cut"
+				} else {
+					echoVar = "$index_cut"
+				}
+			}
+		}
+		return '''echo "  $(echo "«echoVar»" | tr '«csvSep»' '«colSep»')"'''
 	}
 
 }

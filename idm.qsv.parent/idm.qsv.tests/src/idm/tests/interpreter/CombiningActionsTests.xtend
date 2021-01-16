@@ -1,8 +1,8 @@
-package idm.tests.compiler.python
+package idm.tests.interpreter
 
 import com.google.inject.Inject
-import idm.compiler.python.PythonCompiler
-import idm.compiler.python.PythonCompilerOutput
+import idm.interpreter.InterpreterOutput
+import idm.interpreter.QsvXtendInterpreter
 import idm.qsv.QuerySeparatedValues
 import idm.tests.QsvInjectorProvider
 import org.eclipse.xtext.testing.InjectWith
@@ -20,15 +20,15 @@ class CombiningActionsTests {
 	ParseHelper<QuerySeparatedValues> parseHelper
 	@Inject extension ValidationTestHelper
 
-	def void assertPythonCompilesAndRuns(QuerySeparatedValues qsv, String expectedStdOut) {
-		val outputResult = pythonCompileAndRun(qsv)
+	def void assertInterpretation(QuerySeparatedValues qsv, String expectedStdOut) {
+		val outputResult = interpret(qsv)
 		Assertions.assertEquals(expectedStdOut, outputResult.getOutput)
 		Assertions.assertEquals("", outputResult.getError)
 	}
 
-	def PythonCompilerOutput pythonCompileAndRun(QuerySeparatedValues qsv) {
-		val PythonCompiler cmpPython = new PythonCompiler(qsv)
-		val outputResult = cmpPython.compileAndRun
+	def InterpreterOutput interpret(QuerySeparatedValues qsv) {
+		val QsvXtendInterpreter interpreter = new QsvXtendInterpreter(qsv)
+		val outputResult = interpreter.interpret
 		return outputResult
 	}
 
@@ -49,11 +49,11 @@ class CombiningActionsTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   col1
-			2     3
-			5    10
+				col1
+			2	3
+			5	10
 		'''
-		assertPythonCompilesAndRuns(parseTree, expectedResult)
+		assertInterpretation(parseTree, expectedResult)
 	}
 
 	@Test
@@ -69,16 +69,16 @@ class CombiningActionsTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   col0  col1  newcol
-			0     4     3       7
-			1     2     7       9
-			2     1     3       4
-			3     3     5       8
-			4     5     1       6
-			5     1    10      11
-			6     5     1       6
+				col0	col1	newcol
+			0	4	3	7
+			1	2	7	9
+			2	1	3	4
+			3	3	5	8
+			4	5	1	6
+			5	1	10	11
+			6	5	1	6
 		'''
-		assertPythonCompilesAndRuns(parseTree, expectedResult)
+		assertInterpretation(parseTree, expectedResult)
 	}
 
 	@Test
@@ -94,13 +94,13 @@ class CombiningActionsTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			    0   1   3
-			0  f1  f2  f5
-			1  v1  v2  v8
-			2  v1  v7  v1
+				0	1	3
+			0	f1	f2	f5
+			1	v1	v2	v8
+			2	v1	v7	v1
 		'''
 
-		assertPythonCompilesAndRuns(parseTree, expectedResult)
+		assertInterpretation(parseTree, expectedResult)
 	}
 
 	@Test
@@ -117,13 +117,13 @@ class CombiningActionsTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   1   3   6   7   8   9   10
-			0  f2  f4  f1  f4  f7  f9  f6
-			1  v2  v5  v2  v5  v8  v8  v5
-			2  v7  v4  v3  v6  v9  v7  v4
+				1	3	6	7	8	9	10
+			0	f2	f4	f1	f4	f7	f9	f6
+			1	v2	v5	v2	v5	v8	v8	v5
+			2	v7	v4	v3	v6	v9	v7	v4
 		'''
 
-		assertPythonCompilesAndRuns(parseTree, expectedResult)
+		assertInterpretation(parseTree, expectedResult)
 	}
 
 }

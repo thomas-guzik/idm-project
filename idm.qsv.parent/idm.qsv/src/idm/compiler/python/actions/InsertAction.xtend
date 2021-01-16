@@ -14,12 +14,14 @@ class InsertAction implements Action {
 	Insert insert
 	String csvDataVariable
 	String code
+	String columnIndexVariable
 
 	extension ConcreteValues pythonValues
 
-	new(Insert i, String dataVariable) {
+	new(Insert i, String dataVariable, String columnIndex) {
 		insert = i
 		csvDataVariable = dataVariable
+		columnIndexVariable = columnIndex
 		pythonValues = new ConcreteValues
 	}
 
@@ -53,8 +55,10 @@ class InsertAction implements Action {
 				code +=
 					'''«csvDataVariable».insert(loc=len(«csvDataVariable».columns), column="«columnName»", value=«content»)'''
 			} else {
-				code += '''«csvDataVariable»[len(«csvDataVariable».columns)] = «content»'''
+				code += '''«csvDataVariable»[«columnIndexVariable»] = «content»'''
 			}
+			code += PythonCompiler.NEWLINE
+			code += '''«columnIndexVariable» += 1'''
 			code += PythonCompiler.NEWLINE
 		}
 	}

@@ -6,6 +6,7 @@ import idm.compiler.python.actions.DeleteAction
 import idm.compiler.python.actions.EchoAction
 import idm.compiler.python.actions.InsertAction
 import idm.compiler.python.actions.PrintAction
+import idm.compiler.python.actions.SaveAction
 import idm.compiler.python.actions.UpdateAction
 import idm.qsv.Compute
 import idm.qsv.Delete
@@ -14,18 +15,18 @@ import idm.qsv.Header
 import idm.qsv.Insert
 import idm.qsv.Print
 import idm.qsv.QuerySeparatedValues
+import idm.qsv.Save
 import idm.qsv.Statement
 import idm.qsv.Update
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
-import idm.compiler.python.actions.SaveAction
-import idm.qsv.Save
 
 class PythonCompiler {
 	QuerySeparatedValues qsv
 	String csvDataVariable
+	String columnIndexVariable = "columnIndex"
 	String csvFileName
 	public static String NEWLINE = "\n"
 	public static String PRINT_FUNCTION_NAME = "printData"
@@ -34,7 +35,10 @@ class PythonCompiler {
 	String printIfNotEmptyFunction = '''def «PRINT_FUNCTION_NAME»(data):
     if type(data) is pd.DataFrame:
         if data.empty:
-            print()
+            printed = ""
+            for col in data.columns:
+                printed += "\t" + str(col)
+            print(printed)
             return
     if type(data) is pd.Series:
     	print(data.to_string())
@@ -98,6 +102,9 @@ class PythonCompiler {
 		var String code = ""
 		code += '''«csvDataVariable» = pd.read_csv("«csvFileName»", header=«hasColumnName? "'infer'" : "None"»)
 '''
+		code += NEWLINE
+		code += '''«columnIndexVariable» = len(«csvDataVariable».columns)'''
+		code += NEWLINE
 		return code
 	}
 
@@ -118,7 +125,7 @@ class PythonCompiler {
 	}
 
 	private def dispatch compile(Insert delete) {
-		var inserter = new InsertAction(delete, csvDataVariable)
+		var inserter = new InsertAction(delete, csvDataVariable, columnIndexVariable)
 		var code = inserter.compile
 		return code
 	}

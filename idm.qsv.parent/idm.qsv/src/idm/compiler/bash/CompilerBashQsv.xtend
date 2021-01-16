@@ -13,11 +13,13 @@ import idm.qsv.Echo
 import idm.qsv.Print
 import idm.qsv.Update
 import idm.qsv.Insert
+import idm.qsv.Delete
 
 class CompilerBashQsv implements CompilerBash {
 	QuerySeparatedValues qsv
 	Boolean hasColumnName
-	String separator
+	String csvSep
+	String colSep
 	String nameFile
 
 	new(QuerySeparatedValues q) {
@@ -32,6 +34,7 @@ class CompilerBashQsv implements CompilerBash {
 	override String compile() {
 		var String code = ""
 		code += qsv.getHeader().analyze().genCode();
+		
 		for (Statement s : qsv.getStatements()) {
 			code += s.compile();
 		}
@@ -39,9 +42,12 @@ class CompilerBashQsv implements CompilerBash {
 	}
 
 	def Header analyze(Header header) {
-		separator = "," // TODO Penser à ajouter la selection du separateur dans la grammaire
+		csvSep = "," // TODO Penser à ajouter la selection du separateur dans la grammaire
+		colSep = " "
 		hasColumnName = header.isHasColumnName()
 		nameFile = header.nameFile
+		CompilerBashHelper.setCsvSep(csvSep)
+		CompilerBashHelper.setHasColumnName(hasColumnName)
 		return header
 	}
 
@@ -49,8 +55,10 @@ class CompilerBashQsv implements CompilerBash {
 		return '''
 			#!/bin/bash
 			OLD_IFS=$IFS
-			IFS="«separator»"
+			IFS="«csvSep»"
 			file=$(cat «nameFile»)
+			lastColIndex=$(( $(head -1 <(echo "$file") | tr '«csvSep»' '\n' | wc -l) - 1))
+			index=$(seq -s ',' 0 $lastColIndex)
 		'''
 	}
 
@@ -61,21 +69,25 @@ class CompilerBashQsv implements CompilerBash {
 	def dispatch String compile(Compute compute) {
 		return new CompilerBashCompute(compute).compile()
 	}
+	
+	def dispatch String compile(Delete delete) {
+		return new CompilerBashDelete(delete, hasColumnName, csvSep).compile()
+	}
 
 	def dispatch String compile(Echo echo) {
 		return new CompilerBashEcho(echo).compile()
 	}
 	
 	def dispatch String compile(Insert insert) {
-		return new CompilerBashInsert(insert).compile()
+		return new CompilerBashInsert(insert, csvSep).compile()
 	}
 
 	def dispatch String compile(Print print) {
-		return new CompilerBashPrint(print, hasColumnName, nameFile, separator).compile()
+		return new CompilerBashPrint(print, hasColumnName, csvSep, colSep).compile()
 	}
 
 	def dispatch String compile(Update update) {
-		return new CompilerBashUpdate(update).compile()
+		return new CompilerBashUpdate(update, hasColumnName, csvSep).compile()
 	}
 
 	def TerminalOutput executeOnFile(String code, String filename) {

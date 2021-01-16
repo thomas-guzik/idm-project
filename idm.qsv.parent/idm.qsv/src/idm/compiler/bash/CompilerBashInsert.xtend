@@ -5,29 +5,20 @@ import idm.qsv.Insertion
 import idm.qsv.LineInsertion
 import idm.qsv.ColumnInsertion
 import idm.qsv.ContentList
-import idm.qsv.Value
-import idm.qsv.IntegerValue
-import idm.qsv.StringValue
-import idm.qsv.BooleanValue
 import idm.qsv.VariableIdentifier
 import idm.qsv.ColumnDescription
 import idm.qsv.ContentDescription
 import java.util.ArrayList
+import idm.analyzer.AnalyzerValue
 
 class CompilerBashInsert implements CompilerBash {
 
 	Insert insert
-	Boolean hasColumnName
-	Boolean addColumn
 	String csvSep
-	String colSep
 
-	new(Insert i) {
+	new(Insert i, String csvSep) {
 		insert = i
-		this.hasColumnName = hasColumnName
-		this.csvSep = ","
-		colSep = " "
-		addColumn = null
+		this.csvSep = csvSep
 	}
 
 	override String compile() {
@@ -41,21 +32,31 @@ class CompilerBashInsert implements CompilerBash {
 	def dispatch String genCodeInsertion(Insertion i) {}
 
 	def dispatch String genCodeInsertion(LineInsertion l) {
-		return '''file=$(echo -e "$file«FOR r : l.rows»\n«r.genCode()»«ENDFOR»")'''
+		return '''
+			file=$(echo -e "$file«FOR r : l.rows»\n«r.genCode()»«ENDFOR»")
+		'''
 	}
 
 	def String genCode(ContentList l) {
 		var list = newArrayList
 		for (v : l.values) {
-			list.add(v.genCodeValue())
+			var analyzerValue = new AnalyzerValue(v)
+			list.add(analyzerValue.value)
 		}
 		return '''«String.join(",",list)»'''
 	}
 
 	def dispatch String genCodeInsertion(ColumnInsertion c) {
+		var code = ""
 		var list = new ArrayList<ArrayList<String>>()
 		for (d : c.descriptions) {
 			list.add(d.genCode())
+		}
+		for (var i = 0; i < list.size(); i++) {
+			code += '''
+				lastColIndex=$((lastColIndex + 1))
+				index="$index«csvSep»$lastColIndex"
+			'''
 		}
 		var newList = new ArrayList<ArrayList<String>>()
 		for (var i = 0; i < list.get(0).size(); i++) {
@@ -72,8 +73,11 @@ class CompilerBashInsert implements CompilerBash {
 			newnewList.add(String.join(",", l))
 		}
 
-		return '''add=$(echo -e "«String.join("\n", newnewList)»")
-		file=$(paste -d«csvSep» <(echo "$file") <(echo "$add"))'''
+		return '''
+			«code»
+			add=$(echo -e "«String.join("\n", newnewList)»")
+			file=$(paste -d«csvSep» <(echo "$file") <(echo "$add"))
+		'''
 	}
 
 	def genCode(ColumnDescription d) {
@@ -91,7 +95,8 @@ class CompilerBashInsert implements CompilerBash {
 	def dispatch genCodeContentDescription(ContentList l) {
 		var list = new ArrayList<String>()
 		for (v : l.values) {
-			list.add(v.genCodeValue())
+			var analyzerValue = new AnalyzerValue(v)
+			list.add(analyzerValue.value)
 		}
 		return list
 	}
@@ -99,17 +104,4 @@ class CompilerBashInsert implements CompilerBash {
 	def dispatch genCodeContentDescription(VariableIdentifier v) {
 		return newArrayList
 	}
-
-	def dispatch genCodeValue(Value v) {}
-
-	def dispatch genCodeValue(IntegerValue v) { return '''«v.value»''' }
-
-	def dispatch genCodeValue(StringValue v) { return '''«v.value»''' }
-
-	def dispatch genCodeValue(BooleanValue v) { return v.truthy ? "1" : "0" }
-
-	def dispatch genCodeValue(VariableIdentifier v) {
-		throw new Exception("Variable not implemented")
-	}
-
 }
