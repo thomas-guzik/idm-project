@@ -2,12 +2,12 @@
 
 target_language=$1
 case "$target_language" in
-    sh | py)
+    sh | py | int)
         # it's a valid target language
         ;;
     *)
         # it's not
-        echo "Please provide a valid target language first: either sh or py"
+        echo "Please provide a valid target language first: sh, py or int (for interpretation)"
         exit 1
         ;;
 esac

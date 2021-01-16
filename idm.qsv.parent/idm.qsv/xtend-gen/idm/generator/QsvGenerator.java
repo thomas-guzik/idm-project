@@ -7,6 +7,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterators;
 import idm.compiler.bash.CompilerBashQsv;
 import idm.compiler.python.PythonCompiler;
+import idm.interpreter.QsvXtendInterpreter;
 import idm.qsv.QuerySeparatedValues;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.generator.AbstractGenerator;
@@ -30,18 +31,25 @@ public class QsvGenerator extends AbstractGenerator {
     String _plus = (_path + ".");
     final String location = (_plus + QsvGenerator.target);
     final QuerySeparatedValues qsv = IteratorExtensions.<QuerySeparatedValues>last(Iterators.<QuerySeparatedValues>filter(resource.getAllContents(), QuerySeparatedValues.class));
-    InputOutput.<String>println(("Compiling output to: " + location));
     boolean _equals = Objects.equal(QsvGenerator.target, "sh");
     if (_equals) {
       final CompilerBashQsv bashCompiler = new CompilerBashQsv(qsv);
       fsa.generateFile(location, bashCompiler.compile());
+      InputOutput.<String>println(("Saved generated code to: " + location));
     } else {
       boolean _equals_1 = Objects.equal(QsvGenerator.target, "py");
       if (_equals_1) {
         final PythonCompiler pythonCompiler = new PythonCompiler(qsv);
         fsa.generateFile(location, pythonCompiler.compile());
+        InputOutput.<String>println(("Saved generated code to: " + location));
       } else {
-        fsa.generateFile("greetings.txt", "Generator output!");
+        boolean _equals_2 = Objects.equal(QsvGenerator.target, "int");
+        if (_equals_2) {
+          final QsvXtendInterpreter interpreter = new QsvXtendInterpreter(qsv);
+          InputOutput.<String>println(interpreter.interpret().getOutput());
+        } else {
+          fsa.generateFile("greetings.txt", "Generator output!");
+        }
       }
     }
   }

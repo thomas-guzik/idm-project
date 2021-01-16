@@ -1,0 +1,72 @@
+#!/bin/bash
+
+if [ $# -lt 2 ];then
+    echo "Syntax"
+    echo "./run method[,method]* file.qsv (otherfile.qsv)*"
+    echo "Example"
+    echo "./run sh,int test.qsv"
+    exit 1
+fi
+
+methods=$1
+# remove first parameter
+set -- "${@:2}"
+
+do_py=false
+do_sh=false
+do_int=false
+
+IFS=','
+read -ra methods_array <<< "$methods"
+
+for method in "${methods_array[@]}"; do
+    case $method in
+        sh)
+        do_sh=true
+            ;;
+        py)
+        do_py=true
+            ;;
+        int)
+        do_int=true
+            ;;
+       *)
+            # it's not
+            echo "Please provide a valid target language: sh, py or int (for interpretation)"
+            exit 1
+            ;;
+    esac
+done
+
+if [ "$do_py" = true ]; then
+    echo "### Compiling to Python ..."
+    docker run -it --rm -v $PWD:/qsv-code qsv py "$@"
+fi
+
+if [ "$do_sh" = true ]; then
+    echo "### Compiling to bash ..."
+    docker run -it --rm -v $PWD:/qsv-code qsv sh "$@"
+fi
+
+if [ "$do_py" = true ]; then
+    echo "### Running in Python ..."
+    for file in "$@"; do
+        py_file="$(basename "$file" .qsv).py"
+        docker run -it --rm -v $PWD:/qsv-code qsv-py "$py_file"
+    done
+fi
+
+if [ "$do_sh" = true ]; then
+    echo "### Running in bash ..."
+    for file in "$@"; do
+        sh_file="$(basename "$file" .qsv).sh"
+        bash $sh_file
+    done
+fi
+
+if [ "$do_int" = true ]; then
+    echo "### Running interpreter ..."
+    docker run -it --rm -v $PWD:/qsv-code qsv int "$@"
+fi
+
+

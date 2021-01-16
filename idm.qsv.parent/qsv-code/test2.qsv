@@ -1,0 +1,5 @@
+using "foo1.csv" with column names: yes
+    insert
+        :lines (5, 5, "v1", "v7")
+    print
+

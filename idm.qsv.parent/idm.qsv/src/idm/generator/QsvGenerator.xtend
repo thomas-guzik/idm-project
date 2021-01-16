@@ -10,6 +10,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import idm.interpreter.QsvXtendInterpreter
 
 /**
  * Generates code from your model files on save.
@@ -23,13 +24,17 @@ class QsvGenerator extends AbstractGenerator {
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		val location = resource.URI.trimFileExtension.path + "." + target
 		val qsv = resource.allContents.filter(QuerySeparatedValues).last
-		println("Compiling output to: " + location)
 		if (target == "sh") {
 			val CompilerBashQsv bashCompiler = new CompilerBashQsv(qsv)
 			fsa.generateFile(location, bashCompiler.compile())
+			println("Saved generated code to: " + location)
 		} else if (target == "py") {
 			val PythonCompiler pythonCompiler = new PythonCompiler(qsv)
 			fsa.generateFile(location, pythonCompiler.compile())
+			println("Saved generated code to: " + location)
+		} else if (target == "int") {
+			val interpreter = new QsvXtendInterpreter(qsv)
+			println(interpreter.interpret.output)
 		} else {
 			fsa.generateFile('greetings.txt', 'Generator output!')
 		}

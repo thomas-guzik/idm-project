@@ -96,7 +96,7 @@ class QsvXtendInterpreter {
 	}
 
 	def List<String> getFileContent(String filename) {
-		val content = Files.readAllLines(Paths.get(filename), StandardCharsets.UTF_8);
+		val content = Files.readAllLines(Paths.get("/qsv-code/" + filename), StandardCharsets.UTF_8);
 		return content
 	}
 
