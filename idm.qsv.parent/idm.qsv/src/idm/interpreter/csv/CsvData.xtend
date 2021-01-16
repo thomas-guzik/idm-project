@@ -35,6 +35,15 @@ class CsvData {
 		}
 	}
 
+	new(List<String> cols, List<List<String>> tab, boolean h, String s) {
+		columns = cols
+		table = tab
+		header = h
+		separator = s
+		selectedColumns = new ArrayList<Integer>()
+		selectedRows = new ArrayList<Integer>()
+	}
+
 	def private void initColumns(List<String> data) {
 		val number = data.get(0).split(separator).size()
 		if (header) {
@@ -77,12 +86,14 @@ class CsvData {
 			}
 		]
 
-		data += printedColumns.join(PRINT_SEPARATOR)
-		data += NEWLINE
-		data += printedRows.map[row|row.join(PRINT_SEPARATOR)].join(NEWLINE)
-		if (!printedRows.isEmpty) {
+		if (!printedColumns.isEmpty) {
+			data += printedColumns.join(PRINT_SEPARATOR)
+		}
+		if (!printedRows.isEmpty && !columns.isEmpty) {
 			data += NEWLINE
 		}
+
+		data += printedRows.map[row|row.join(PRINT_SEPARATOR)].join(NEWLINE)
 		return data
 	}
 
@@ -191,7 +202,37 @@ class CsvData {
 		content = '''{«content»}'''
 		val File file = new File(filename);
 		val FileWriter writer = new FileWriter(file, false);
-		writer.write(content.replaceAll("\\s+",""));
+		writer.write(content.replaceAll("\\s+", ""));
 		writer.close();
 	}
+
+	def String sumLinesOfColumn(String column) {
+		val indexOfColumn = columns.indexOf(column)
+		try {
+			val valuesOfColumn = table.map[row|Integer.parseInt(row.get(indexOfColumn))]
+			return valuesOfColumn.reduce[a, b|a + b] + ""
+		} catch (NumberFormatException exception) {
+			val valuesOfColumn = table.map[row|row.get(indexOfColumn)]
+			return valuesOfColumn.reduce[a, b|a + b]
+		}
+	}
+
+	def sumColumns(List<String> columns) {
+		val columnIndexes = columns.map[col|columns.indexOf(col)]
+		val intRows = table.map[row|columnIndexes.map[i|Integer.parseInt(row.get(i))]]
+		val result = intRows.map[row|row.reduce[v1, v2|v1 + v2]]
+
+		val resultTable = new ArrayList<List<String>>()
+		IntStream.range(0, nbRows).forEach [ rowIndex |
+			val newRow = new ArrayList<String>()
+			newRow.add(result.get(rowIndex) + "")
+			resultTable.add(newRow)
+		]
+
+//		val columnContent = intRows.map[row|row.reduce[i1, i2|i1 + i2]]
+//		val table = columnContent.map[value | new List<String>(value)]
+		val data = new CsvData(List.of(), resultTable, header, separator)
+		return data
+	}
+
 }

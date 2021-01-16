@@ -17,6 +17,7 @@ class PrintAction implements Action {
 
 	CsvData csvData
 	Print print
+	String NEWLINE = "\n"
 
 	extension LineFilters lineFiltering
 	extension ConcreteValues values
@@ -41,7 +42,7 @@ class PrintAction implements Action {
 		}
 		val printed = csvData.toString()
 		csvData.resetFilters()
-		return printed
+		return printed + NEWLINE
 	}
 
 	private def select(Columns selection) {
