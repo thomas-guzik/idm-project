@@ -12,6 +12,7 @@ class CsvData {
 
 	List<String> columns
 	List<Integer> selectedColumns
+	Integer maxColumnsIndex
 	List<List<String>> table
 	List<Integer> selectedRows
 	boolean header
@@ -33,6 +34,7 @@ class CsvData {
 			initColumns(data)
 			initTable(data)
 		}
+		maxColumnsIndex = nbColumns()
 	}
 
 	new(List<String> cols, List<List<String>> tab, boolean h, String s) {
@@ -132,11 +134,12 @@ class CsvData {
 		if (header) {
 			columns.add(name)
 		} else {
-			columns.add(nbColumns + "")
+			columns.add(maxColumnsIndex + "")
 		}
 		IntStream.range(0, column.size()).forEach [ i |
 			table.get(i).add(column.get(i) + "")
 		]
+		maxColumnsIndex++
 	}
 
 	def void deleteColumn(String name) {
@@ -233,6 +236,16 @@ class CsvData {
 //		val table = columnContent.map[value | new List<String>(value)]
 		val data = new CsvData(List.of(), resultTable, header, separator)
 		return data
+	}
+	
+	def insertColumnsFromCsv(List<String> names, CsvData data) {
+		if(data.nbRows !== nbRows) {
+			throw new IllegalArgumentException
+		}
+		columns.addAll(names)
+		IntStream.range(0, nbRows).forEach[rowIndex|
+			table.get(rowIndex).addAll(data.table.get(rowIndex))
+		]
 	}
 
 }

@@ -27,24 +27,24 @@ class ComputeAction implements Action {
 
 	override interpret() {
 		val variable = compute.variable.value
-		compute.function.compile(variable)
+		compute.function.interpret(variable)
 		return ""
 	}
 
-	private def dispatch compile(Function function, String variable) {
+	private def dispatch interpret(Function function, String variable) {
 		throw new MissingConcreteImplementationException("Function")
 	}
 
-	private def dispatch compile(SumLines sumLines, String variable) {
+	private def dispatch interpret(SumLines sumLines, String variable) {
 		val column = sumLines.column.columnId
 		val result = csvData.sumLinesOfColumn(column)
-		QsvXtendInterpreter.storeVariable(variable, result)
+		QsvXtendInterpreter.storeValue(variable, result)
 	}
 
-	private def dispatch compile(SumColumns sumLines, String variable) {
+	private def dispatch interpret(SumColumns sumLines, String variable) {
 		val columns = sumLines.columns.map[c|c.columnId]
 		val result = csvData.sumColumns(columns)
-		QsvXtendInterpreter.storeVariable(variable, result)
+		QsvXtendInterpreter.storeCsv(variable, result)
 	}
 
 }

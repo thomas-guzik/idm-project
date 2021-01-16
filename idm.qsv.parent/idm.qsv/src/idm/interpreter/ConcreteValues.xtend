@@ -108,8 +108,8 @@ class ConcreteValues {
 		return contentList.values.map[v|v.value]
 	}
 
-	def dispatch getPythonRowContent(VariableIdentifier id) {
-		return id.value
+	def dispatch getRowContent(VariableIdentifier id) {
+		return QsvXtendInterpreter.idm.interpreter.QsvXtendInterpreter.getValue(id.value)
 	}
 
 	def dispatch List<String> getNames(Column column) {

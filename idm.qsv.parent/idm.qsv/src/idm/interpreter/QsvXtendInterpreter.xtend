@@ -31,7 +31,8 @@ class QsvXtendInterpreter {
 	String printed
 	String csvFileName
 	CsvData csvData
-	static Map<String, Object> variableStore
+	static Map<String, String> valueStore
+	static Map<String, CsvData> csvDataStore
 
 	new(QuerySeparatedValues q) {
 		qsv = q
@@ -39,7 +40,8 @@ class QsvXtendInterpreter {
 
 	def InterpreterOutput interpret() {
 		printed = ""
-		variableStore = new HashMap
+		valueStore = new HashMap
+		csvDataStore = new HashMap
 		qsv.getHeader().interpret()
 		for (Statement s : qsv.getStatements()) {
 			s.interpret();
@@ -98,12 +100,32 @@ class QsvXtendInterpreter {
 		return content
 	}
 
-	def static void storeVariable(String variable, Object value) {
-		variableStore.put(variable, value)
+	def static Object getVariable(String variable) {
+		val value = valueStore.get(variable)
+		val data = csvDataStore.get(variable)
+		return value === null ? data : value
 	}
 
-	def static Object getVariable(String variable) {
-		variableStore.get(variable)
+	def static void storeValue(String variable, String value) {
+		valueStore.put(variable, value)
+		if (csvDataStore.containsKey(variable)) {
+			csvDataStore.remove(variable)
+		}
+	}
+
+	def static String getValue(String variable) {
+		valueStore.get(variable)
+	}
+
+	def static void storeCsv(String variable, CsvData value) {
+		csvDataStore.put(variable, value)
+		if (valueStore.containsKey(variable)) {
+			valueStore.remove(variable)
+		}
+	}
+
+	def static CsvData getCsv(String variable) {
+		csvDataStore.get(variable)
 	}
 
 }
