@@ -60,6 +60,8 @@ class DeleteAction implements Action {
 
 		}
 		code += PythonCompiler.NEWLINE
+		code += '''«csvDataVariable».reset_index(drop=True, inplace=True)'''
+		code += PythonCompiler.NEWLINE
 		return code
 	}
 

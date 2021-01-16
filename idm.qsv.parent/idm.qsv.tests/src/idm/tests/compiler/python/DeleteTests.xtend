@@ -105,9 +105,9 @@ class DeleteTests {
 
 		val expectedResult = '''
 			   col0  col1
-			1     2     7
-			3     3     5
-			5     1    10
+			0     2     7
+			1     3     5
+			2     1    10
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -125,9 +125,9 @@ class DeleteTests {
 		val expectedResult = '''
 			   col0  col1
 			0     4     3
-			2     1     3
-			3     3     5
-			5     1    10
+			1     1     3
+			2     3     5
+			3     1    10
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -144,7 +144,7 @@ class DeleteTests {
 
 		val expectedResult = '''
 			   f1  f2  f3
-			1  v1  v7  v3
+			0  v1  v7  v3
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -162,7 +162,7 @@ class DeleteTests {
 		val expectedResult = '''
 			    0   1   2
 			0  f1  f2  f3
-			2  v1  v7  v3
+			1  v1  v7  v3
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}

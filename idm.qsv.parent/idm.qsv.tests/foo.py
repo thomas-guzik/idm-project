@@ -19,5 +19,6 @@ filter79 = my_data["col1"] < 5
 filter78 = filter79
 my_data = my_data.drop(my_data[filter78].index)
 
+my_data.reset_index(drop=True, inplace=True)
 tmp62 = my_data
 printData(tmp62)
