@@ -35,7 +35,10 @@ class PythonCompiler {
 	String printIfNotEmptyFunction = '''def «PRINT_FUNCTION_NAME»(data):
     if type(data) is pd.DataFrame:
         if data.empty:
-            print()
+            printed = ""
+            for col in data.columns:
+                printed += "\t" + str(col)
+            print(printed)
             return
     if type(data) is pd.Series:
     	print(data.to_string())

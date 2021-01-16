@@ -237,15 +237,19 @@ class CsvData {
 		val data = new CsvData(List.of(), resultTable, header, separator)
 		return data
 	}
-	
+
 	def insertColumnsFromCsv(List<String> names, CsvData data) {
-		if(data.nbRows !== nbRows) {
+		if (data.nbRows !== nbRows) {
 			throw new IllegalArgumentException
 		}
 		columns.addAll(names)
-		IntStream.range(0, nbRows).forEach[rowIndex|
+		IntStream.range(0, nbRows).forEach [ rowIndex |
 			table.get(rowIndex).addAll(data.table.get(rowIndex))
 		]
+	}
+
+	def void deleteAllLines() {
+		table = new ArrayList<List<String>>()
 	}
 
 }

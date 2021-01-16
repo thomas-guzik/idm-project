@@ -56,9 +56,10 @@ class DeleteTests {
 		''')
 		parseTree.assertNoErrors
 
-		val result = interpret(parseTree)
-		Assertions.assertEquals("", result.output.strip)
-		Assertions.assertEquals("", result.getError)
+		val expectedResult = '''
+			«"\t"»f1	f2	f3
+		'''
+		assertInterpretation(parseTree, expectedResult)
 	}
 
 	@Test

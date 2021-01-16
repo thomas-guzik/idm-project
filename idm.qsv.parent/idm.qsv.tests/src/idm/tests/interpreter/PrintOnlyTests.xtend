@@ -373,10 +373,10 @@ class PrintOnlyTests {
 		''')
 		parseTree.assertNoErrors
 
-		val expectedResultGreaterOrEqual = '''
+		val expectedResult = '''
 			«"\t"»col0	col1
 		'''
-		assertInterpretation(parseTree, expectedResultGreaterOrEqual)
+		assertInterpretation(parseTree, expectedResult)
 	}
 
 	@Test

@@ -25,26 +25,41 @@ class DeleteAction implements Action {
 
 	override interpret() {
 		var deleteAll = true
+		var deleteAllLines = false
+		var deleteAllColumns = false
 		if (delete.selector !== null) {
+			deleteAll = false
 			val Lines lineSelection = delete.selector.lineSelection
 			if (lineSelection !== null) {
-				deleteAll = false
-				lineSelection.select()
+				deleteAllLines = lineSelection.cond === null
+				if (!deleteAllLines) {
+					lineSelection.select()
+				}
 			}
 			val Columns columnSelection = delete.selector.columnSelection
 			if (columnSelection !== null) {
-				deleteAll = false
-				columnSelection.select()
+				deleteAllColumns = columnSelection.columns === null
+				if (!deleteAllColumns) {
+					columnSelection.select()
+				}
 			}
 		}
 		if (deleteAll) {
 			csvData.deleteAllData
+		}
+		if (deleteAllLines) {
+			csvData.deleteAllLines()
+		}
+		if (deleteAllColumns) {
+			csvData.deleteAllData
+
 		}
 		csvData.resetFilters
 		return ""
 	}
 
 	private def select(Columns selection) {
+		println(selection.columns)
 		var columnNames = selection.columns.names
 		for (String columnName : columnNames) {
 			csvData.deleteColumn(columnName)

@@ -109,7 +109,7 @@ class ConcreteValues {
 	}
 
 	def dispatch getRowContent(VariableIdentifier id) {
-		return QsvXtendInterpreter.idm.interpreter.QsvXtendInterpreter.getValue(id.value)
+		return QsvXtendInterpreter.getValue(id.value)
 	}
 
 	def dispatch List<String> getNames(Column column) {

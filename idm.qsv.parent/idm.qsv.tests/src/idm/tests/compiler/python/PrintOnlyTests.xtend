@@ -376,10 +376,10 @@ class PrintOnlyTests {
 		''')
 		parseTree.assertNoErrors
 
-		val result = pythonCompileAndRun(parseTree)
-		Assertions.assertEquals("", result.output.strip)
-		Assertions.assertEquals("", result.getError)
-
+		val expectedResult = '''
+			«"\t"»col0	col1
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
 
 	@Test
@@ -504,15 +504,18 @@ class PrintOnlyTests {
 	}
 
 	@Test
-	def void printOneLineWithFalseCondition() {
+	def void printOneLineWithFalseConditionIsEmpty() {
 		val parseTree = parseHelper.parse('''
 			using "foo2.csv" with column names: no
 			print
 				:lines #1 #2 = 5
 		''')
-		val result = pythonCompileAndRun(parseTree)
-		Assertions.assertEquals("", result.output.strip)
-		Assertions.assertEquals("", result.getError)
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+			«"\t"»0	1	2
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
 
 	@Test

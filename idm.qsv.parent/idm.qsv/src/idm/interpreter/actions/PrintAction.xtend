@@ -46,7 +46,9 @@ class PrintAction implements Action {
 	}
 
 	private def select(Columns selection) {
-		csvData.selectColumns(selection.columns.names)
+		if (selection.columns !== null) {
+			csvData.selectColumns(selection.columns.names)
+		}
 	}
 
 	private def select(Lines selection) {

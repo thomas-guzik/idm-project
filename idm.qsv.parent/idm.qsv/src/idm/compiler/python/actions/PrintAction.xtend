@@ -47,11 +47,13 @@ class PrintAction implements Action {
 	}
 
 	private def String select(Columns selection) {
-		code += '''«printVariable» = «printVariable»[['''
-		val columnNames = selection.columns.getPythonNames()
-		code += columnNames.join(',')
-		code += "]]"
-		code += PythonCompiler.NEWLINE
+		if (selection.columns !== null) {
+			code += '''«printVariable» = «printVariable»[['''
+			val columnNames = selection.columns.getPythonNames()
+			code += columnNames.join(',')
+			code += "]]"
+			code += PythonCompiler.NEWLINE
+		}
 		return code
 	}
 

@@ -26,20 +26,38 @@ class DeleteAction implements Action {
 	override String compile() {
 		code = ""
 		var deleteAll = true
+		var deleteAllLines = false
+		var deleteAllColumns = false
 		if (delete.selector !== null) {
+			deleteAll = false
 			val Lines lineSelection = delete.selector.lineSelection
 			if (lineSelection !== null) {
-				deleteAll = false
-				code += lineSelection.select()
+				deleteAllLines = lineSelection.cond === null
+				if (!deleteAllLines) {
+					code += lineSelection.select()
+				}
 			}
 			val Columns columnSelection = delete.selector.columnSelection
 			if (columnSelection !== null) {
-				deleteAll = false
-				code += columnSelection.select()
+				deleteAllColumns = columnSelection.columns === null
+				if (!deleteAllColumns) {
+					code += columnSelection.select()
+				}
 			}
 		}
-		if(deleteAll) {
+		if (deleteAll) {
 			code += '''«csvDataVariable» = «csvDataVariable»[0:0]'''
+			code += PythonCompiler.NEWLINE
+			code += '''«csvDataVariable» = «csvDataVariable».drop(«csvDataVariable».columns, axis='columns')'''
+		}
+		if (deleteAllLines) {
+			code += '''«csvDataVariable» = «csvDataVariable»[0:0]'''
+			code += PythonCompiler.NEWLINE
+		}
+		if (deleteAllColumns) {
+			code += '''«csvDataVariable» = «csvDataVariable».drop(«csvDataVariable».columns, axis='columns')'''
+			code += PythonCompiler.NEWLINE
+
 		}
 		code += PythonCompiler.NEWLINE
 		return code
