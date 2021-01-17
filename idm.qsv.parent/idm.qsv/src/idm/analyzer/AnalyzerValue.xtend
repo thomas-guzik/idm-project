@@ -35,7 +35,7 @@ class AnalyzerValue {
 	def dispatch getValue(BooleanValue v) { return v.truthy ? "1" : "0" }
 
 	def dispatch getValue(VariableIdentifier v) {
-		return v.value
+		return '''«v.value.substring(1)»'''
 	}
 
 	def getValueType() {

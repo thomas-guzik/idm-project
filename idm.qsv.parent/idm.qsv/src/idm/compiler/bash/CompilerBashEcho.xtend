@@ -6,21 +6,25 @@ import idm.analyzer.ValueType
 class CompilerBashEcho implements CompilerBash {
 
 	Echo echo
+	String varName
 
 	new(Echo c) {
 		echo = c
+		varName = echo.variable.value.substring(1)
 	}
 
 	override String compile() {
-		var varType = CompilerBashHelper.getVariableType(echo.variable.value)
+		var varType = CompilerBashHelper.getVariableType(varName)
+		println(varType)
 		if (varType === ValueType.VAR) {
 			return '''
-				echo "$v_«echo.variable.value»"
+				echo "$v_«varName»"
 			'''
 		} else if(varType === ValueType.COL) {
+			println("ici")
 			return '''
 			n=0
-			echo "$v_«echo.variable.value»" | while read c
+			echo "$v_«varName»" | tr ',' '\n' | while read c
 			do
 			echo "$n $c"
 			n=$((n + 1))

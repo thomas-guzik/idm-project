@@ -25,13 +25,13 @@ class CompilerBashHelper {
 	def static String genStart() {
 		return '''
 			n=0
-			nbCol=$(( $(echo "$index" | tr '«idm.compiler.bash.CompilerBashHelper.csvSep»' '\n' | wc -l) - 1))
+			nbCol=$(( $(echo "$index" | tr '«csvSep»' '\n' | wc -l) - 1))
 		'''
 	}
 
 	def static String genNbCol() {
 		return '''
-			nbCol=$(( $(echo "$index" | tr '«idm.compiler.bash.CompilerBashHelper.csvSep»' '\n' | wc -l) - 1))
+			nbCol=$(( $(echo "$index" | tr '«csvSep»' '\n' | wc -l) - 1))
 		'''
 	}
 
@@ -39,7 +39,7 @@ class CompilerBashHelper {
 		if (s !== null) {
 			return '''
 				«FOR v : s»
-					loc_«v»=$(( $(echo "$«echoVar»" | tr '«idm.compiler.bash.CompilerBashHelper.csvSep»' '\n' | grep -n -w "^«v»" |  awk -F ":" '{print $1}') - 1))
+					loc_«v»=$(( $(echo "$«echoVar»" | tr '«csvSep»' '\n' | grep -n -w "^«v»" |  awk -F ":" '{print $1}') - 1))
 				«ENDFOR»
 			'''
 		} else {
@@ -48,15 +48,17 @@ class CompilerBashHelper {
 	}
 
 	def static genInput(ColumnSelectType colSelectType) {
-		var code = '''echo "$file" |'''
+		println("input")
+		var code = '''< <(echo "$file"'''
 
 		if (hasColumnName) {
-			code += ''' tail -n +2 |'''
+			code += '''| tail -n +2'''
 		}
 
 		if (colSelectType !== ColumnSelectType.ALL) {
-			code += ''' cut -d "«idm.compiler.bash.CompilerBashHelper.csvSep»" -f "$nb_cut" |'''
+			code += '''| cut -d "«csvSep»" -f "$nb_cut"'''
 		}
+		code += ''')'''
 		return code
 	}
 
@@ -81,7 +83,7 @@ class CompilerBashHelper {
 	def static genCut(HashSet<String> cols, String echoVar) {
 		return '''
 			«FOR c : cols»
-				cut_«c»=$(echo "«echoVar»" | tr '«csvSep»' '\n' | grep -n -w "^«c»" |  awk -F ":" '{print $1}')
+				cut_«c»=$(echo "$«echoVar»" | tr '«csvSep»' '\n' | grep -n -w "^«c»" |  awk -F ":" '{print $1}')
 			«ENDFOR»
 		'''
 	}
