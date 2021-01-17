@@ -67,7 +67,7 @@ fi
 
 if [ "$do_int" = true ]; then
     echo "### Running interpreter ..."
-    bash interpret "$@"
+    bash run-interpret "$@"
 fi
 
 

@@ -21,6 +21,6 @@ Using the py option for the first time will trigger the build of a Python docker
 NB: if you need to run docker using `sudo`, you can first update the necessary files using:
 
 ```
-sed -i 's/docker/sudo docker/g' qsv-code/compile-py qsv-code/compile-sh qsv-code/run-py
+sed -i 's/docker/sudo docker/g' qsv-code/compile-* qsv-code/run*
 ```
 (also in the `idm.qsv.parent` directory)
