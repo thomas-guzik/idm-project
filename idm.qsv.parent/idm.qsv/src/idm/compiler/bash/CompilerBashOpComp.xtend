@@ -1,7 +1,5 @@
 package idm.compiler.bash
 
-import idm.qsv.BinCond
-import idm.analyzer.AnalyzerBinCond
 import idm.qsv.OpComp
 import idm.qsv.CompareEqual
 import idm.qsv.CompareNotEqual
@@ -11,18 +9,18 @@ import idm.qsv.CompareLowerOrEqual
 import idm.qsv.CompareGreaterOrEqual
 import idm.analyzer.ValueType
 
-class CompilerBashBinCond {
+class CompilerBashOpComp {
 
-	BinCond binCond
-	AnalyzerBinCond analyzer
+	OpComp op
+	String value
 
-	new(BinCond b) {
-		binCond = b
-		analyzer = new AnalyzerBinCond(binCond)
+	new(OpComp op, String value) {
+		this.op = op
+		this.value = value
 	}
-
-	def String genBashCode() {
-		return '''${c[$loc_«analyzer.columnId»]} «binCond.operator.genCodeOperator(analyzer.valueType)» «genCodeValue»'''
+	
+	def genCodeOperator(ValueType t) {
+		return op.genCodeOperator(t)
 	}
 
 	def dispatch genCodeOperator(OpComp op, ValueType t) {}
@@ -96,38 +94,38 @@ class CompilerBashBinCond {
 			throw new Exception("Error during generating code for condition")
 		}
 	}
-	
+
+	def genOperatorString() {
+		return op.genOperatorString()
+	}
+
 	def dispatch genOperatorString(OpComp op) {}
-	
+
 	def dispatch genOperatorString(CompareEqual op) {
 		return "eq"
 	}
-	
+
 	def dispatch genOperatorString(CompareNotEqual op) {
 		return "ne"
 	}
-	
+
 	def dispatch genOperatorString(CompareLower op) {
 		return "lt"
 	}
-	
+
 	def dispatch genOperatorString(CompareGreater op) {
 		return "gt"
 	}
-	
+
 	def dispatch genOperatorString(CompareLowerOrEqual op) {
 		return "le"
 	}
-	
+
 	def dispatch genOperatorString(CompareGreaterOrEqual op) {
 		return "ge"
 	}
-	
+
 	def genCodeOperatorForVar() {
-		return '''$op_«analyzer.value»_«binCond.operator.genOperatorString()»'''
-	}
-	
-	def genCodeValue() {		
-		return '''$v_«analyzer.value»'''
+		return '''$op_«value»_«op.genOperatorString()»'''
 	}
 }

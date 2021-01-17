@@ -53,4 +53,18 @@ class CompilerBashCondition {
 			throw new Exception("Error during conditions analyzing")
 		}
 	}
+	
+	def genBeforeConditon() {
+		return '''
+		«FOR varWithOp : analyzer.variableWithOperator»
+		«var v = varWithOp.getKey()»
+		«var op = new CompilerBashOpComp(varWithOp.getValue(), "")»
+		if [ $v_«v.value» ] ; then
+		op_«v.value»_«op.genOperatorString()»="«op.genCodeOperator(v.valueType)»"
+		else
+		op_«v.value»_«op.genOperatorString()»="«op.genCodeOperator(v.valueType)»"
+		fi
+		«ENDFOR»
+		'''
+	}
 }

@@ -5,16 +5,17 @@ import idm.qsv.VariableIdentifier
 import idm.qsv.BooleanValue
 import idm.qsv.StringValue
 import idm.qsv.IntegerValue
+import idm.compiler.bash.CompilerBashHelper
 
-
-
-class AnalyzerValue {
 enum ValueType {
 	INT,
 	STRING,
 	BOOL,
+	COL,
 	VAR
+
 }
+class AnalyzerValue {
 	Value v
 
 	new(Value v) {
@@ -56,7 +57,7 @@ enum ValueType {
 	}
 
 	def dispatch getValueType(VariableIdentifier v) {
-		return ValueType.VAR
+		return CompilerBashHelper.getVariableType(v.value)
 	}
 
 }
