@@ -38,21 +38,22 @@ for method in "${methods_array[@]}"; do
     esac
 done
 
+
 if [ "$do_py" = true ]; then
     echo "### Compiling to Python ..."
-    docker run -it --rm -v $PWD:/qsv-code qsv py "$@"
+    bash compile-py "$@"
 fi
 
 if [ "$do_sh" = true ]; then
     echo "### Compiling to bash ..."
-    docker run -it --rm -v $PWD:/qsv-code qsv sh "$@"
+    bash compile-sh "$@"
 fi
 
 if [ "$do_py" = true ]; then
     echo "### Running in Python ..."
     for file in "$@"; do
         py_file="$(basename "$file" .qsv).py"
-        docker run -it --rm -v $PWD:/qsv-code qsv-py "$py_file"
+        bash run-py "$py_file"
     done
 fi
 
@@ -60,13 +61,13 @@ if [ "$do_sh" = true ]; then
     echo "### Running in bash ..."
     for file in "$@"; do
         sh_file="$(basename "$file" .qsv).sh"
-        bash $sh_file
+        bash run-sh "$sh_file"
     done
 fi
 
 if [ "$do_int" = true ]; then
     echo "### Running interpreter ..."
-    docker run -it --rm -v $PWD:/qsv-code qsv int "$@"
+    bash interpret "$@"
 fi
 
 

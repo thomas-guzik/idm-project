@@ -1,0 +1,5 @@
+using "foo_sum.csv" with column names: yes
+    compute $ee
+        :sumColumns c2, c3
+    echo $ee
+

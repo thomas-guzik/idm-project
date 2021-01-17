@@ -8,22 +8,15 @@ docker build -t qsv .
 
 **Compiling and running generated code**
 
-
-**1. Using bash**
-
 ```
 cd idm.qsv.parent/qsv-code/
-./compile-sh test.qsv
-./run-sh test.sh
+./run sh,py,int test.qsv test2.qsv
 ```
 
-**2. Using python**
+You can use sh,py,int to try out all three versions on all the files. It is also possible to only pick one or two by following the same syntax.
 
-```
-cd idm.qsv.parent/qsv-code/
-./compile-py test.qsv
-./run-py test.py
-```
+Using the py option for the first time will trigger the build of a Python docker image containing necessary dependencies (such as pandas).
+
 
 NB: if you need to run docker using `sudo`, you can first update the necessary files using:
 

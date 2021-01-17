@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ $# -lt 1 ];then
+    echo "Please provide at least one QSV file"
+    exit 1
+fi
+
+docker image inspect qsv &> /dev/null
+image_exists=$?
+if [ $image_exists -ne 0 ];then
+    echo "Docker image qsv does not exist. Please build it first in idm.qsv.parent/ using:"
+    echo
+    echo "docker build -t qsv ."
+    exit 1
+fi
+
+docker run -it --rm -v $PWD:/qsv-code qsv int "$@"

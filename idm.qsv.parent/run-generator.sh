@@ -40,14 +40,12 @@ for file in "$@"; do
     esac
 done
 
-echo "Found all QSV files."
-
 for file in "$@"; do
     echo "Processing $file ..."
     echo
     java -jar idm.qsv/build/libs/idm.qsv-1.0.0-SNAPSHOT.jar "$target_language" "$FILES_LOCATION/$file"
     echo
+    echo "Done processing $file"
     echo
 done
 
-echo "Finished for all the files"
