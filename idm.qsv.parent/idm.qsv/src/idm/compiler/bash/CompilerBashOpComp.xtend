@@ -23,7 +23,9 @@ class CompilerBashOpComp {
 		return op.genCodeOperator(t)
 	}
 
-	def dispatch genCodeOperator(OpComp op, ValueType t) {}
+	def dispatch genCodeOperator(OpComp op, ValueType t) {
+		println("maybe be here")
+	}
 
 	def dispatch genCodeOperator(CompareEqual op, ValueType t) {
 		if (t === ValueType.INT) {
@@ -62,6 +64,7 @@ class CompilerBashOpComp {
 	}
 
 	def dispatch genCodeOperator(CompareGreater op, ValueType t) {
+		println("greater op")
 		if (t === ValueType.INT) {
 			return "-gt"
 		} else if (t == ValueType.VAR) {
@@ -76,6 +79,8 @@ class CompilerBashOpComp {
 	def dispatch genCodeOperator(CompareLowerOrEqual op, ValueType t) {
 		if (t === ValueType.INT) {
 			return "-le"
+		} else if (t == ValueType.VAR) {
+			return genCodeOperatorForVar()
 		} else if (t === ValueType.STRING || t === ValueType.BOOL) {
 			throw new Exception("Only integer can be compare with lower or equal operator")
 		} else {
@@ -114,6 +119,7 @@ class CompilerBashOpComp {
 	}
 
 	def dispatch genOperatorString(CompareGreater op) {
+		println("is it here ?")
 		return "gt"
 	}
 

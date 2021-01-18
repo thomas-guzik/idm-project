@@ -10,6 +10,7 @@ import idm.qsv.ColumnDescription
 import idm.qsv.ContentDescription
 import java.util.ArrayList
 import idm.analyzer.AnalyzerValue
+import idm.analyzer.ValueType
 
 class CompilerBashInsert implements CompilerBash {
 
@@ -41,12 +42,18 @@ class CompilerBashInsert implements CompilerBash {
 		var list = newArrayList
 		for (v : l.values) {
 			var analyzerValue = new AnalyzerValue(v)
-			list.add(analyzerValue.value)
+			var valueType = analyzerValue.getValueType()
+			if (valueType == ValueType.VAR) {
+				list.add("$v_" + analyzerValue.value)
+			} else {
+				list.add(analyzerValue.value)
+			}
 		}
 		return '''«String.join(",",list)»'''
 	}
 
 	def dispatch String genCodeInsertion(ColumnInsertion c) {
+		// TODO Trouver un meilleur code
 		var code = ""
 		var list = new ArrayList<ArrayList<String>>()
 		for (d : c.descriptions) {
@@ -96,12 +103,26 @@ class CompilerBashInsert implements CompilerBash {
 		var list = new ArrayList<String>()
 		for (v : l.values) {
 			var analyzerValue = new AnalyzerValue(v)
-			list.add(analyzerValue.value)
+			var valueType = analyzerValue.getValueType()
+			if (valueType == ValueType.VAR) {
+				list.add("$v_" + analyzerValue.value)
+			} else {
+				list.add(analyzerValue.value)
+			}
 		}
 		return list
 	}
 
 	def dispatch genCodeContentDescription(VariableIdentifier v) {
-		return newArrayList
+		var varName = v.value.substring(1)
+		var varType =CompilerBashHelper.getVariableType(v.value.substring(1))
+		var list = new ArrayList<String>()
+		if(varType === ValueType.COL) {
+			list.add("$v_"+varName)
+			return list
+		}
+		else {
+			throw new Exception("The variable is not a column")
+		}
 	}
 }

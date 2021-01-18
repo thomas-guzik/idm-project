@@ -19,6 +19,7 @@ class CompilerBashBinCond {
 	new(BinCond b) {
 		binCond = b
 		analyzer = new AnalyzerBinCond(binCond)
+		
 	}
 
 	def String genBashCode() {
@@ -78,6 +79,8 @@ class CompilerBashBinCond {
 	def dispatch genCodeOperator(CompareLowerOrEqual op, ValueType t) {
 		if (t === ValueType.INT) {
 			return "-le"
+		} else if (t == ValueType.VAR) {
+			return genCodeOperatorForVar()
 		} else if (t === ValueType.STRING || t === ValueType.BOOL) {
 			throw new Exception("Only integer can be compare with lower or equal operator")
 		} else {
@@ -127,7 +130,13 @@ class CompilerBashBinCond {
 		return '''$op_«analyzer.value»_«binCond.operator.genOperatorString()»'''
 	}
 	
-	def genCodeValue() {		
-		return '''$v_«analyzer.value»'''
+	def genCodeValue() {
+		if(analyzer.valueType === ValueType.VAR) {
+			return '''$v_«analyzer.value»'''
+		} else if (analyzer.valueType === ValueType.COL) {
+			throw new Exception("Can not used a column in a condition")
+		} else {
+			return '''«analyzer.value»'''
+		}
 	}
 }

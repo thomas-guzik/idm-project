@@ -59,9 +59,14 @@ class AnalyzerCondition {
 
 	def void analyze(BinCond b) {
 		b.columnId.analyzeColumnIdentifier()
+		println("analyzer Value")
 		var analyzerValue = new AnalyzerValue(b.compValue)
+		println("fin analyzer value")
+		
 		if(analyzerValue.getValueType() === ValueType.VAR) {
+			println("add in var Op")
 			varWithOp.add(new Pair<AnalyzerValue, OpComp>(analyzerValue, b.operator))
+			println("fin var add")
 		}
 	}
 

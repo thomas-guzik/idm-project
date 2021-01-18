@@ -53,13 +53,14 @@ class CompilerBashPrint implements CompilerBash {
 			«genBeforeWhile()»
 			n=0
 			«genColTitle()»
-			«CompilerBashHelper.genInput(colSelectType)» while read -a c
+			while read -a c
 			do
-			«IF withCondition»if [[ «c.genCond()» ]] ; then«ENDIF»
+			
+			«IF withCondition»if eval [[ «c.genCond()» ]] ; then«ENDIF»
 			echo $n «CompilerBashHelper.genEcho(colSep)»
 			«IF withCondition»fi«ENDIF»
 			n=$(( $n + 1 ))
-			done
+			done «CompilerBashHelper.genInput(colSelectType)»
 		'''
 	}
 
@@ -71,7 +72,16 @@ class CompilerBashPrint implements CompilerBash {
 			«ENDIF»
 			«genCutVariable»
 			«genLocVariable»
+			«genCondVariable»
 		'''
+	}
+	
+	def genCondVariable() {
+		if(c === null) {
+			return ""
+		} else {
+			return c.genBeforeCondition()
+		}
 	}
 
 	def genCutVariable() {

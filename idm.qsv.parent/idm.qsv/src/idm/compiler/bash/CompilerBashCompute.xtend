@@ -64,12 +64,21 @@ class CompilerBashCompute implements CompilerBash {
 		println("sumline")
 		return '''
 			«genCut()»
+			type=""
 			while read c
 			do
-			if [[ $c =~ ^[0-9]+$ ]] ; then	
-			v_«varName»=$(( $v_«varName» + $c ))
-			else 
+			if ! [[ $c =~ ^[0-9]+$ ]] ; then
+			type="str"
+			break
+			fi
+			done «CompilerBashHelper.genInput(ColumnSelectType.NAME)»
+			
+			while read c
+			do
+			if [[ $type = "str" ]] ; then	
 			v_«varName»="$v_«varName»$c"
+			else 
+			v_«varName»=$(( $v_«varName» + $c ))
 			fi
 			done «CompilerBashHelper.genInput(ColumnSelectType.NAME)»
 		'''
@@ -82,10 +91,19 @@ class CompilerBashCompute implements CompilerBash {
 		nbCol=$(( $(echo "$nb_cut" | tr ',' '\n' | wc -l) -1))
 		while read -a c
 		do
-		if [[ ${c[0]} =~ ^[0-9]+$ ]] ; then
-		v_«varName»=$v_«varName»,$(( $( eval echo '${c['$(seq -s ']}+${c[' 0 $nbCol)']}' ) ))
-		else 
+		type=""
+		for (( i=0 ; i <= $nbCol ; i++ ))
+		do
+		if ! [[ $c =~ ^[0-9]+$ ]] ; then
+		type="str"
+		break
+		fi
+		done
+		
+		if [[ type = "str" ]] ; then
 		v_«varName»=$v_«varName»,$(eval echo '${c['$(seq -s ']}${c[' 0 $nbCol)']}')
+		else 
+		v_«varName»=$v_«varName»,$(( $( eval echo '${c['$(seq -s ']}+${c[' 0 $nbCol)']}' ) ))
 		fi
 		done «CompilerBashHelper.genInput(ColumnSelectType.NAME)»
 		v_«varName»=${v_«varName»:1}'''
