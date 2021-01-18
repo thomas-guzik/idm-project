@@ -15,23 +15,24 @@ class CompilerBashHelper {
 	static HashMap<String, ValueType> variables = new HashMap<String, ValueType>()
 
 	def static setCsvSep(String sep) {
-		idm.compiler.bash.CompilerBashHelper.csvSep = sep
+		csvSep = sep
 	}
 
 	def static setHasColumnName(Boolean b) {
 		hasColumnName = b
 	}
 
-	def static String genStart() {
-		return '''
-			n=0
-			nbCol=$(( $(echo "$index" | tr '«csvSep»' '\n' | wc -l) - 1))
-		'''
-	}
-
 	def static String genNbCol() {
 		return '''
 			nbCol=$(( $(echo "$index" | tr '«csvSep»' '\n' | wc -l) - 1))
+		'''
+	}
+	
+	def static String genHeader() {
+		return '''
+		«IF hasColumnName»
+		header=$(echo "$file" | head -1)
+		«ENDIF»
 		'''
 	}
 
@@ -62,9 +63,21 @@ class CompilerBashHelper {
 		return code
 	}
 
-	def static genEcho(String colSep) {
+	def static genPrintf(String colSep) {
 		return '''
-			$(eval echo '${c['$(seq -s ']}«colSep»${c[' 0 $nbCol)]'}')
+		for(( i=0; i <= $nbCol; i++))
+		do
+		printf "«colSep»${c[$i]}"
+		done
+		echo ""
+		'''
+		
+	}
+	
+	def static genEcho(String colSep) {
+		return 
+		'''
+		$(eval echo '${c['$(seq -s ']}«colSep»${c[' 0 $nbCol)']}')
 		'''
 	}
 
