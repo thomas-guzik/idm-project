@@ -85,10 +85,13 @@ class PythonCompiler {
 
 	private def String compile() {
 		var String pythonCode = ""
-		pythonCode += "import pandas as pd"
-		pythonCode += NEWLINE
-		pythonCode += printIfNotEmptyFunction
-		pythonCode += NEWLINE
+		pythonCode += '''
+		import pandas as pd
+		from pandas.api.types import is_numeric_dtype
+		import functools
+		«printIfNotEmptyFunction»
+		
+		'''
 		pythonCode += qsv.getHeader().compile()
 		for (Statement s : qsv.getStatements()) {
 			pythonCode += s.compile();

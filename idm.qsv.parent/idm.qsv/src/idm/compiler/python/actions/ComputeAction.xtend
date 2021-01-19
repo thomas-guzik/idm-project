@@ -39,8 +39,19 @@ class ComputeAction implements Action {
 	}
 
 	private def dispatch compile(SumColumns sumLines, String variable) {
-		val columns = sumLines.columns.map[c|c.pythonColumn].join(", ")
-		code += '''«variable» = «csvDataVariable»[[«columns»]].sum(axis=1)'''
+		val pythonColumnsVariable = "cols_to_sum"
+		val pythonColumns = '''[«sumLines.columns.map[c|c.pythonColumn].join(", ")»]'''
+		code += '''«pythonColumnsVariable» = «pythonColumns»'''
+		code += PythonCompiler.NEWLINE
+		code += '''all_int = all([is_numeric_dtype(«csvDataVariable»[col]) for col in «pythonColumnsVariable»])'''
+		code += PythonCompiler.NEWLINE
+		code += '''
+		if all_int:
+			«variable» = «csvDataVariable»[«pythonColumnsVariable»].sum(axis=1)
+		else:
+			«variable» = functools.reduce(lambda a,b: «csvDataVariable»[a].map(str) + «csvDataVariable»[b].map(str), «pythonColumnsVariable»)'''
+		code += PythonCompiler.NEWLINE
+		code += PythonCompiler.NEWLINE
 	}
 
 }

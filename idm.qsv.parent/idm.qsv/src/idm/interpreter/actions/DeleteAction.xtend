@@ -59,7 +59,6 @@ class DeleteAction implements Action {
 	}
 
 	private def select(Columns selection) {
-		println(selection.columns)
 		var columnNames = selection.columns.names
 		for (String columnName : columnNames) {
 			csvData.deleteColumn(columnName)
