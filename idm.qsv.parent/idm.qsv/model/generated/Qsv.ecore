@@ -10,10 +10,13 @@
   <eClassifiers xsi:type="ecore:EClass" name="Header">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nameFile" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hasColumnName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="csvSep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Statement"/>
   <eClassifiers xsi:type="ecore:EClass" name="Print" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="selector" eType="#//Selector"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="format" eType="#//Format"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Delete" eSuperTypes="#//Statement">
@@ -164,4 +167,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SaveCsv" eSuperTypes="#//SaveMethod"/>
   <eClassifiers xsi:type="ecore:EClass" name="SaveJson" eSuperTypes="#//SaveMethod"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Format"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PrettyFormat" eSuperTypes="#//Format"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SeparatorFormat" eSuperTypes="#//Format">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="separator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
 </ecore:EPackage>

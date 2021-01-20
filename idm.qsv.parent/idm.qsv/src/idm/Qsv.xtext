@@ -12,7 +12,7 @@ QuerySeparatedValues:
 // TODO ? : same for column insertion
 
 Header:
-	'using' nameFile=STRING 'with' 'column' 'names:' (hasColumnName?='yes'|'no')
+	'using' nameFile=STRING 'with' 'column' 'names:' (hasColumnName?='yes'|'no') (':csvSeparator' csvSep=STRING)?
 ;
 
 Statement:
@@ -20,7 +20,7 @@ Statement:
 ;
 
 Print:
-	'print' selector=Selector
+	'print' selector=Selector (format=Format)?
 ;
 
 Delete:
@@ -206,6 +206,18 @@ SaveCsv:
 
 SaveJson:
 	{SaveJson} ':json' (filename=STRING)?
+;
+
+Format:
+	PrettyFormat | SeparatorFormat
+;
+
+PrettyFormat:
+	{PrettyFormat} ':pretty'
+;
+
+SeparatorFormat:
+	':separator' separator=STRING
 ;
 
 SignedInt returns ecore::EInt: '-'? INT;

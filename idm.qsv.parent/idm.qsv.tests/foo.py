@@ -1,4 +1,6 @@
 import pandas as pd
+from pandas.api.types import is_numeric_dtype
+import functools
 def printData(data):
     if type(data) is pd.DataFrame:
         if data.empty:

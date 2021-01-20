@@ -9,13 +9,15 @@ import idm.qsv.ColumnNumberIdentifier
 import idm.qsv.ColumnNameIdentifier
 import java.util.Set
 import java.util.HashSet
+import idm.qsv.OpComp
 
 class AnalyzerCondition {
 
 	Condition condition
 	Set<String> colSelectedByNumber = new HashSet<String>()
 	Set<String> colSelectedByName = new HashSet<String>()
-
+	Set<Pair<AnalyzerValue, OpComp>> varWithOp = new HashSet<Pair<AnalyzerValue, OpComp>>()
+	
 	new(Condition c) {
 		condition = c
 		condition.analyze()
@@ -27,6 +29,10 @@ class AnalyzerCondition {
 
 	def getColSelectedByName() {
 		return colSelectedByName
+	}
+	
+	def variableWithOperator() {
+		return varWithOp
 	}
 
 	def void analyze(Condition c) {
@@ -53,6 +59,15 @@ class AnalyzerCondition {
 
 	def void analyze(BinCond b) {
 		b.columnId.analyzeColumnIdentifier()
+		println("analyzer Value")
+		var analyzerValue = new AnalyzerValue(b.compValue)
+		println("fin analyzer value")
+		
+		if(analyzerValue.getValueType() === ValueType.VAR) {
+			println("add in var Op")
+			varWithOp.add(new Pair<AnalyzerValue, OpComp>(analyzerValue, b.operator))
+			println("fin var add")
+		}
 	}
 
 	def dispatch void analyzeColumnIdentifier(ColumnIdentifier c) {}

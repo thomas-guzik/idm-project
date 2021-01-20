@@ -101,8 +101,8 @@ class ComputeTests {
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
-	
-		@Test
+
+	@Test
 	def void sumTwoColumnsNoHeaders() {
 		val parseTree = parseHelper.parse('''
 			using "foo_numbers_noheaders.csv" with column names: no
@@ -124,4 +124,37 @@ class ComputeTests {
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
 
+	@Test
+	def void mixIntStringInSumTwoColumns() {
+		val parseTree = parseHelper.parse('''
+			using "foo_mix_int_str2.csv" with column names: yes
+			compute $sumCol0Col1
+				:sumColumns f2, f3
+			echo $sumCol0Col1
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+			0     23
+			1    7v4
+		'''
+
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void sumLinesInColumnMixed() {
+		val parseTree = parseHelper.parse('''
+			using "foo_mix_int_str2.csv" with column names: yes
+			compute $sumf2
+				:sumLines f3
+			echo $sumf2
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+			3v4
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
 }

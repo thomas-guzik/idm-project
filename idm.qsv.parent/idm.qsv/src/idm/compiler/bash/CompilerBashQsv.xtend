@@ -14,12 +14,12 @@ import idm.qsv.Print
 import idm.qsv.Update
 import idm.qsv.Insert
 import idm.qsv.Delete
+import idm.qsv.Save
 
 class CompilerBashQsv implements CompilerBash {
 	QuerySeparatedValues qsv
 	Boolean hasColumnName
 	String csvSep
-	String colSep
 	String nameFile
 
 	new(QuerySeparatedValues q) {
@@ -34,7 +34,6 @@ class CompilerBashQsv implements CompilerBash {
 	override String compile() {
 		var String code = ""
 		code += qsv.getHeader().analyze().genCode();
-		
 		for (Statement s : qsv.getStatements()) {
 			code += s.compile();
 		}
@@ -42,10 +41,14 @@ class CompilerBashQsv implements CompilerBash {
 	}
 
 	def Header analyze(Header header) {
-		csvSep = "," // TODO Penser à ajouter la selection du separateur dans la grammaire
-		colSep = " "
 		hasColumnName = header.isHasColumnName()
 		nameFile = header.nameFile
+		if(header.csvSep !== null) {
+			csvSep = header.csvSep
+		}
+		else {
+			csvSep = ","
+		}
 		CompilerBashHelper.setCsvSep(csvSep)
 		CompilerBashHelper.setHasColumnName(hasColumnName)
 		return header
@@ -83,7 +86,11 @@ class CompilerBashQsv implements CompilerBash {
 	}
 
 	def dispatch String compile(Print print) {
-		return new CompilerBashPrint(print, hasColumnName, csvSep, colSep).compile()
+		return new CompilerBashPrint(print, hasColumnName, csvSep).compile()
+	}
+	
+	def dispatch String compile(Save save) {
+		return new CompilerBashSave(save, nameFile, hasColumnName).compile()
 	}
 
 	def dispatch String compile(Update update) {
@@ -106,7 +113,6 @@ class CompilerBashQsv implements CompilerBash {
 		var String error = ""
 		while ((err = stdError.readLine()) !== null) {
 			error += err + "\n"
-			println(err)
 		}
 		return new TerminalOutput(output, error)
 	}

@@ -4,6 +4,8 @@ import idm.qsv.Print
 import idm.analyzer.ColumnSelectType
 import java.util.List
 import java.util.Set
+import idm.analyzer.FormatType
+import idm.analyzer.AnalyzerPrint
 
 class CompilerBashPrint implements CompilerBash {
 
@@ -20,13 +22,23 @@ class CompilerBashPrint implements CompilerBash {
 	Set<String> colNumberInCond
 
 	CompilerBashSelector c
+	
+	FormatType formatType
 
-	new(Print p, Boolean hasColumnName, String csvSep, String colSep) {
+	new(Print p, Boolean hasColumnName, String csvSep) {
 		print = p
 		this.hasColumnName = hasColumnName
 		this.csvSep = csvSep
-		this.colSep = colSep
-
+		
+		var analyzer = new AnalyzerPrint(print)
+		
+		formatType = analyzer.getFormatType()
+		colSep = analyzer.getSeparator()
+		
+		if(colSep === "\t") {
+			println("tab")
+		}
+		
 		if (print.selector !== null) {
 			c = new CompilerBashSelector(print.selector)
 			colSelectType = c.colSelectType
@@ -43,7 +55,7 @@ class CompilerBashPrint implements CompilerBash {
 			colNumberInCond = null
 		}
 	}
-
+	
 	override String compile() {
 		return print.genCode()
 	}
@@ -52,26 +64,37 @@ class CompilerBashPrint implements CompilerBash {
 		return '''
 			«genBeforeWhile()»
 			n=0
-			«genColTitle()»
-			«CompilerBashHelper.genInput(colSelectType)» while read -a c
+			title=$(«genColTitle()»)
+			print=$(while read -a c
 			do
-			«IF withCondition»if [[ «c.genCond()» ]] ; then«ENDIF»
-			echo $n «CompilerBashHelper.genEcho(colSep)»
+			«IF withCondition»if eval [[ «c.genCond()» ]] ; then«ENDIF»
+			printf "$n"
+			«CompilerBashHelper.genPrintf(colSep)»
 			«IF withCondition»fi«ENDIF»
 			n=$(( $n + 1 ))
-			done
+			done «CompilerBashHelper.genInput(colSelectType)»)
+			echo -e "$title\n$print"«IF formatType === formatType.PRETTY» | column -n -t -s "«colSep»"«ENDIF»
 		'''
 	}
 
 	def genBeforeWhile() {
 		return '''
-			header=$(echo "$file" | head -1)
+			«CompilerBashHelper.genHeader()»
 			«IF colSelectType == ColumnSelectType.ALL»
 				nbCol=$(( $(echo "$index" | tr '«csvSep»' '\n' | wc -l) - 1))
 			«ENDIF»
 			«genCutVariable»
 			«genLocVariable»
+			«genCondVariable»
 		'''
+	}
+	
+	def genCondVariable() {
+		if(c === null) {
+			return ""
+		} else {
+			return c.genBeforeCondition()
+		}
 	}
 
 	def genCutVariable() {
@@ -140,7 +163,7 @@ class CompilerBashPrint implements CompilerBash {
 				}
 			}
 		}
-		return '''echo "  $(echo "«echoVar»" | tr '«csvSep»' '«colSep»')"'''
+		return '''echo "«colSep»$(echo "«echoVar»" | tr '«csvSep»' '«colSep»')"'''
 	}
 
 }

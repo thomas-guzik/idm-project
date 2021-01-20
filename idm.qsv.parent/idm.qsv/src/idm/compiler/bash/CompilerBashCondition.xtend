@@ -4,6 +4,7 @@ import idm.qsv.Condition
 import idm.analyzer.AnalyzerCondition
 import idm.qsv.MidPriority
 import idm.qsv.HighestPriority
+import idm.analyzer.ValueType
 
 class CompilerBashCondition {
 
@@ -52,5 +53,32 @@ class CompilerBashCondition {
 		} else {
 			throw new Exception("Error during conditions analyzing")
 		}
+	}
+	
+	def genBeforeCondition() {
+		println("deb before Cond")
+		var code = ''''''
+		for(varWithOp : analyzer.variableWithOperator) {
+			println("boucle")
+			var v = varWithOp.getKey()
+			var op = new CompilerBashOpComp(varWithOp.getValue(), "")
+			var opString = op.genOperatorString()
+			if(opString === "eq" || opString === "ne") {
+				code += '''
+				if [[ $v_«v.value» =~ ^[0-9]+$ ]] ; then
+				op_«v.value»_«opString»="«op.genCodeOperator(ValueType.INT)»"
+				else
+				op_«v.value»_«opString»="«op.genCodeOperator(ValueType.STRING)»"
+				fi
+				'''
+			}
+			else {
+				code += '''
+				op_«v.value»_«opString»="«op.genCodeOperator(ValueType.INT)»"
+				'''
+			}
+		}
+		println("fin before cond")
+		return code
 	}
 }

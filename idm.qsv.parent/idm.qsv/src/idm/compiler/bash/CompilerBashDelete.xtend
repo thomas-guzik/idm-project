@@ -40,17 +40,20 @@ class CompilerBashDelete implements CompilerBash {
 	def String genCode(Delete delete) {
 		return '''
 			«genBeforeWhile()»
+			«genCondVariable()»
 			«CompilerBashHelper.genLocVariable(colNameInCond,"header")»
 			«CompilerBashHelper.genLocVariable(colNumberInCond,"index")»
 			«CompilerBashHelper.genNbCol()»
 			n=0
-			file=$(«CompilerBashHelper.genInput(colSelectType)» while read -a c
+			file=$(while read -a c
 			do
-			«IF withCondition»if [[ ! ( «c.genCond()» ) ]] ; then«ENDIF»
+			«IF withCondition»if eval ! [[ «c.genCond()» ]] ; then«ENDIF»
 			echo «CompilerBashHelper.genEcho(csvSep)»
 			«IF withCondition»fi«ENDIF»
 			n=$(( $n + 1 ))
-			done)
+			done «CompilerBashHelper.genInput(colSelectType)»)
+			«IF hasColumnName»file="$header
+			$file"«ENDIF»
 		'''
 	}
 
@@ -92,6 +95,19 @@ class CompilerBashDelete implements CompilerBash {
 				nbCol=$(( $(echo "$index" | tr ',' '\n' | wc -l) -1))
 			'''
 		}
-
+		else {
+			if(hasColumnName) {
+				code +='''header=$(echo "$file" | head -1)'''
+			}
+		}
+		return code
+	}
+	
+	def genCondVariable() {
+		if(c === null) {
+			return ""
+		} else {
+			return c.genBeforeCondition()
+		}
 	}
 }

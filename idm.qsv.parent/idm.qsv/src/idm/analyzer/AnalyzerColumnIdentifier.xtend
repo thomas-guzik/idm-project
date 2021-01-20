@@ -24,7 +24,6 @@ class AnalyzerColumnIdentifier {
 	def dispatch getColumnIdentifierType(ColumnIdentifier c) {}
 	
 	def dispatch getColumnIdentifierType(ColumnNameIdentifier c) {
-		c.class
 		return ColumnIdentifierType.NAME
 	}
 	

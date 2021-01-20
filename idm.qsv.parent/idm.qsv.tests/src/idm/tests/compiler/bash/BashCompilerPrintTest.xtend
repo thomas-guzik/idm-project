@@ -228,7 +228,9 @@ class BashCompilerPrintTest {
 		println(errors)
 		val CompilerBashQsv cmpBash = new CompilerBashQsv(result)
 		val code = cmpBash.compile()
+		println(code)
 		val execution = cmpBash.run(code)
+		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 		Assertions.assertEquals("", execution.error)
 	}

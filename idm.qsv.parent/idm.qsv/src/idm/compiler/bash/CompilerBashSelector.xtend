@@ -14,9 +14,11 @@ class CompilerBashSelector implements CompilerBash {
 	AnalyzerSelector analyzer
 
 	new(Selector s) {
+		println("selector")
 		selector = s
 		analyzer = new AnalyzerSelector(selector)
-		analyzer.analyze()
+		println("analyzer")
+		println("fin analyze")
 	}
 	
 	def genCond() {
@@ -56,6 +58,16 @@ class CompilerBashSelector implements CompilerBash {
 		var cmpCondition = new CompilerBashCondition(cond)
 		var code = cmpCondition.genBashCondition()
 		return code
+	}
+	
+	def String genBeforeCondition() {
+		if(selector.lineSelection !== null && selector.lineSelection.cond !== null) {
+			var cmpCondition = new CompilerBashCondition(selector.lineSelection.cond)
+			return cmpCondition.genBeforeCondition()		
+		}
+		else {
+			return ""
+		}
 	}
 	
 	def getColSelectType() {

@@ -220,10 +220,16 @@ class CsvData {
 		}
 	}
 
-	def sumColumns(List<String> columns) {
-		val columnIndexes = columns.map[col|columns.indexOf(col)]
-		val intRows = table.map[row|columnIndexes.map[i|Integer.parseInt(row.get(i))]]
-		val result = intRows.map[row|row.reduce[v1, v2|v1 + v2]]
+	def sumColumns(List<String> sumColumns) {
+		val columnIndexes = sumColumns.map[col|columns.indexOf(col)]
+		val result = new ArrayList<String>()
+		try {
+			val intRows = table.map[row|columnIndexes.map[i|Integer.parseInt(row.get(i))]]
+			result.addAll(intRows.map[row|row.reduce[v1, v2|v1 + v2]].map[toString])
+		} catch (NumberFormatException e) {
+			val stringRows = table.map[row|columnIndexes.map[i|row.get(i)]]
+			result.addAll(stringRows.map[row|row.reduce[v1, v2|v1 + v2]])
+		}
 
 		val resultTable = new ArrayList<List<String>>()
 		IntStream.range(0, nbRows).forEach [ rowIndex |
@@ -232,8 +238,6 @@ class CsvData {
 			resultTable.add(newRow)
 		]
 
-//		val columnContent = intRows.map[row|row.reduce[i1, i2|i1 + i2]]
-//		val table = columnContent.map[value | new List<String>(value)]
 		val data = new CsvData(List.of(), resultTable, header, separator)
 		return data
 	}
