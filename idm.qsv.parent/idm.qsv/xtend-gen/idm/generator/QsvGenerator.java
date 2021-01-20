@@ -45,7 +45,7 @@ public class QsvGenerator extends AbstractGenerator {
       } else {
         boolean _equals_2 = Objects.equal(QsvGenerator.target, "int");
         if (_equals_2) {
-          final QsvXtendInterpreter interpreter = new QsvXtendInterpreter(qsv);
+          final QsvXtendInterpreter interpreter = new QsvXtendInterpreter(qsv, "qsv-code/");
           InputOutput.<String>println(interpreter.interpret().getOutput());
         } else {
           fsa.generateFile("greetings.txt", "Generator output!");

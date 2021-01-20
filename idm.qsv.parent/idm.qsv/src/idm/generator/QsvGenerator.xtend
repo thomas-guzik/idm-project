@@ -33,7 +33,7 @@ class QsvGenerator extends AbstractGenerator {
 			fsa.generateFile(location, pythonCompiler.compile())
 			println("Saved generated code to: " + location)
 		} else if (target == "int") {
-			val interpreter = new QsvXtendInterpreter(qsv)
+			val interpreter = new QsvXtendInterpreter(qsv, "qsv-code/")
 			println(interpreter.interpret.output)
 		} else {
 			fsa.generateFile('greetings.txt', 'Generator output!')

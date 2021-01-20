@@ -31,11 +31,18 @@ class QsvXtendInterpreter {
 	String printed
 	String csvFileName
 	CsvData csvData
+	String filesLocation
 	static Map<String, String> valueStore
 	static Map<String, CsvData> csvDataStore
 
 	new(QuerySeparatedValues q) {
 		qsv = q
+		filesLocation = ""
+	}
+
+	new(QuerySeparatedValues q, String files) {
+		qsv = q
+		filesLocation = files
 	}
 
 	def InterpreterOutput interpret() {
@@ -96,7 +103,7 @@ class QsvXtendInterpreter {
 	}
 
 	def List<String> getFileContent(String filename) {
-		val content = Files.readAllLines(Paths.get("/qsv-code/" + filename), StandardCharsets.UTF_8);
+		val content = Files.readAllLines(Paths.get(filesLocation + filename), StandardCharsets.UTF_8);
 		return content
 	}
 
