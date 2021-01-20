@@ -14,13 +14,15 @@ def printData(data):
     	return
     print(data)
 
-my_data = pd.read_csv("foo_numbers.csv", header='infer')
+my_data = pd.read_csv("foo_mix_int_str2.csv", header='infer')
 
 columnIndex = len(my_data.columns)
-filter79 = my_data["col1"] < 5
-filter78 = filter79
-my_data = my_data.drop(my_data[filter78].index)
+cols_to_sum = ["f2", "f3"]
+all_int = all([is_numeric_dtype(my_data[col]) for col in cols_to_sum])
+if all_int:
+	sumCol0Col1 = my_data[cols_to_sum].sum(axis=1)
+else:
+	sumCol0Col1 = functools.reduce(lambda a,b: my_data[a].map(str) + my_data[b].map(str), cols_to_sum)
 
-my_data.reset_index(drop=True, inplace=True)
-tmp62 = my_data
-printData(tmp62)
+
+printData(sumCol0Col1)

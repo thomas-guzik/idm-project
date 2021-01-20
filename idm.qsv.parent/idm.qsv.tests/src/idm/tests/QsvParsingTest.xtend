@@ -4,10 +4,13 @@
 package idm.tests
 
 import com.google.inject.Inject
+import idm.qsv.QsvPackage
 import idm.qsv.QuerySeparatedValues
+import idm.validation.QsvValidator
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.extensions.InjectionExtension
 import org.eclipse.xtext.testing.util.ParseHelper
+import org.eclipse.xtext.testing.validation.ValidationTestHelper
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.^extension.ExtendWith
@@ -17,15 +20,117 @@ import org.junit.jupiter.api.^extension.ExtendWith
 class QsvParsingTest {
 	@Inject
 	ParseHelper<QuerySeparatedValues> parseHelper
+	@Inject extension ValidationTestHelper
 
 	@Test
-	def void loadFile() {
+	def void errorWhenPrintingColumnNameNoHeaders() {
 		val result = parseHelper.parse('''
 			using "test.csv" with column names: no
 			print
+				:columns somename
 		''')
 		Assertions.assertNotNull(result)
-		val errors = result.eResource.errors
-		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		result.assertError(QsvPackage.Literals.QUERY_SEPARATED_VALUES, QsvValidator.INVALID_NAME_USAGE)
+	}
+
+	@Test
+	def void noErrorWhenPrintingColumnNameWithHeaders() {
+		val result = parseHelper.parse('''
+			using "test.csv" with column names: yes
+			print
+				:columns somename
+		''')
+		Assertions.assertNotNull(result)
+		result.assertNoErrors
+	}
+
+	@Test
+	def void errorWhenInsertingColumnNameNoHeaders() {
+		val result = parseHelper.parse('''
+			using "test.csv" with column names: no
+			insert
+				:columns ef (8, 6)
+		''')
+		Assertions.assertNotNull(result)
+		result.assertError(QsvPackage.Literals.QUERY_SEPARATED_VALUES, QsvValidator.INVALID_NAME_USAGE)
+	}
+
+	@Test
+	def void noErrorWhenInsertingColumnNameWithHeaders() {
+		val result = parseHelper.parse('''
+			using "test.csv" with column names: yes
+			insert
+				:columns ef (8, 6)
+		''')
+		Assertions.assertNotNull(result)
+		result.assertNoErrors
+	}
+
+	@Test
+	def void errorWhenDeletingColumnNameNoHeaders() {
+		val result = parseHelper.parse('''
+			using "test.csv" with column names: no
+			delete
+				:columns thename
+		''')
+		Assertions.assertNotNull(result)
+		result.assertError(QsvPackage.Literals.QUERY_SEPARATED_VALUES, QsvValidator.INVALID_NAME_USAGE)
+	}
+
+	@Test
+	def void noErrorWhenDeletingColumnNameWithHeaders() {
+		val result = parseHelper.parse('''
+			using "test.csv" with column names: yes
+			delete
+				:columns thename
+		''')
+		Assertions.assertNotNull(result)
+		result.assertNoErrors
+	}
+
+	@Test
+	def void errorWhenUpdatingColumnNameNoHeaders() {
+		val result = parseHelper.parse('''
+			using "test.csv" with column names: no
+			update
+				:set "v8"
+				:columns f2
+		''')
+		Assertions.assertNotNull(result)
+		result.assertError(QsvPackage.Literals.QUERY_SEPARATED_VALUES, QsvValidator.INVALID_NAME_USAGE)
+	}
+
+	@Test
+	def void noErrorWhenUpdatingColumnNameWithHeaders() {
+		val result = parseHelper.parse('''
+			using "test.csv" with column names: yes
+			update
+				:set "v8"
+				:columns f2
+		''')
+		Assertions.assertNotNull(result)
+		result.assertNoErrors
+	}
+
+	@Test
+	def void errorWhenUsingUndefinedVariable() {
+		val result = parseHelper.parse('''
+			using "test.csv" with column names: yes
+			echo $somevar
+		''')
+		Assertions.assertNotNull(result)
+		result.assertError(QsvPackage.Literals.QUERY_SEPARATED_VALUES, QsvValidator.UNDEFINED_VARIABLE)
+	}
+
+	@Test
+	def void noErrorWhenUsingDefinedVariable() {
+		val result = parseHelper.parse('''
+			using "test.csv" with column names: no
+			compute $somevar
+				:sumLines #0
+			echo $somevar
+		''')
+		Assertions.assertNotNull(result)
+		result.assertNoErrors
 	}
 }
