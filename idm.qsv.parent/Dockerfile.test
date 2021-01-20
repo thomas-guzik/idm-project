@@ -6,7 +6,7 @@ RUN ln -s /usr/bin/python3 /usr/local/bin/python
 RUN apt-get -y update && apt-get install -y python3-pip
 RUN pip3 install pandas==1.1.4
 
-RUN ./gradlew test
+RUN gradle test
 
 RUN gradle shadowJar
 
