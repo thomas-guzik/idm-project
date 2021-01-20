@@ -2,13 +2,17 @@ package idm.compiler.python.actions
 
 import idm.compiler.python.ConcreteValues
 import idm.compiler.python.LineFilters
+import idm.compiler.python.MissingConcreteImplementationException
 import idm.compiler.python.PythonCompiler
 import idm.qsv.Columns
 import idm.qsv.Condition
+import idm.qsv.Format
 import idm.qsv.Line
 import idm.qsv.LineRange
 import idm.qsv.Lines
+import idm.qsv.PrettyFormat
 import idm.qsv.Print
+import idm.qsv.SeparatorFormat
 
 class PrintAction implements Action {
 	Print print
@@ -41,9 +45,28 @@ class PrintAction implements Action {
 				columnSelection.select()
 			}
 		}
-		code += '''«PythonCompiler.PRINT_FUNCTION_NAME»(«printVariable»)'''
-		code += PythonCompiler.NEWLINE
+		val format = print.format
+		if (format === null) {
+			code += '''«PythonCompiler.PRINT_FUNCTION_NAME»(«printVariable»)'''
+			code += PythonCompiler.NEWLINE
+			return code
+		}
+		format.makePretty()
 		return code
+	}
+
+	def dispatch void makePretty(Format format) {
+		throw new MissingConcreteImplementationException("Format")
+
+	}
+
+	def dispatch void makePretty(SeparatorFormat format) {
+		val separator = format.separator
+		code += '''«PythonCompiler.PRETTY_PRINT_FUNCTION_NAME»(«printVariable»,"«separator»")'''
+		code += PythonCompiler.NEWLINE
+	}
+
+	def dispatch void makePretty(PrettyFormat format) {
 	}
 
 	private def String select(Columns selection) {

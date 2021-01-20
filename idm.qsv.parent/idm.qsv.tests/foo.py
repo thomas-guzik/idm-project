@@ -13,16 +13,35 @@ def printData(data):
     	print(data.to_string())
     	return
     print(data)
-
-my_data = pd.read_csv("foo_mix_int_str2.csv", header='infer')
+def prettyPrintData(data, separator):
+	    if type(data) is pd.DataFrame:
+	        if data.empty:
+	            print()
+	            return
+	        print_data_frame(data, separator)
+	        return
+	    if type(data) is pd.Series:
+	    	print(data.to_string())
+	    	return
+	    print(data)
+def print_data_frame(data, separator):
+		    table_to_print = separator
+		    table_to_print += separator.join(map(str, data.columns))
+		    table_to_print += "\n"
+		    lines_to_print = []
+		    for i, line in zip(range(0, len(data.values)), data.values):
+		        line_to_print = str(i) + separator
+		        line_to_print += separator.join(map(str, line))
+		        lines_to_print.append(line_to_print)
+		    table_to_print += "\n".join(lines_to_print)
+		    print(table_to_print)
+my_data = pd.read_csv("foo_numbers.csv", header='infer')
 
 columnIndex = len(my_data.columns)
-cols_to_sum = ["f2", "f3"]
-all_int = all([is_numeric_dtype(my_data[col]) for col in cols_to_sum])
-if all_int:
-	sumCol0Col1 = my_data[cols_to_sum].sum(axis=1)
-else:
-	sumCol0Col1 = functools.reduce(lambda a,b: my_data[a].map(str) + my_data[b].map(str), cols_to_sum)
+filter79 = my_data["col1"] < 5
+filter78 = filter79
+my_data = my_data.drop(my_data[filter78].index)
 
-
-printData(sumCol0Col1)
+my_data.reset_index(drop=True, inplace=True)
+tmp63 = my_data
+printData(tmp63)

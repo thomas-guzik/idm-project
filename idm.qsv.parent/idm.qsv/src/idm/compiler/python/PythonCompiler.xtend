@@ -30,6 +30,7 @@ class PythonCompiler {
 	String csvFileName
 	public static String NEWLINE = "\n"
 	public static String PRINT_FUNCTION_NAME = "printData"
+	public static String PRETTY_PRINT_FUNCTION_NAME = "prettyPrintData"
 	static Integer filterCount = 0
 	static Integer tmpVariableCount = 0
 	String printIfNotEmptyFunction = '''def «PRINT_FUNCTION_NAME»(data):
@@ -46,31 +47,32 @@ class PythonCompiler {
     print(data)
 	    '''
 
-//	String printIfNotEmptyFunction = '''def «PRINT_FUNCTION_NAME»(data):
-//    if type(data) is pd.DataFrame:
-//        if data.empty:
-//            print()
-//            return
-//        print_data_frame(data)
-//        return
-//    if type(data) is pd.Series:
-//    	print(data.to_string())
-//    	return
-//    print(data)
-//	    '''
-//	    
-//	String printDataFrameFunction = '''def print_data_frame(data):
-//	    table_to_print = "\t"
-//	    table_to_print += "\t".join(map(str, data.columns))
-//	    table_to_print += "\n"
-//	    lines_to_print = []
-//	    for i, line in zip(range(0, len(data.values)), data.values):
-//	        line_to_print = str(i) + "\t"
-//	        line_to_print += "\t".join(map(str, line))
-//	        lines_to_print.append(line_to_print)
-//	    table_to_print += "\n".join(lines_to_print)
-//	    print(table_to_print)
-//	    '''
+	String prettyPrintIfNotEmptyFunction = '''def «PRETTY_PRINT_FUNCTION_NAME»(data, separator):
+	    if type(data) is pd.DataFrame:
+	        if data.empty:
+	            print()
+	            return
+	        print_data_frame(data, separator)
+	        return
+	    if type(data) is pd.Series:
+	    	print(data.to_string())
+	    	return
+	    print(data)
+	    '''
+
+	String printDataFrameFunction = '''def print_data_frame(data, separator):
+		    table_to_print = separator
+		    table_to_print += separator.join(map(str, data.columns))
+		    table_to_print += "\n"
+		    lines_to_print = []
+		    for i, line in zip(range(0, len(data.values)), data.values):
+		        line_to_print = str(i) + separator
+		        line_to_print += separator.join(map(str, line))
+		        lines_to_print.append(line_to_print)
+		    table_to_print += "\n".join(lines_to_print)
+		    print(table_to_print)
+	    '''
+
 	new(QuerySeparatedValues q) {
 		qsv = q
 	}
@@ -86,11 +88,12 @@ class PythonCompiler {
 	private def String compile() {
 		var String pythonCode = ""
 		pythonCode += '''
-		import pandas as pd
-		from pandas.api.types import is_numeric_dtype
-		import functools
-		«printIfNotEmptyFunction»
-		
+			import pandas as pd
+			from pandas.api.types import is_numeric_dtype
+			import functools
+			«printIfNotEmptyFunction»
+			«prettyPrintIfNotEmptyFunction»
+			«printDataFrameFunction»
 		'''
 		pythonCode += qsv.getHeader().compile()
 		for (Statement s : qsv.getStatements()) {
