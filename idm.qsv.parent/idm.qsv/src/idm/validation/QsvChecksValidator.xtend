@@ -26,7 +26,7 @@ import org.eclipse.xtext.validation.Check
  * See
  * https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
-class QsvValidator extends AbstractQsvValidator {
+class QsvChecksValidator extends AbstractQsvValidator {
 	public static final String INVALID_NAME_USAGE = "invalidNameUsage"
 	public static final String UNDEFINED_VARIABLE = "undefinedVariable"
 

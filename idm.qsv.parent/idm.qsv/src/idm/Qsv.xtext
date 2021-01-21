@@ -198,7 +198,7 @@ SaveMethod:
 ;
 
 SaveCsv:
-	{SaveCsv} ':csv' (filename=STRING)?
+	{SaveCsv} ':csv' (filename=STRING)? (separator=SeparatorFormat)?
 ;
 
 SaveJson:

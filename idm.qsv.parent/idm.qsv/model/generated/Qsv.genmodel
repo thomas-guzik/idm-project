@@ -134,7 +134,9 @@
     <genClasses ecoreClass="Qsv.ecore#//SaveMethod">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//SaveMethod/filename"/>
     </genClasses>
-    <genClasses ecoreClass="Qsv.ecore#//SaveCsv"/>
+    <genClasses ecoreClass="Qsv.ecore#//SaveCsv">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//SaveCsv/separator"/>
+    </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//SaveJson"/>
     <genClasses ecoreClass="Qsv.ecore#//Format"/>
     <genClasses ecoreClass="Qsv.ecore#//PrettyFormat"/>

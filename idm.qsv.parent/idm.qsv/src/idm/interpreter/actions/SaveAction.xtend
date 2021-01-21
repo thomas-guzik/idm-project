@@ -35,7 +35,11 @@ class SaveAction implements Action {
 
 	private def dispatch saveFile(SaveCsv csvMethod) {
 		val file = csvMethod.filename === null ? originalFileName : csvMethod.filename
-		csvData.saveTo(file)
+		var separator = ","
+		if (csvMethod.separator !== null) {
+			separator = csvMethod.separator.separator
+		}
+		csvData.saveTo(file, separator)
 	}
 
 	private def String nameToJson(String filename) {

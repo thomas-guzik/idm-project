@@ -6,7 +6,7 @@ package idm.tests
 import com.google.inject.Inject
 import idm.qsv.QsvPackage
 import idm.qsv.QuerySeparatedValues
-import idm.validation.QsvValidator
+import idm.validation.QsvChecksValidator
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.extensions.InjectionExtension
 import org.eclipse.xtext.testing.util.ParseHelper
@@ -30,7 +30,7 @@ class QsvParsingTest {
 				:columns somename
 		''')
 		Assertions.assertNotNull(result)
-		result.assertError(QsvPackage.Literals.QUERY_SEPARATED_VALUES, QsvValidator.INVALID_NAME_USAGE)
+		result.assertError(QsvPackage.Literals.QUERY_SEPARATED_VALUES, QsvChecksValidator.INVALID_NAME_USAGE)
 	}
 
 	@Test
@@ -52,7 +52,7 @@ class QsvParsingTest {
 				:columns ef (8, 6)
 		''')
 		Assertions.assertNotNull(result)
-		result.assertError(QsvPackage.Literals.QUERY_SEPARATED_VALUES, QsvValidator.INVALID_NAME_USAGE)
+		result.assertError(QsvPackage.Literals.QUERY_SEPARATED_VALUES, QsvChecksValidator.INVALID_NAME_USAGE)
 	}
 
 	@Test
@@ -74,7 +74,7 @@ class QsvParsingTest {
 				:columns thename
 		''')
 		Assertions.assertNotNull(result)
-		result.assertError(QsvPackage.Literals.QUERY_SEPARATED_VALUES, QsvValidator.INVALID_NAME_USAGE)
+		result.assertError(QsvPackage.Literals.QUERY_SEPARATED_VALUES, QsvChecksValidator.INVALID_NAME_USAGE)
 	}
 
 	@Test
@@ -97,7 +97,7 @@ class QsvParsingTest {
 				:columns f2
 		''')
 		Assertions.assertNotNull(result)
-		result.assertError(QsvPackage.Literals.QUERY_SEPARATED_VALUES, QsvValidator.INVALID_NAME_USAGE)
+		result.assertError(QsvPackage.Literals.QUERY_SEPARATED_VALUES, QsvChecksValidator.INVALID_NAME_USAGE)
 	}
 
 	@Test
@@ -119,7 +119,7 @@ class QsvParsingTest {
 			echo $somevar
 		''')
 		Assertions.assertNotNull(result)
-		result.assertError(QsvPackage.Literals.QUERY_SEPARATED_VALUES, QsvValidator.UNDEFINED_VARIABLE)
+		result.assertError(QsvPackage.Literals.QUERY_SEPARATED_VALUES, QsvChecksValidator.UNDEFINED_VARIABLE)
 	}
 
 	@Test

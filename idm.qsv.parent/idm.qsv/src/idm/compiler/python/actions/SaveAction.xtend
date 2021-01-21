@@ -1,10 +1,13 @@
 package idm.compiler.python.actions
 
 import idm.compiler.python.MissingConcreteImplementationException
+import idm.qsv.Format
+import idm.qsv.PrettyFormat
 import idm.qsv.Save
 import idm.qsv.SaveCsv
 import idm.qsv.SaveJson
 import idm.qsv.SaveMethod
+import idm.qsv.SeparatorFormat
 
 class SaveAction implements Action {
 	Save save
@@ -35,12 +38,16 @@ class SaveAction implements Action {
 
 	private def dispatch saveFile(SaveCsv csvMethod) {
 		val file = csvMethod.filename === null ? originalFileName : csvMethod.filename
-		code += '''«csvDataVariable».to_csv("«file»", index=False)'''
+		var separator = ","
+		if (csvMethod.separator !== null) {
+			separator = csvMethod.separator.separator
+		}
+		code += '''«csvDataVariable».to_csv("«file»", index=False, sep="«separator»")'''
 	}
-	
+
 	private def String nameToJson(String filename) {
 		var jsonName = filename
-		if(filename.endsWith(".csv")) {
+		if (filename.endsWith(".csv")) {
 			jsonName = filename.substring(0, filename.lastIndexOf(".csv"))
 		}
 		jsonName += ".json"

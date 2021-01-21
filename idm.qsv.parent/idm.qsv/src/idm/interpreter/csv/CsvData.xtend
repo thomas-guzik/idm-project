@@ -20,7 +20,6 @@ class CsvData {
 	String separator
 	final String NEWLINE = "\n"
 	final String DEFAULT_PRINT_SEPARATOR = "\t"
-	final String WRITE_SEPARATOR = ","
 
 	new(List<String> data, boolean h, String s) {
 		header = h
@@ -63,11 +62,11 @@ class CsvData {
 			table.add(new ArrayList<String>(row.split(separator)))
 		}
 	}
-	
+
 	override String toString() {
 		return toStringWithSeparator(DEFAULT_PRINT_SEPARATOR)
 	}
-	
+
 	def String toStringWithSeparator(String separator) {
 		var data = ""
 
@@ -189,10 +188,10 @@ class CsvData {
 		filtered = false
 	}
 
-	def void saveTo(String filename) {
-		var content = columns.join(WRITE_SEPARATOR)
+	def void saveTo(String filename, String separator) {
+		var content = columns.join(separator)
 		content += NEWLINE
-		content += table.map[row|row.join(WRITE_SEPARATOR)].join(NEWLINE)
+		content += table.map[row|row.join(separator)].join(NEWLINE)
 		val File file = new File(filename);
 		val FileWriter writer = new FileWriter(file, false);
 		writer.write(content);

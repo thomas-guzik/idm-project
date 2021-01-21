@@ -161,4 +161,29 @@ class SaveTests {
 		Assertions.assertEquals(expectedResult, getFileContent(filename))
 	}
 
+	@Test
+	def void saveToCsvWithDashSeparator() {
+		val filename = "foo3.csv"
+		val parseTree = parseHelper.parse('''
+			using "foo3.csv" with column names: yes
+			insert
+				:lines ("v8", "v0", "v5")
+			save
+				:csv
+				:separator "-"
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+		f1-f2-f3
+		v1-v2-v3
+		v1-v7-v3
+		v8-v0-v5'''
+		val result = interpret(parseTree)
+		Assertions.assertEquals("", result.output.strip)
+		Assertions.assertEquals("", result.getError)
+
+		Assertions.assertEquals(expectedResult, getFileContent(filename))
+	}
+
 }
