@@ -8,9 +8,6 @@ QuerySeparatedValues:
 	statements += Statement*
 ;
 
-// TODO ? : check that column names are not used in selections if with names = no
-// TODO ? : same for column insertion
-
 Header:
 	'using' nameFile=STRING 'with' 'column' 'names:' (hasColumnName?='yes'|'no') (':csvSeparator' csvSep=STRING)?
 ;

@@ -3,9 +3,6 @@ package idm.interpreter.actions
 import idm.interpreter.ConcreteValues
 import idm.interpreter.LineFilters
 import idm.interpreter.csv.CsvData
-import idm.qsv.Columns
-import idm.qsv.Condition
-import idm.qsv.Lines
 import idm.qsv.Update
 
 class UpdateAction implements Action {

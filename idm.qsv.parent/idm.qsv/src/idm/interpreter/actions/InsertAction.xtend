@@ -2,7 +2,7 @@ package idm.interpreter.actions
 
 import idm.compiler.python.MissingConcreteImplementationException
 import idm.interpreter.ConcreteValues
-import idm.interpreter.LineFilters
+import idm.interpreter.QsvXtendInterpreter
 import idm.interpreter.csv.CsvData
 import idm.qsv.ColumnDescription
 import idm.qsv.ColumnInsertion
@@ -13,20 +13,17 @@ import idm.qsv.Insertion
 import idm.qsv.LineInsertion
 import idm.qsv.VariableIdentifier
 import java.util.List
-import idm.interpreter.QsvXtendInterpreter
 
 class InsertAction implements Action {
 
 	CsvData csvData
 	Insert insert
 
-	extension LineFilters lineFiltering
 	extension ConcreteValues values
 
 	new(Insert i, CsvData data) {
 		insert = i
 		csvData = data
-		lineFiltering = new LineFilters(csvData)
 		values = new ConcreteValues
 	}
 
@@ -50,8 +47,6 @@ class InsertAction implements Action {
 	private def dispatch insert(ColumnInsertion columnInsertion) {
 		for (ColumnDescription description : columnInsertion.descriptions) {
 			val name = description.columnName === null ? null : description.columnName.value
-			val content = description.content.rowContent
-//			csvData.insertColumn(name, content)
 			description.content.insertWithName(name)
 
 		}

@@ -19,7 +19,7 @@ class CsvData {
 	boolean filtered = false
 	String separator
 	final String NEWLINE = "\n"
-	final String PRINT_SEPARATOR = "\t"
+	final String DEFAULT_PRINT_SEPARATOR = "\t"
 	final String WRITE_SEPARATOR = ","
 
 	new(List<String> data, boolean h, String s) {
@@ -63,8 +63,12 @@ class CsvData {
 			table.add(new ArrayList<String>(row.split(separator)))
 		}
 	}
-
+	
 	override String toString() {
+		return toStringWithSeparator(DEFAULT_PRINT_SEPARATOR)
+	}
+	
+	def String toStringWithSeparator(String separator) {
 		var data = ""
 
 		val printedColumns = new ArrayList<String>()
@@ -89,13 +93,13 @@ class CsvData {
 		]
 
 		if (!printedColumns.isEmpty) {
-			data += printedColumns.join(PRINT_SEPARATOR)
+			data += printedColumns.join(separator)
 		}
 		if (!printedRows.isEmpty && !columns.isEmpty) {
 			data += NEWLINE
 		}
 
-		data += printedRows.map[row|row.join(PRINT_SEPARATOR)].join(NEWLINE)
+		data += printedRows.map[row|row.join(separator)].join(NEWLINE)
 		return data
 	}
 

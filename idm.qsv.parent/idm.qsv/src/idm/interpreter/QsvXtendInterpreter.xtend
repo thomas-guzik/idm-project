@@ -34,6 +34,7 @@ class QsvXtendInterpreter {
 	static Map<String, String> valueStore
 	static Map<String, CsvData> csvDataStore
 
+
 	new(QuerySeparatedValues q) {
 		qsv = q
 	}
