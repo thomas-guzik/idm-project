@@ -37,11 +37,11 @@ class CombiningActionsTests {
 		val parseTree = parseHelper.parse('''
 			using "foo_numbers.csv" with column names: yes
 			compute $sumCol0
-				:sumLines col0
+				:sumValuesInColumn col0
 			update
 				:set $sumCol0
 				:columns col0
-				:lines col0 = 1
+				:condition col0 = 1
 			print
 				:columns col1
 				:lines col0 = $sumCol0
@@ -49,9 +49,9 @@ class CombiningActionsTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   col1
-			2     3
-			5    10
+				col1
+			2	3
+			5	10
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -69,14 +69,14 @@ class CombiningActionsTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   col0  col1  newcol
-			0     4     3       7
-			1     2     7       9
-			2     1     3       4
-			3     3     5       8
-			4     5     1       6
-			5     1    10      11
-			6     5     1       6
+				col0	col1	newcol
+			0	4	3	7
+			1	2	7	9
+			2	1	3	4
+			3	3	5	8
+			4	5	1	6
+			5	1	10	11
+			6	5	1	6
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -94,10 +94,10 @@ class CombiningActionsTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			    0   1   3
-			0  f1  f2  f5
-			1  v1  v2  v8
-			2  v1  v7  v1
+				0	1	3
+			0	f1	f2	f5
+			1	v1	v2	v8
+			2	v1	v7	v1
 		'''
 
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
@@ -117,10 +117,10 @@ class CombiningActionsTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   1   3   6   7   8   9   10
-			0  f2  f4  f1  f4  f7  f9  f6
-			1  v2  v5  v2  v5  v8  v8  v5
-			2  v7  v4  v3  v6  v9  v7  v4
+				1	3	6	7	8	9	10
+			0	f2	f4	f1	f4	f7	f9	f6
+			1	v2	v5	v2	v5	v8	v8	v5
+			2	v7	v4	v3	v6	v9	v7	v4
 		'''
 
 		assertPythonCompilesAndRuns(parseTree, expectedResult)

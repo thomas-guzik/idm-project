@@ -6,7 +6,7 @@ import idm.compiler.python.PythonCompiler
 import idm.qsv.Compute
 import idm.qsv.Function
 import idm.qsv.SumColumns
-import idm.qsv.SumLines
+import idm.qsv.SumValuesInColumn
 
 class ComputeAction implements Action {
 	Compute compute
@@ -33,7 +33,7 @@ class ComputeAction implements Action {
 		throw new MissingConcreteImplementationException("Function")
 	}
 
-	private def dispatch compile(SumLines sumLines, String variable) {
+	private def dispatch compile(SumValuesInColumn sumLines, String variable) {
 		val column = sumLines.column.pythonColumn
 		code += '''«variable» = «csvDataVariable»[«column»].sum()'''
 	}

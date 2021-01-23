@@ -36,7 +36,7 @@ class ConcreteValues {
 	}
 
 	def dispatch String getPythonValue(VariableIdentifier id) {
-		return id.value.substring(1)
+		return "user_" + id.value.substring(1)
 	}
 
 	def dispatch String getPythonValue(Value value) {

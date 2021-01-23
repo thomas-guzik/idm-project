@@ -63,4 +63,46 @@ class PrintFormatTests {
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
 
+	@Test
+	def void printFormatWithDashSeparatorAndHeaders() {
+		val parseTree = parseHelper.parse('''
+			using "foo2.csv" with column names: yes
+			print :separator "-"
+		''')
+		val expectedResult = '''
+			-f1-f2-f3
+			0-v1-v2-v3
+			1-v1-v7-v3
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printFormatPretty() {
+		val parseTree = parseHelper.parse('''
+			using "foo1.csv" with column names: no
+			print :pretty
+		''')
+		val expectedResult = '''
+			   0   1   2
+			0  f1  f2  f3
+			1  v1  v2  v3
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printFormatDefault() {
+		val parseTree = parseHelper.parse('''
+			using "foo1.csv" with column names: no
+			print
+		''')
+		val expectedResult = '''
+				0	1	2
+			0	f1	f2	f3
+			1	v1	v2	v3
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
 }

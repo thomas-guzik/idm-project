@@ -36,8 +36,8 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Compute/function"/>
     </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//Function"/>
-    <genClasses ecoreClass="Qsv.ecore#//SumLines">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//SumLines/column"/>
+    <genClasses ecoreClass="Qsv.ecore#//SumValuesInColumn">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//SumValuesInColumn/column"/>
     </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//SumColumns">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//SumColumns/columns"/>

@@ -47,7 +47,7 @@ class PrintAction implements Action {
 		}
 		val format = print.format
 		if (format === null) {
-			code += '''«PythonCompiler.PRINT_FUNCTION_NAME»(«printVariable»)'''
+			code += '''«PythonCompiler.PRINT_SEPARATOR_FUNCTION_NAME»(«printVariable», "\t")'''
 			code += PythonCompiler.NEWLINE
 			return code
 		}
@@ -62,11 +62,13 @@ class PrintAction implements Action {
 
 	def dispatch void makePretty(SeparatorFormat format) {
 		val separator = format.separator
-		code += '''«PythonCompiler.PRETTY_PRINT_FUNCTION_NAME»(«printVariable»,"«separator»")'''
+		code += '''«PythonCompiler.PRINT_SEPARATOR_FUNCTION_NAME»(«printVariable»,"«separator»")'''
 		code += PythonCompiler.NEWLINE
 	}
 
 	def dispatch void makePretty(PrettyFormat format) {
+		code += '''«PythonCompiler.PRINT_PRETTY_FUNCTION_NAME»(«printVariable»)'''
+		code += PythonCompiler.NEWLINE
 	}
 
 	private def String select(Columns selection) {

@@ -43,8 +43,8 @@ class PrintOnlyTests {
 		''')
 		parseTree.assertNoErrors
 		val expectedResult = '''
-			   f1  f2  f3
-			0  v1  v2  v3
+				f1	f2	f3
+			0	v1	v2	v3
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -58,9 +58,9 @@ class PrintOnlyTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			    0   1   2
-			0  f1  f2  f3
-			1  v1  v2  v3
+				0	1	2
+			0	f1	f2	f3
+			1	v1	v2	v3
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 
@@ -76,9 +76,9 @@ class PrintOnlyTests {
 		''')
 		parseTree.assertNoErrors
 		val expectedResult = '''
-			   f1  f2  f3
-			0  v1  v2  v3
-			1  v1  v7  v3
+				f1	f2	f3
+			0	v1	v2	v3
+			1	v1	v7	v3
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 
@@ -95,9 +95,9 @@ class PrintOnlyTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   f1  f2  f3
-			0  v1  v2  v3
-			1  v1  v7  v3
+				f1	f2	f3
+			0	v1	v2	v3
+			1	v1	v7	v3
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -112,9 +112,9 @@ class PrintOnlyTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   f2
-			0  v2
-			1  v7
+				f2
+			0	v2
+			1	v7
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -129,10 +129,10 @@ class PrintOnlyTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			    1
-			0  f2
-			1  v2
-			2  v7
+				1
+			0	f2
+			1	v2
+			2	v7
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -148,9 +148,9 @@ class PrintOnlyTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   f2
-			0  v2
-			1  v7
+				f2
+			0	v2
+			1	v7
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -165,9 +165,9 @@ class PrintOnlyTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   f1  f3
-			0  v1  v3
-			1  v1  v3
+				f1	f3
+			0	v1	v3
+			1	v1	v3
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -182,10 +182,10 @@ class PrintOnlyTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			    0   2
-			0  f1  f3
-			1  v1  v3
-			2  v1  v3
+				0	2
+			0	f1	f3
+			1	v1	v3
+			2	v1	v3
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -200,9 +200,9 @@ class PrintOnlyTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   col0  col1
-			2     1     3
-			5     1    10
+				col0	col1
+			2	1	3
+			5	1	10
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -218,17 +218,17 @@ class PrintOnlyTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   col0  col1
-			2     1     3
-			5     1    10
-			   col0  col1
-			0     4     3
-			1     2     7
-			2     1     3
-			3     3     5
-			4     5     1
-			5     1    10
-			6     5     1
+				col0	col1
+			2	1	3
+			5	1	10
+				col0	col1
+			0	4	3
+			1	2	7
+			2	1	3
+			3	3	5
+			4	5	1
+			5	1	10
+			6	5	1
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -243,9 +243,9 @@ class PrintOnlyTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   0  1
-			4  5  1
-			6  5  1
+				0	1
+			4	5	1
+			6	5	1
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -260,8 +260,8 @@ class PrintOnlyTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   f1  f2  f3
-			1  v1  v7  v3
+				f1	f2	f3
+			1	v1	v7	v3
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -277,8 +277,8 @@ class PrintOnlyTests {
 		parseTreeEqual.assertNoErrors
 
 		val expectedResultEqual = '''
-			   col0  col1
-			1     2     7
+				col0	col1
+			1	2	7
 		'''
 		assertPythonCompilesAndRuns(parseTreeEqual, expectedResultEqual)
 
@@ -291,12 +291,12 @@ class PrintOnlyTests {
 		parseTreeNotEqual.assertNoErrors
 
 		val expectedResultNotEqual = '''
-			   col0  col1
-			0     4     3
-			1     2     7
-			2     1     3
-			3     3     5
-			5     1    10
+				col0	col1
+			0	4	3
+			1	2	7
+			2	1	3
+			3	3	5
+			5	1	10
 		'''
 		assertPythonCompilesAndRuns(parseTreeNotEqual, expectedResultNotEqual)
 
@@ -309,11 +309,11 @@ class PrintOnlyTests {
 		parseTreeLower.assertNoErrors
 
 		val expectedResultLower = '''
-			   col0  col1
-			1     2     7
-			2     1     3
-			3     3     5
-			5     1    10
+				col0	col1
+			1	2	7
+			2	1	3
+			3	3	5
+			5	1	10
 		'''
 		assertPythonCompilesAndRuns(parseTreeLower, expectedResultLower)
 
@@ -326,10 +326,10 @@ class PrintOnlyTests {
 		parseTreeGreater.assertNoErrors
 
 		val expectedResultGreater = '''
-			   col0  col1
-			1     2     7
-			3     3     5
-			5     1    10
+				col0	col1
+			1	2	7
+			3	3	5
+			5	1	10
 		'''
 		assertPythonCompilesAndRuns(parseTreeGreater, expectedResultGreater)
 
@@ -342,11 +342,11 @@ class PrintOnlyTests {
 		parseTreeLowerOrEqual.assertNoErrors
 
 		val expectedResultLowerOrEqual = '''
-			   col0  col1
-			1     2     7
-			2     1     3
-			3     3     5
-			5     1    10
+				col0	col1
+			1	2	7
+			2	1	3
+			3	3	5
+			5	1	10
 		'''
 		assertPythonCompilesAndRuns(parseTreeLowerOrEqual, expectedResultLowerOrEqual)
 
@@ -359,10 +359,10 @@ class PrintOnlyTests {
 		parseTreeGreaterOrEqual.assertNoErrors
 
 		val expectedResultGreaterOrEqual = '''
-			   col0  col1
-			1     2     7
-			3     3     5
-			5     1    10
+				col0	col1
+			1	2	7
+			3	3	5
+			5	1	10
 		'''
 		assertPythonCompilesAndRuns(parseTreeGreaterOrEqual, expectedResultGreaterOrEqual)
 	}
@@ -392,10 +392,10 @@ class PrintOnlyTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   col0  col1
-			2     1     3
-			3     3     5
-			5     1    10
+				col0	col1
+			2	1	3
+			3	3	5
+			5	1	10
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -410,9 +410,9 @@ class PrintOnlyTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   col0  col1
-			0     4     3
-			3     3     5
+				col0	col1
+			0	4	3
+			3	3	5
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -427,10 +427,10 @@ class PrintOnlyTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   col0  col1
-			0     4     3
-			3     3     5
-			5     1    10
+				col0	col1
+			0	4	3
+			3	3	5
+			5	1	10
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -446,10 +446,10 @@ class PrintOnlyTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   col1
-			0     3
-			3     5
-			5    10
+				col1
+			0	3
+			3	5
+			5	10
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -464,11 +464,11 @@ class PrintOnlyTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   col0  col1
-			1     2     7
-			2     1     3
-			3     3     5
-			5     1    10
+				col0	col1
+			1	2	7
+			2	1	3
+			3	3	5
+			5	1	10
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -481,8 +481,8 @@ class PrintOnlyTests {
 				:lines #1
 		''')
 		val expectedResult = '''
-			    0   1   2
-			1  v1  v2  v3
+				0	1	2
+			1	v1	v2	v3
 		'''
 
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
@@ -496,8 +496,8 @@ class PrintOnlyTests {
 				:lines #1 #0 = "v1"
 		''')
 		val expectedResult = '''
-			    0   1   2
-			1  v1  v2  v3
+				0	1	2
+			1	v1	v2	v3
 		'''
 
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
@@ -526,9 +526,9 @@ class PrintOnlyTests {
 				:lines #1-2
 		''')
 		val expectedResult = '''
-			    0   1   2
-			1  v1  v2  v3
-			2  v1  v7  v3
+				0	1	2
+			1	v1	v2	v3
+			2	v1	v7	v3
 		'''
 
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
@@ -542,8 +542,8 @@ class PrintOnlyTests {
 				:lines #1-2 #1 = "v7"
 		''')
 		val expectedResult = '''
-			    0   1   2
-			2  v1  v7  v3
+				0	1	2
+			2	v1	v7	v3
 		'''
 
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
@@ -557,10 +557,10 @@ class PrintOnlyTests {
 				:lines #2-5 col1 > 2
 		''')
 		val expectedResult = '''
-			   col0  col1
-			2     1     3
-			3     3     5
-			5     1    10
+				col0	col1
+			2	1	3
+			3	3	5
+			5	1	10
 		'''
 
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
