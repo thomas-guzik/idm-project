@@ -28,6 +28,8 @@ class SaveTests {
 	@Inject extension ValidationTestHelper
 
 	def void assertPythonCompilesAndRuns(QuerySeparatedValues qsv, String expectedStdOut) {
+		val errors = qsv.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val outputResult = pythonCompileAndRun(qsv)
 		Assertions.assertEquals(expectedStdOut, outputResult.getOutput)
 		Assertions.assertEquals("", outputResult.getError)
