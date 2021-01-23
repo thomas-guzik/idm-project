@@ -48,7 +48,7 @@ class DeleteBashCompiler implements BashCompiler {
 			file=$(while read -a c
 			do
 			«IF withCondition»if eval ! [[ «c.genCond()» ]] ; then«ENDIF»
-			echo «BashCompilerHelper.genEcho(csvSep)»
+			«BashCompilerHelper.genPrintf(csvSep)»
 			«IF withCondition»fi«ENDIF»
 			n=$(( $n + 1 ))
 			done «BashCompilerHelper.genInput(colSelectType)»)
@@ -94,17 +94,16 @@ class DeleteBashCompiler implements BashCompiler {
 				nb_cut=${nb_cut::-1}
 				nbCol=$(( $(echo "$index" | tr ',' '\n' | wc -l) -1))
 			'''
-		}
-		else {
-			if(hasColumnName) {
-				code +='''header=$(echo "$file" | head -1)'''
+		} else {
+			if (hasColumnName) {
+				code += '''header=$(echo "$file" | head -1)'''
 			}
 		}
 		return code
 	}
-	
+
 	def genCondVariable() {
-		if(c === null) {
+		if (c === null) {
 			return ""
 		} else {
 			return c.genBeforeCondition()

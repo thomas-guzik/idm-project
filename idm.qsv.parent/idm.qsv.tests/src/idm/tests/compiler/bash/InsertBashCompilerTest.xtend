@@ -25,10 +25,10 @@ class InsertBashCompilerTest {
 			print
 		''')
 		val expectedResult = '''
-			  0 1 2
-			0 f1 f2 f3
-			1 v1 v2 v3
-			2 w1 w2 w3
+				0	1	2
+			0	f1	f2	f3
+			1	v1	v2	v3
+			2	w1	w2	w3
 		'''
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
@@ -47,11 +47,11 @@ class InsertBashCompilerTest {
 			print
 		''')
 		val expectedResult = '''
-			  0 1 2
-			0 f1 f2 f3
-			1 v1 v2 v3
-			2 w1 w2 w3
-			3 y1 y2 y3
+				0	1	2
+			0	f1	f2	f3
+			1	v1	v2	v3
+			2	w1	w2	w3
+			3	y1	y2	y3
 		'''
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
@@ -70,9 +70,9 @@ class InsertBashCompilerTest {
 			print
 		''')
 		val expectedResult = '''
-			  0 1 2 3
-			0 f1 f2 f3 f4
-			1 v1 v2 v3 v4
+				0	1	2	3
+			0	f1	f2	f3	f4
+			1	v1	v2	v3	v4
 		'''
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
@@ -91,9 +91,9 @@ class InsertBashCompilerTest {
 			print
 		''')
 		val expectedResult = '''
-			  0 1 2 3 4
-			0 f1 f2 f3 f4 f5
-			1 v1 v2 v3 v4 v5
+				0	1	2	3	4
+			0	f1	f2	f3	f4	f5
+			1	v1	v2	v3	v4	v5
 		'''
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors

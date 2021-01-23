@@ -25,15 +25,17 @@ class DeleteBashCompilerTest {
 			print
 		''')
 		val expectedResult = '''
-			  0 1 2
-			0 f1 f2 f3
+				0	1	2
+			0	f1	f2	f3
 		'''
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
+		println(code)
 		val execution = cmpBash.run(code)
+		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 	
@@ -45,8 +47,8 @@ class DeleteBashCompilerTest {
 			print
 		''')
 		val expectedResult = '''
-			  0 1 2
-			0 v1 v2 v3
+				0	1	2
+			0	v1	v2	v3
 		'''
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
@@ -65,10 +67,10 @@ class DeleteBashCompilerTest {
 			print
 		''')
 		val expectedResult = '''
-			  a b c d
-			0 0 5 6 7
-			1 3 9 1 0
-			2 6 5 3 4
+				a	b	c	d
+			0	0	5	6	7
+			1	3	9	1	0
+			2	6	5	3	4
 		'''
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
@@ -89,9 +91,9 @@ class DeleteBashCompilerTest {
 			print
 		''')
 		val expectedResult = '''
-			  a b c d
-			0 1 1 1 1
-			4 6 5 3 4
+				a	b	c	d
+			0	1	1	1	1
+			1	6	5	3	4
 		'''
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
@@ -110,9 +112,9 @@ class DeleteBashCompilerTest {
 			print
 		''')
 		val expectedResult = '''
-			  0 2
-			0 f1 f3
-			1 v1 v3
+				0	2
+			0	f1	f3
+			1	v1	v3
 		'''
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
@@ -132,9 +134,9 @@ class DeleteBashCompilerTest {
 			print
 		''')
 		val expectedResult = '''
-			  2
-			0 f3
-			1 v3
+				2
+			0	f3
+			1	v3
 		'''
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors

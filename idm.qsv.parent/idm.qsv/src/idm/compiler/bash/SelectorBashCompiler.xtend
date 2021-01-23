@@ -38,7 +38,7 @@ class SelectorBashCompiler {
 		}
 		if (lines.cond !== null) {
 			if (!code.isEmpty) {
-				code += " && "
+				code += " '&&' "
 			}
 			code += lines.cond.genCode();
 		}
@@ -47,7 +47,7 @@ class SelectorBashCompiler {
 	}
 
 	def genCode(LineRange range) {
-		return ''' $n -ge «range.start» && $n -le «range.end» '''
+		return ''' $n -ge «range.start» '&&' $n -le «range.end» '''
 	}
 
 	def genCode(Line line) {

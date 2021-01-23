@@ -62,11 +62,11 @@ class BashCompilerHelper {
 
 	def static genPrintf(String colSep) {
 		return '''
-			for(( i=0; i <= $nbCol; i++))
+			for((i=0; i <= $nbCol; i++))
 			do
-			printf "«colSep»${c[$i]}"
+			printf "${c[$i]}«csvSep»"
 			done
-			echo ""
+			printf "\\b\n"
 		'''
 
 	}

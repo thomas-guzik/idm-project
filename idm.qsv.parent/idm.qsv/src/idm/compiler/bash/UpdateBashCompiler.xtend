@@ -77,7 +77,7 @@ class UpdateBashCompiler implements BashCompiler {
 			  c[$loc_«v»]="«IF valueType === ValueType.VAR»$v_«ENDIF»«value»"
 			«ENDFOR»
 			«IF withCondition»fi«ENDIF»
-			echo «BashCompilerHelper.genEcho(csvSep)»
+			«BashCompilerHelper.genPrintf(csvSep)»
 			done)
 			«IF hasColumnName»
 			file="$header

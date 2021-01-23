@@ -25,9 +25,9 @@ class UpdateBashCompilerTest {
 			print
 		''')
 		val expectedResult = '''
-			  0 1 2
-			0 f1 w f3
-			1 v1 w v3
+				0	1	2
+			0	f1	w	f3
+			1	v1	w	v3
 		'''
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
@@ -46,9 +46,9 @@ class UpdateBashCompilerTest {
 			print
 		''')
 		val expectedResult = '''
-			  0 1 2
-			0 f1 w f3
-			1 v1 v2 v3
+				0	1	2
+			0	f1	w	f3
+			1	v1	v2	v3
 		'''
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors

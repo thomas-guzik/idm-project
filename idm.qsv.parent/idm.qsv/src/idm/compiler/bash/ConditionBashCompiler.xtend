@@ -31,7 +31,7 @@ class ConditionBashCompiler {
 	def String genCode(Condition cond) {
 		var code = cond.mid.genCode()
 		if (cond.orCondition !== null) {
-			code += " || " + cond.orCondition.genCode()
+			code += " '||' " + cond.orCondition.genCode()
 		}
 		return code
 	}
@@ -39,7 +39,7 @@ class ConditionBashCompiler {
 	def String genCode(MidPriority mid) {
 		var code = mid.high.genCode()
 		if (mid.andCondition !== null) {
-			code += " && " + mid.andCondition.genCode()
+			code += " '&&' " + mid.andCondition.genCode()
 		}
 		return code
 	}
@@ -49,17 +49,15 @@ class ConditionBashCompiler {
 			var binCondGen = new BinCondBashCompiler(high.baseCondition)
 			return binCondGen.genBashCode()
 		} else if (high.nestedCondition !== null) {
-			return ''' ( «high.nestedCondition.genCode()» )'''
+			return ''' '(' «high.nestedCondition.genCode()» ')' '''
 		} else {
 			throw new Exception("Error during conditions analyzing")
 		}
 	}
 	
 	def genBeforeCondition() {
-		println("deb before Cond")
 		var code = ''''''
 		for(varWithOp : analyzer.variableWithOperator) {
-			println("boucle")
 			var v = varWithOp.getKey()
 			var op = new OpCompBashCompiler(varWithOp.getValue(), "")
 			var opString = op.genOperatorString()
@@ -78,7 +76,6 @@ class ConditionBashCompiler {
 				'''
 			}
 		}
-		println("fin before cond")
 		return code
 	}
 }

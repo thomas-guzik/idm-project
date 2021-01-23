@@ -18,17 +18,17 @@ class VariableBashCompilerTest {
 	ParseHelper<QuerySeparatedValues> parseHelper
 
 	@Test
-	def void sumLinesAndConditionEqual() {
+	def void sumValuesInColumnAndConditionEqual() {
 		val parseTree = parseHelper.parse('''
 			using "test_variable.csv" with column names: yes
 			compute $dix
-				:sumLines a
+				:sumValuesInColumn a
 			print :lines b = $dix
 		''')
 		val expectedResult = '''
-			  a b c d
-			0 1 10 v vvvv
-			2 3 10 v w
+				a	b	c	d
+			0	1	10	v	vvvv
+			2	3	10	v	w
 		'''
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors
@@ -42,17 +42,17 @@ class VariableBashCompilerTest {
 	}
 
 	@Test
-	def void sumLinesAndConditionNonEqua() {
+	def void sumValuesInColumnAndConditionNonEqua() {
 		val parseTree = parseHelper.parse('''
 			using "test_variable.csv" with column names: yes
 			compute $dix
-				:sumLines a
+				:sumValuesInColumn a
 			print :lines b != $dix
 		''')
 		val expectedResult = '''
-			  a b c d
-			1 2 9 v 10
-			3 4 11 v 0
+				a	b	c	d
+			1	2	9	v	10
+			3	4	11	v	0
 		'''
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors
@@ -66,16 +66,16 @@ class VariableBashCompilerTest {
 	}
 
 	@Test
-	def void sumLinesAndConditionGreater() {
+	def void sumValuesInColumnAndConditionGreater() {
 		val parseTree = parseHelper.parse('''
 			using "test_variable.csv" with column names: yes
 			compute $dix
-				:sumLines a
+				:sumValuesInColumn a
 			print :lines b > $dix
 		''')
 		val expectedResult = '''
-			  a b c d
-			3 4 11 v 0
+				a	b	c	d
+			3	4	11	v	0
 		'''
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors
@@ -90,16 +90,16 @@ class VariableBashCompilerTest {
 	}
 
 	@Test
-	def void sumLinesAndConditionLess() {
+	def void sumValuesInColumnAndConditionLess() {
 		val parseTree = parseHelper.parse('''
 			using "test_variable.csv" with column names: yes
 			compute $dix
-				:sumLines a
+				:sumValuesInColumn a
 			print :lines b < $dix
 		''')
 		val expectedResult = '''
-			  a b c d
-			1 2 9 v 10
+				a	b	c	d
+			1	2	9	v	10
 		'''
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors
@@ -114,18 +114,18 @@ class VariableBashCompilerTest {
 	}
 
 	@Test
-	def void sumLinesAndConditionGreaterEqual() {
+	def void sumValuesInColumnAndConditionGreaterEqual() {
 		val parseTree = parseHelper.parse('''
 			using "test_variable.csv" with column names: yes
 			compute $dix
-				:sumLines a
+				:sumValuesInColumn a
 			print :lines b >= $dix
 		''')
 		val expectedResult = '''
-			  a b c d
-			0 1 10 v vvvv
-			2 3 10 v w
-			3 4 11 v 0
+				a	b	c	d
+			0	1	10	v	vvvv
+			2	3	10	v	w
+			3	4	11	v	0
 		'''
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors
@@ -139,18 +139,18 @@ class VariableBashCompilerTest {
 	}
 
 	@Test
-	def void sumLinesAndConditonLessEqual() {
+	def void sumValuesInColumnAndConditonLessEqual() {
 		val parseTree = parseHelper.parse('''
 			using "test_variable.csv" with column names: yes
 			compute $dix
-				:sumLines a
+				:sumValuesInColumn a
 			print :lines b <= $dix
 		''')
 		val expectedResult = '''
-			  a b c d
-			0 1 10 v vvvv
-			1 2 9 v 10
-			2 3 10 v w
+				a	b	c	d
+			0	1	10	v	vvvv
+			1	2	9	v	10
+			2	3	10	v	w
 		'''
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors
@@ -165,16 +165,16 @@ class VariableBashCompilerTest {
 	}
 
 	@Test
-	def void sumLinesAndConditonEqualString() {
+	def void sumValuesInColumnAndConditonEqualString() {
 		val parseTree = parseHelper.parse('''
 			using "test_variable.csv" with column names: yes
 			compute $v
-				:sumLines c
+				:sumValuesInColumn c
 			print :lines d = $v
 		''')
 		val expectedResult = '''
-			  a b c d
-			0 1 10 v vvvv
+				a	b	c	d
+			0	1	10	v	vvvv
 		'''
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors
@@ -189,18 +189,18 @@ class VariableBashCompilerTest {
 	}
 
 	@Test
-	def void sumLinesAndConditonNotEqualString() {
+	def void sumValuesInColumnAndConditonNotEqualString() {
 		val parseTree = parseHelper.parse('''
 			using "test_variable.csv" with column names: yes
 			compute $v
-				:sumLines c
+				:sumValuesInColumn c
 			print :lines d != $v
 		''')
 		val expectedResult = '''
-			  a b c d
-			1 2 9 v 10
-			2 3 10 v w
-			3 4 11 v 0
+				a	b	c	d
+			1	2	9	v	10
+			2	3	10	v	w
+			3	4	11	v	0
 		'''
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors
@@ -215,18 +215,18 @@ class VariableBashCompilerTest {
 	}
 
 	@Test
-	def void sumLinesAndDeleteConditionEqual() {
+	def void sumValuesInColumnAndDeleteConditionEqual() {
 		val parseTree = parseHelper.parse('''
 			using "test_variable.csv" with column names: yes
 			compute $dix
-				:sumLines a
+				:sumValuesInColumn a
 			delete :lines b = $dix
 			print
 		''')
 		val expectedResult = '''
-			  a b c d
-			0 2 9 v 10
-			1 4 11 v 0
+				a	b	c	d
+			0	2	9	v	10
+			1	4	11	v	0
 		'''
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors
@@ -241,20 +241,20 @@ class VariableBashCompilerTest {
 	}
 
 	@Test
-	def void sumLinesAndUpdateConditionEqual() {
+	def void sumValuesInColumnAndUpdateConditionEqual() {
 		val parseTree = parseHelper.parse('''
 			using "test_variable.csv" with column names: yes
 			compute $dix
-				:sumLines a
+				:sumValuesInColumn a
 			update :set $dix :columns a
 			print
 		''')
 		val expectedResult = '''
-			  a b c d
-			0 10 10 v vvvv
-			1 10 9 v 10
-			2 10 10 v w
-			3 10 11 v 0
+				a	b	c	d
+			0	10	10	v	vvvv
+			1	10	9	v	10
+			2	10	10	v	w
+			3	10	11	v	0
 		'''
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors
@@ -269,21 +269,21 @@ class VariableBashCompilerTest {
 	}
 	
 		@Test
-	def void sumLinesAndInsertLine() {
+	def void sumValuesInColumnAndInsertLine() {
 		val parseTree = parseHelper.parse('''
 			using "test_variable.csv" with column names: yes
 			compute $dix
-				:sumLines a
+				:sumValuesInColumn a
 			insert :lines ($dix,$dix,$dix,$dix)
 			print
 		''')
 		val expectedResult = '''
-			  a b c d
-			0 1 10 v vvvv
-			1 2 9 v 10
-			2 3 10 v w
-			3 4 11 v 0
-			4 10 10 10 10
+				a	b	c	d
+			0	1	10	v	vvvv
+			1	2	9	v	10
+			2	3	10	v	w
+			3	4	11	v	0
+			4	10	10	10	10
 		'''
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors
@@ -298,20 +298,20 @@ class VariableBashCompilerTest {
 	}
 	
 			@Test
-	def void sumLinesAndInsertColumns() {
+	def void sumValuesInColumnAndInsertColumns() {
 		val parseTree = parseHelper.parse('''
 			using "test_variable.csv" with column names: yes
 			compute $dix
-				:sumLines a
+				:sumValuesInColumn a
 			insert :columns e ($dix,$dix,$dix,$dix)
 			print
 		''')
 		val expectedResult = '''
-			  a b c d e
-			0 1 10 v vvvv 10
-			1 2 9 v 10 10
-			2 3 10 v w 10
-			3 4 11 v 0 10
+				a	b	c	d	e
+			0	1	10	v	vvvv	10
+			1	2	9	v	10	10
+			2	3	10	v	w	10
+			3	4	11	v	0	10
 		'''
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors
@@ -326,7 +326,7 @@ class VariableBashCompilerTest {
 	}
 	
 				@Test
-	def void sumLinesAndInsertColumnsFromVar() {
+	def void sumColumnsAndInsertColumnsFromVar() {
 		val parseTree = parseHelper.parse('''
 			using "test_variable.csv" with column names: no
 			compute $col
@@ -335,11 +335,11 @@ class VariableBashCompilerTest {
 			print
 		''')
 		val expectedResult = '''
-			  a b c d e
-			0 1 10 v vvvv 1
-			1 2 9 v 10 2
-			2 3 10 v w 3
-			3 4 11 v 0 4
+				a	b	c	d	e
+			0	1	10	v	vvvv	1
+			1	2	9	v	10	2
+			2	3	10	v	w	3
+			3	4	11	v	0	4
 		'''
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors

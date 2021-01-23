@@ -22,23 +22,23 @@ class PrintBashCompiler implements BashCompiler {
 	Set<String> colNumberInCond
 
 	SelectorBashCompiler c
-	
+
 	FormatType formatType
 
 	new(Print p, Boolean hasColumnName, String csvSep) {
 		print = p
 		this.hasColumnName = hasColumnName
 		this.csvSep = csvSep
-		
+
 		var analyzer = new PrintAnalyzer(print)
-		
+
 		formatType = analyzer.getFormatType()
 		colSep = analyzer.getSeparator()
-		
-		if(colSep === "\t") {
+
+		if (colSep === "\t") {
 			println("tab")
 		}
-		
+
 		if (print.selector !== null) {
 			c = new SelectorBashCompiler(print.selector)
 			colSelectType = c.colSelectType
@@ -55,7 +55,7 @@ class PrintBashCompiler implements BashCompiler {
 			colNumberInCond = null
 		}
 	}
-	
+
 	override String compile() {
 		return print.genCode()
 	}
@@ -68,8 +68,7 @@ class PrintBashCompiler implements BashCompiler {
 			print=$(while read -a c
 			do
 			«IF withCondition»if eval [[ «c.genCond()» ]] ; then«ENDIF»
-			printf "$n"
-			«BashCompilerHelper.genPrintf(colSep)»
+			«genPrintf()»
 			«IF withCondition»fi«ENDIF»
 			n=$(( $n + 1 ))
 			done «BashCompilerHelper.genInput(colSelectType)»)
@@ -88,9 +87,9 @@ class PrintBashCompiler implements BashCompiler {
 			«genCondVariable»
 		'''
 	}
-	
+
 	def genCondVariable() {
-		if(c === null) {
+		if (c === null) {
 			return ""
 		} else {
 			return c.genBeforeCondition()
@@ -101,7 +100,7 @@ class PrintBashCompiler implements BashCompiler {
 		var code = ""
 		if (colSelectType !== ColumnSelectType.ALL) {
 			var echoVar = ""
-				if (colSelectType === ColumnSelectType.NAME) {
+			if (colSelectType === ColumnSelectType.NAME) {
 				echoVar = "$header"
 			} else if (colSelectType === ColumnSelectType.NUMBER) {
 				echoVar = "$index"
@@ -164,6 +163,17 @@ class PrintBashCompiler implements BashCompiler {
 			}
 		}
 		return '''echo "«colSep»$(echo "«echoVar»" | tr '«csvSep»' '«colSep»')"'''
+	}
+
+	def genPrintf() {
+		return '''
+			printf "$n"
+			for((i=0; i <= $nbCol; i++))
+			do
+			printf "«colSep»${c[$i]}"
+			done
+			printf "\n"
+			'''
 	}
 
 }
