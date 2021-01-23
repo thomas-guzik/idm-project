@@ -1,19 +1,19 @@
 package idm.compiler.bash
 
 import idm.qsv.Condition
-import idm.analyzer.AnalyzerCondition
 import idm.qsv.MidPriority
 import idm.qsv.HighestPriority
 import idm.analyzer.ValueType
+import idm.analyzer.ConditionAnalyzer
 
-class CompilerBashCondition {
+class ConditionBashCompiler {
 
 	Condition condition
-	AnalyzerCondition analyzer
+	ConditionAnalyzer analyzer
 
 	new(Condition c) {
 		condition = c
-		analyzer = new AnalyzerCondition(condition)
+		analyzer = new ConditionAnalyzer(condition)
 	}
 
 	def getColSelectedByNumber() {
@@ -46,7 +46,7 @@ class CompilerBashCondition {
 
 	def String genCode(HighestPriority high) {
 		if (high.baseCondition !== null) {
-			var binCondGen = new CompilerBashBinCond(high.baseCondition)
+			var binCondGen = new BinCondBashCompiler(high.baseCondition)
 			return binCondGen.genBashCode()
 		} else if (high.nestedCondition !== null) {
 			return ''' ( «high.nestedCondition.genCode()» )'''
@@ -61,7 +61,7 @@ class CompilerBashCondition {
 		for(varWithOp : analyzer.variableWithOperator) {
 			println("boucle")
 			var v = varWithOp.getKey()
-			var op = new CompilerBashOpComp(varWithOp.getValue(), "")
+			var op = new OpCompBashCompiler(varWithOp.getValue(), "")
 			var opString = op.genOperatorString()
 			if(opString === "eq" || opString === "ne") {
 				code += '''

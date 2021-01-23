@@ -9,7 +9,7 @@ import idm.qsv.CompareLowerOrEqual
 import idm.qsv.CompareGreaterOrEqual
 import idm.analyzer.ValueType
 
-class CompilerBashOpComp {
+class OpCompBashCompiler {
 
 	OpComp op
 	String value

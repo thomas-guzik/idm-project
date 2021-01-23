@@ -5,7 +5,7 @@ import idm.analyzer.ColumnSelectType
 import java.util.List
 import java.util.Set
 
-class CompilerBashDelete implements CompilerBash {
+class DeleteBashCompiler implements BashCompiler {
 
 	Delete delete
 	Boolean hasColumnName
@@ -18,14 +18,14 @@ class CompilerBashDelete implements CompilerBash {
 	Set<String> colNameInCond
 	Set<String> colNumberInCond
 
-	CompilerBashSelector c
+	SelectorBashCompiler c
 
 	new(Delete d, Boolean hasColumnName, String csvSep) {
 		delete = d
 		this.hasColumnName = hasColumnName
 		this.csvSep = csvSep
 
-		c = new CompilerBashSelector(delete.selector)
+		c = new SelectorBashCompiler(delete.selector)
 	}
 
 	override String compile() {
@@ -41,17 +41,17 @@ class CompilerBashDelete implements CompilerBash {
 		return '''
 			«genBeforeWhile()»
 			«genCondVariable()»
-			«CompilerBashHelper.genLocVariable(colNameInCond,"header")»
-			«CompilerBashHelper.genLocVariable(colNumberInCond,"index")»
-			«CompilerBashHelper.genNbCol()»
+			«BashCompilerHelper.genLocVariable(colNameInCond,"header")»
+			«BashCompilerHelper.genLocVariable(colNumberInCond,"index")»
+			«BashCompilerHelper.genNbCol()»
 			n=0
 			file=$(while read -a c
 			do
 			«IF withCondition»if eval ! [[ «c.genCond()» ]] ; then«ENDIF»
-			echo «CompilerBashHelper.genEcho(csvSep)»
+			echo «BashCompilerHelper.genEcho(csvSep)»
 			«IF withCondition»fi«ENDIF»
 			n=$(( $n + 1 ))
-			done «CompilerBashHelper.genInput(colSelectType)»)
+			done «BashCompilerHelper.genInput(colSelectType)»)
 			«IF hasColumnName»file="$header
 			$file"«ENDIF»
 		'''

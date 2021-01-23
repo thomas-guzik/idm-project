@@ -10,7 +10,7 @@ import idm.analyzer.ColumnSelectType
 import java.util.HashSet
 import idm.analyzer.FunctionName
 
-class CompilerBashCompute implements CompilerBash {
+class ComputeBashCompiler implements BashCompiler {
 
 	Compute compute
 	String varName
@@ -35,9 +35,9 @@ class CompilerBashCompute implements CompilerBash {
 		println(varName)
 		if (functionName === FunctionName.SUMCOL) {
 			println("summmm")
-			CompilerBashHelper.addVariable(varName, ValueType.COL)
+			BashCompilerHelper.addVariable(varName, ValueType.COL)
 		} else {
-			CompilerBashHelper.addVariable(varName, ValueType.VAR)
+			BashCompilerHelper.addVariable(varName, ValueType.VAR)
 		}
 
 		var analyzer = new AnalyzerCompute(compute)
@@ -71,7 +71,7 @@ class CompilerBashCompute implements CompilerBash {
 			type="str"
 			break
 			fi
-			done «CompilerBashHelper.genInput(ColumnSelectType.NAME)»
+			done «BashCompilerHelper.genInput(ColumnSelectType.NAME)»
 			
 			while read c
 			do
@@ -80,7 +80,7 @@ class CompilerBashCompute implements CompilerBash {
 			else 
 			v_«varName»=$(( $v_«varName» + $c ))
 			fi
-			done «CompilerBashHelper.genInput(ColumnSelectType.NAME)»
+			done «BashCompilerHelper.genInput(ColumnSelectType.NAME)»
 		'''
 	}
 
@@ -105,7 +105,7 @@ class CompilerBashCompute implements CompilerBash {
 		else 
 		v_«varName»=$v_«varName»,$(( $( eval echo '${c['$(seq -s ']}+${c[' 0 $nbCol)']}' ) ))
 		fi
-		done «CompilerBashHelper.genInput(ColumnSelectType.NAME)»
+		done «BashCompilerHelper.genInput(ColumnSelectType.NAME)»
 		v_«varName»=${v_«varName»:1}'''
 	}
 
@@ -115,15 +115,15 @@ class CompilerBashCompute implements CompilerBash {
 			«IF colName.size !== 0»
 				header=$(echo "$file" | head -1)
 				«IF colNumber.size !== 0»
-					«CompilerBashHelper.genCut(colName, "header")»
-					«CompilerBashHelper.genCut(colNumber, "index")»
+					«BashCompilerHelper.genCut(colName, "header")»
+					«BashCompilerHelper.genCut(colNumber, "index")»
 					nb_cut="$cut_«String.join(',$cut_',colName)»,$cut_«String.join(',$cut_',colNumber)»"
 				«ELSE»
-					«CompilerBashHelper.genCut(colName, "header")»
+					«BashCompilerHelper.genCut(colName, "header")»
 					nb_cut="$cut_«String.join(',$cut_',colName)»"
 				«ENDIF»
 			«ELSE»
-				«CompilerBashHelper.genCut(colNumber, "index")»
+				«BashCompilerHelper.genCut(colNumber, "index")»
 				nb_cut="$cut_«String.join(',$cut_',colNumber)»"
 			«ENDIF»
 		'''

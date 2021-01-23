@@ -9,7 +9,7 @@ enum ColumnIdentifierType {
 	NUMBER
 }
 
-class AnalyzerColumnIdentifier {
+class ColumnIdentifierAnalyzer {
 	
 	ColumnIdentifier columnIdentifier
 	

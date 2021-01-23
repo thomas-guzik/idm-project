@@ -1,14 +1,14 @@
 package idm.compiler.bash
 
 import idm.qsv.Update
-import idm.analyzer.AnalyzerValue
-import idm.analyzer.AnalyzerColumn
 import idm.analyzer.ColumnSelectType
 import java.util.HashSet
 import java.util.Set
 import idm.analyzer.ValueType
+import idm.analyzer.ColumnAnalyzer
+import idm.analyzer.ValueAnalyzer
 
-class CompilerBashUpdate implements CompilerBash {
+class UpdateBashCompiler implements BashCompiler {
 
 	Update update
 	
@@ -23,7 +23,7 @@ class CompilerBashUpdate implements CompilerBash {
 	Set<String> colSelectedByName = new HashSet<String>()
 	
 	Boolean withCondition = false
-	CompilerBashCondition cmpCond
+	ConditionBashCompiler cmpCond
 	
 	ValueType valueType
 
@@ -39,11 +39,11 @@ class CompilerBashUpdate implements CompilerBash {
 	}
 	
 	def Update analyze(Update u) {
-		var analyzerValue = new AnalyzerValue(u.value)
+		var analyzerValue = new ValueAnalyzer(u.value)
 		value = analyzerValue.getValue()
 		valueType = analyzerValue.getValueType()
 		
-		var analyzerColumn = new AnalyzerColumn(u.columns)
+		var analyzerColumn = new ColumnAnalyzer(u.columns)
 		if(analyzerColumn.columnSelectType === ColumnSelectType.NUMBER) {
 			colSelectedByNumber.addAll(analyzerColumn.columnsList)
 		}
@@ -54,7 +54,7 @@ class CompilerBashUpdate implements CompilerBash {
 		
 		if(u.cond !== null) {
 			withCondition = true
-			cmpCond = new CompilerBashCondition(u.cond)
+			cmpCond = new ConditionBashCompiler(u.cond)
 			colSelectedByNumber.addAll(cmpCond.colSelectedByNumber)
 			colSelectedByName.addAll(cmpCond.colSelectedByName)
 		}
@@ -68,8 +68,8 @@ class CompilerBashUpdate implements CompilerBash {
 			«IF hasColumnName»
 			header=$(echo "$file" | head -1)
 			«ENDIF»
-			«CompilerBashHelper.genLocVariable(colSelectedByNumber, "index")»
-			«CompilerBashHelper.genLocVariable(colSelectedByName, "header")»
+			«BashCompilerHelper.genLocVariable(colSelectedByNumber, "index")»
+			«BashCompilerHelper.genLocVariable(colSelectedByName, "header")»
 			file=$( «genInput()» while read -a c
 			do
 			«IF withCondition»if [[ «cmpCond.genBashCondition()» ]] ; then«ENDIF»
@@ -77,7 +77,7 @@ class CompilerBashUpdate implements CompilerBash {
 			  c[$loc_«v»]="«IF valueType === ValueType.VAR»$v_«ENDIF»«value»"
 			«ENDFOR»
 			«IF withCondition»fi«ENDIF»
-			echo «CompilerBashHelper.genEcho(csvSep)»
+			echo «BashCompilerHelper.genEcho(csvSep)»
 			done)
 			«IF hasColumnName»
 			file="$header

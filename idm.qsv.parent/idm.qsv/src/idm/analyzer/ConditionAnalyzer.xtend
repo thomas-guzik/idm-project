@@ -11,12 +11,12 @@ import java.util.Set
 import java.util.HashSet
 import idm.qsv.OpComp
 
-class AnalyzerCondition {
+class ConditionAnalyzer {
 
 	Condition condition
 	Set<String> colSelectedByNumber = new HashSet<String>()
 	Set<String> colSelectedByName = new HashSet<String>()
-	Set<Pair<AnalyzerValue, OpComp>> varWithOp = new HashSet<Pair<AnalyzerValue, OpComp>>()
+	Set<Pair<ValueAnalyzer, OpComp>> varWithOp = new HashSet<Pair<ValueAnalyzer, OpComp>>()
 	
 	new(Condition c) {
 		condition = c
@@ -60,12 +60,12 @@ class AnalyzerCondition {
 	def void analyze(BinCond b) {
 		b.columnId.analyzeColumnIdentifier()
 		println("analyzer Value")
-		var analyzerValue = new AnalyzerValue(b.compValue)
+		var analyzerValue = new ValueAnalyzer(b.compValue)
 		println("fin analyzer value")
 		
 		if(analyzerValue.getValueType() === ValueType.VAR) {
 			println("add in var Op")
-			varWithOp.add(new Pair<AnalyzerValue, OpComp>(analyzerValue, b.operator))
+			varWithOp.add(new Pair<ValueAnalyzer, OpComp>(analyzerValue, b.operator))
 			println("fin var add")
 		}
 	}

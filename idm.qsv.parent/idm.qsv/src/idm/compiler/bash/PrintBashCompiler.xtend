@@ -5,9 +5,9 @@ import idm.analyzer.ColumnSelectType
 import java.util.List
 import java.util.Set
 import idm.analyzer.FormatType
-import idm.analyzer.AnalyzerPrint
+import idm.analyzer.PrintAnalyzer
 
-class CompilerBashPrint implements CompilerBash {
+class PrintBashCompiler implements BashCompiler {
 
 	Print print
 	Boolean hasColumnName
@@ -21,7 +21,7 @@ class CompilerBashPrint implements CompilerBash {
 	Set<String> colNameInCond
 	Set<String> colNumberInCond
 
-	CompilerBashSelector c
+	SelectorBashCompiler c
 	
 	FormatType formatType
 
@@ -30,7 +30,7 @@ class CompilerBashPrint implements CompilerBash {
 		this.hasColumnName = hasColumnName
 		this.csvSep = csvSep
 		
-		var analyzer = new AnalyzerPrint(print)
+		var analyzer = new PrintAnalyzer(print)
 		
 		formatType = analyzer.getFormatType()
 		colSep = analyzer.getSeparator()
@@ -40,7 +40,7 @@ class CompilerBashPrint implements CompilerBash {
 		}
 		
 		if (print.selector !== null) {
-			c = new CompilerBashSelector(print.selector)
+			c = new SelectorBashCompiler(print.selector)
 			colSelectType = c.colSelectType
 			colSelected = c.colSelected
 			withCondition = c.isWithCondition()
@@ -69,17 +69,17 @@ class CompilerBashPrint implements CompilerBash {
 			do
 			«IF withCondition»if eval [[ «c.genCond()» ]] ; then«ENDIF»
 			printf "$n"
-			«CompilerBashHelper.genPrintf(colSep)»
+			«BashCompilerHelper.genPrintf(colSep)»
 			«IF withCondition»fi«ENDIF»
 			n=$(( $n + 1 ))
-			done «CompilerBashHelper.genInput(colSelectType)»)
+			done «BashCompilerHelper.genInput(colSelectType)»)
 			echo -e "$title\n$print"«IF formatType === formatType.PRETTY» | column -n -t -s "«colSep»"«ENDIF»
 		'''
 	}
 
 	def genBeforeWhile() {
 		return '''
-			«CompilerBashHelper.genHeader()»
+			«BashCompilerHelper.genHeader()»
 			«IF colSelectType == ColumnSelectType.ALL»
 				nbCol=$(( $(echo "$index" | tr '«csvSep»' '\n' | wc -l) - 1))
 			«ENDIF»
@@ -101,7 +101,7 @@ class CompilerBashPrint implements CompilerBash {
 		var code = ""
 		if (colSelectType !== ColumnSelectType.ALL) {
 			var echoVar = ""
-			if (colSelectType === ColumnSelectType.NAME) {
+				if (colSelectType === ColumnSelectType.NAME) {
 				echoVar = "$header"
 			} else if (colSelectType === ColumnSelectType.NUMBER) {
 				echoVar = "$index"
@@ -137,8 +137,8 @@ class CompilerBashPrint implements CompilerBash {
 			echoVarForNumber = "index_cut"
 		}
 		return '''
-			«CompilerBashHelper.genLocVariable(colNameInCond, echoVarForName)»
-			«CompilerBashHelper.genLocVariable(colNumberInCond, echoVarForNumber)»
+			«BashCompilerHelper.genLocVariable(colNameInCond, echoVarForName)»
+			«BashCompilerHelper.genLocVariable(colNumberInCond, echoVarForNumber)»
 		'''
 	}
 

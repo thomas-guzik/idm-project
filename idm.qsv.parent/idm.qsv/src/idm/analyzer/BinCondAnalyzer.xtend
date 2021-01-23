@@ -2,16 +2,16 @@ package idm.analyzer
 
 import idm.qsv.BinCond
 
-class AnalyzerBinCond {
+class BinCondAnalyzer {
 
 	BinCond binCond
-	AnalyzerValue analyzerValue
-	AnalyzerColumnIdentifier analyzerColumnIdentifier
+	ValueAnalyzer analyzerValue
+	ColumnIdentifierAnalyzer analyzerColumnIdentifier
 
 	new(BinCond b) {
 		binCond = b
-		analyzerColumnIdentifier = new AnalyzerColumnIdentifier(binCond.columnId)
-		analyzerValue = new AnalyzerValue(binCond.compValue)
+		analyzerColumnIdentifier = new ColumnIdentifierAnalyzer(binCond.columnId)
+		analyzerValue = new ValueAnalyzer(binCond.compValue)
 	}
 
 	def getColumnId() {

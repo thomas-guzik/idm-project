@@ -1,7 +1,6 @@
 package idm.compiler.bash
 
 import idm.qsv.BinCond
-import idm.analyzer.AnalyzerBinCond
 import idm.qsv.OpComp
 import idm.qsv.CompareEqual
 import idm.qsv.CompareNotEqual
@@ -10,15 +9,16 @@ import idm.qsv.CompareGreater
 import idm.qsv.CompareLowerOrEqual
 import idm.qsv.CompareGreaterOrEqual
 import idm.analyzer.ValueType
+import idm.analyzer.BinCondAnalyzer
 
-class CompilerBashBinCond {
+class BinCondBashCompiler {
 
 	BinCond binCond
-	AnalyzerBinCond analyzer
+	BinCondAnalyzer analyzer
 
 	new(BinCond b) {
 		binCond = b
-		analyzer = new AnalyzerBinCond(binCond)
+		analyzer = new BinCondAnalyzer(binCond)
 		
 	}
 

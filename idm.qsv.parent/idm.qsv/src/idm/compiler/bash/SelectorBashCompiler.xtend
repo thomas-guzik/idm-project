@@ -7,7 +7,7 @@ import idm.qsv.Line
 import idm.qsv.Condition
 import idm.analyzer.AnalyzerSelector
 
-class CompilerBashSelector implements CompilerBash {
+class SelectorBashCompiler {
 
 	Selector selector
 	
@@ -55,14 +55,14 @@ class CompilerBashSelector implements CompilerBash {
 	}
 
 	def String genCode(Condition cond) {
-		var cmpCondition = new CompilerBashCondition(cond)
+		var cmpCondition = new ConditionBashCompiler(cond)
 		var code = cmpCondition.genBashCondition()
 		return code
 	}
 	
 	def String genBeforeCondition() {
 		if(selector.lineSelection !== null && selector.lineSelection.cond !== null) {
-			var cmpCondition = new CompilerBashCondition(selector.lineSelection.cond)
+			var cmpCondition = new ConditionBashCompiler(selector.lineSelection.cond)
 			return cmpCondition.genBeforeCondition()		
 		}
 		else {

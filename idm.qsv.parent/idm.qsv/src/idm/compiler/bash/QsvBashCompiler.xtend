@@ -16,7 +16,7 @@ import idm.qsv.Insert
 import idm.qsv.Delete
 import idm.qsv.Save
 
-class CompilerBashQsv implements CompilerBash {
+class QsvBashCompiler implements BashCompiler {
 	QuerySeparatedValues qsv
 	Boolean hasColumnName
 	String csvSep
@@ -49,8 +49,8 @@ class CompilerBashQsv implements CompilerBash {
 		else {
 			csvSep = ","
 		}
-		CompilerBashHelper.setCsvSep(csvSep)
-		CompilerBashHelper.setHasColumnName(hasColumnName)
+		BashCompilerHelper.setCsvSep(csvSep)
+		BashCompilerHelper.setHasColumnName(hasColumnName)
 		return header
 	}
 
@@ -70,31 +70,31 @@ class CompilerBashQsv implements CompilerBash {
 	}
 
 	def dispatch String compile(Compute compute) {
-		return new CompilerBashCompute(compute).compile()
+		return new ComputeBashCompiler(compute).compile()
 	}
 	
 	def dispatch String compile(Delete delete) {
-		return new CompilerBashDelete(delete, hasColumnName, csvSep).compile()
+		return new DeleteBashCompiler(delete, hasColumnName, csvSep).compile()
 	}
 
 	def dispatch String compile(Echo echo) {
-		return new CompilerBashEcho(echo).compile()
+		return new EchoBashCompiler(echo).compile()
 	}
 	
 	def dispatch String compile(Insert insert) {
-		return new CompilerBashInsert(insert, csvSep).compile()
+		return new InsertBashCompiler(insert, csvSep).compile()
 	}
 
 	def dispatch String compile(Print print) {
-		return new CompilerBashPrint(print, hasColumnName, csvSep).compile()
+		return new PrintBashCompiler(print, hasColumnName, csvSep).compile()
 	}
 	
 	def dispatch String compile(Save save) {
-		return new CompilerBashSave(save, nameFile, hasColumnName).compile()
+		return new SaveBashCompiler(save, nameFile, hasColumnName).compile()
 	}
 
 	def dispatch String compile(Update update) {
-		return new CompilerBashUpdate(update, hasColumnName, csvSep).compile()
+		return new UpdateBashCompiler(update, hasColumnName, csvSep).compile()
 	}
 
 	def TerminalOutput executeOnFile(String code, String filename) {

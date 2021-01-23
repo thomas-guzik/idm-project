@@ -11,7 +11,7 @@ enum FormatType {
 	SEPARATOR
 }
 
-class AnalyzerPrint {
+class PrintAnalyzer {
 
 	Print print
 	FormatType formatType

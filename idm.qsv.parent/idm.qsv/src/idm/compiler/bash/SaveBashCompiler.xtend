@@ -6,7 +6,7 @@ import idm.qsv.SaveJson
 import idm.analyzer.ColumnSelectType
 import idm.qsv.SaveMethod
 
-class CompilerBashSave implements CompilerBash {
+class SaveBashCompiler implements BashCompiler {
 	Save save
 	String nameFile
 	Boolean hasColumnName
@@ -58,7 +58,7 @@ class CompilerBashSave implements CompilerBash {
 		// "0":"v1","1":"v1","2":"v8"
 		println("ici")
 		return '''
-		«CompilerBashHelper.genNbCol»
+		«BashCompilerHelper.genNbCol»
 		«IF hasColumnName»
 		header=$(echo "$file" | head -1) 
 		«ENDIF»
@@ -70,7 +70,7 @@ class CompilerBashSave implements CompilerBash {
 		j[$i]="${j[$i]},\"$n\":\"${c[$i]}\""
 		done
 		n=$(( $n + 1 ))
-		done «CompilerBashHelper.genInput(ColumnSelectType.ALL)»
+		done «BashCompilerHelper.genInput(ColumnSelectType.ALL)»
 		while read -a c
 		do
 		for(( i=0 ; i <= $nbCol; i++))

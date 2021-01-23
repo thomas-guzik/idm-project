@@ -9,10 +9,10 @@ import idm.qsv.VariableIdentifier
 import idm.qsv.ColumnDescription
 import idm.qsv.ContentDescription
 import java.util.ArrayList
-import idm.analyzer.AnalyzerValue
 import idm.analyzer.ValueType
+import idm.analyzer.ValueAnalyzer
 
-class CompilerBashInsert implements CompilerBash {
+class InsertBashCompiler implements BashCompiler {
 
 	Insert insert
 	String csvSep
@@ -41,7 +41,7 @@ class CompilerBashInsert implements CompilerBash {
 	def String genCode(ContentList l) {
 		var list = newArrayList
 		for (v : l.values) {
-			var analyzerValue = new AnalyzerValue(v)
+			var analyzerValue = new ValueAnalyzer(v)
 			var valueType = analyzerValue.getValueType()
 			if (valueType == ValueType.VAR) {
 				list.add("$v_" + analyzerValue.value)
@@ -102,7 +102,7 @@ class CompilerBashInsert implements CompilerBash {
 	def dispatch genCodeContentDescription(ContentList l) {
 		var list = new ArrayList<String>()
 		for (v : l.values) {
-			var analyzerValue = new AnalyzerValue(v)
+			var analyzerValue = new ValueAnalyzer(v)
 			var valueType = analyzerValue.getValueType()
 			if (valueType == ValueType.VAR) {
 				list.add("$v_" + analyzerValue.value)
@@ -115,7 +115,7 @@ class CompilerBashInsert implements CompilerBash {
 
 	def dispatch genCodeContentDescription(VariableIdentifier v) {
 		var varName = v.value.substring(1)
-		var varType =CompilerBashHelper.getVariableType(v.value.substring(1))
+		var varType =BashCompilerHelper.getVariableType(v.value.substring(1))
 		var list = new ArrayList<String>()
 		if(varType === ValueType.COL) {
 			list.add("$v_"+varName)

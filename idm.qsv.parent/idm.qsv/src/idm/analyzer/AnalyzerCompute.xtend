@@ -31,7 +31,7 @@ class AnalyzerCompute {
 	}
 	
 	def analyze(Compute c) {
-		variable = new AnalyzerValue(c.variable).getValue()
+		variable = new ValueAnalyzer(c.variable).getValue()
 		c.function.analyzeFunction()
 	}
 	
@@ -50,7 +50,7 @@ class AnalyzerCompute {
 	}
 	
 	def addToTheGoodColumns(ColumnIdentifier c) {
-		var analyzer = new AnalyzerColumnIdentifier(c)
+		var analyzer = new ColumnIdentifierAnalyzer(c)
 		if(analyzer.columnIdentifierType === ColumnIdentifierType.NAME) {			
 			colName.add(analyzer.columnIdentifier)
 		} else {

@@ -29,7 +29,7 @@ class AnalyzerSelector {
 
 		if (columnSelection !== null) {
 			if (columnSelection.columns !== null) {
-				var analyzerColumn = new AnalyzerColumn(columnSelection.columns)
+				var analyzerColumn = new ColumnAnalyzer(columnSelection.columns)
 				colSelected = analyzerColumn.columnsList
 				colSelectType = analyzerColumn.columnSelectType
 			}
@@ -44,7 +44,7 @@ class AnalyzerSelector {
 	def void analyze(Lines l) {
 		if (l.cond !== null) {
 			println("analyze cond")
-			var analyzerCond = new AnalyzerCondition(l.cond)
+			var analyzerCond = new ConditionAnalyzer(l.cond)
 			println("fin analyze cond")
 			colNameInCond = analyzerCond.colSelectedByName
 			colNumberInCond = analyzerCond.colSelectedByNumber

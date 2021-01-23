@@ -6,7 +6,7 @@ import java.util.List
 import idm.qsv.ColumnNames
 import idm.qsv.ColumnNumbers
 
-class AnalyzerColumn {
+class ColumnAnalyzer {
 	
 	Column columns
 	List<String> cols

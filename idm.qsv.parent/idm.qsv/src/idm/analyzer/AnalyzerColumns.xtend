@@ -15,14 +15,14 @@ class AnalyzerColumns {
 	Columns columns
 	List<String> cols
 
-	AnalyzerColumn analyzerColumn
+	ColumnAnalyzer analyzerColumn
 
 	new(Columns c) {
 		columns = c
 		cols = new ArrayList<String>()
 
 		if (columns.columns !== null) {
-			analyzerColumn = new AnalyzerColumn(columns.columns)
+			analyzerColumn = new ColumnAnalyzer(columns.columns)
 		} else {
 			analyzerColumn = null
 		}

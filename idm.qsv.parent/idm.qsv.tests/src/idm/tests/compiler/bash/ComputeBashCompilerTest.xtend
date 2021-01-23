@@ -9,11 +9,11 @@ import idm.tests.QsvInjectorProvider
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.extensions.InjectionExtension
 import org.junit.jupiter.api.^extension.ExtendWith
-import idm.compiler.bash.CompilerBashQsv
+import idm.compiler.bash.QsvBashCompiler
 
 @ExtendWith(InjectionExtension)
 @InjectWith(QsvInjectorProvider)
-class BashCompilerComputeTest {
+class ComputeBashCompilerTest {
 	@Inject
 	ParseHelper<QuerySeparatedValues> parseHelper
 
@@ -31,7 +31,7 @@ class BashCompilerComputeTest {
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		val CompilerBashQsv cmpBash = new CompilerBashQsv(parseTree)
+		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
@@ -51,7 +51,7 @@ class BashCompilerComputeTest {
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		val CompilerBashQsv cmpBash = new CompilerBashQsv(parseTree)
+		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
 		println(code)
 		val execution = cmpBash.run(code)
@@ -73,7 +73,7 @@ class BashCompilerComputeTest {
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		val CompilerBashQsv cmpBash = new CompilerBashQsv(parseTree)
+		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
@@ -99,7 +99,7 @@ class BashCompilerComputeTest {
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		val CompilerBashQsv cmpBash = new CompilerBashQsv(parseTree)
+		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
 		println(code)
 		val execution = cmpBash.run(code)
@@ -127,7 +127,7 @@ class BashCompilerComputeTest {
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		val CompilerBashQsv cmpBash = new CompilerBashQsv(parseTree)
+		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)

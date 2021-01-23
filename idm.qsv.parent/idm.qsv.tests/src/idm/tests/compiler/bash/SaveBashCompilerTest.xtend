@@ -9,14 +9,14 @@ import idm.tests.QsvInjectorProvider
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.extensions.InjectionExtension
 import org.junit.jupiter.api.^extension.ExtendWith
-import idm.compiler.bash.CompilerBashQsv
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.charset.StandardCharsets
+import idm.compiler.bash.QsvBashCompiler
 
 @ExtendWith(InjectionExtension)
 @InjectWith(QsvInjectorProvider)
-class BashCompilerSaveTest {
+class SaveBashCompilerTest {
 	@Inject
 	ParseHelper<QuerySeparatedValues> parseHelper
 
@@ -37,7 +37,7 @@ class BashCompilerSaveTest {
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		val CompilerBashQsv cmpBash = new CompilerBashQsv(parseTree)
+		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
 		cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, getFileContent(filename))
@@ -57,7 +57,7 @@ class BashCompilerSaveTest {
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		val CompilerBashQsv cmpBash = new CompilerBashQsv(parseTree)
+		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
 		cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, getFileContent(filename))

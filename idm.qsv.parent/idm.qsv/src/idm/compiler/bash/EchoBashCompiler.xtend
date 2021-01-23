@@ -3,7 +3,7 @@ package idm.compiler.bash
 import idm.qsv.Echo
 import idm.analyzer.ValueType
 
-class CompilerBashEcho implements CompilerBash {
+class EchoBashCompiler implements BashCompiler {
 
 	Echo echo
 	String varName
@@ -14,7 +14,7 @@ class CompilerBashEcho implements CompilerBash {
 	}
 
 	override String compile() {
-		var varType = CompilerBashHelper.getVariableType(varName)
+		var varType = BashCompilerHelper.getVariableType(varName)
 		println(varType)
 		if (varType === ValueType.VAR) {
 			return '''

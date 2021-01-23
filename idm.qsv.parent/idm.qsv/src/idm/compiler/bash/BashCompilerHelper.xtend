@@ -8,7 +8,7 @@ import java.util.Set
 import java.util.List
 import java.util.HashSet
 
-class CompilerBashHelper {
+class BashCompilerHelper {
 
 	static String csvSep = ""
 	static Boolean hasColumnName
