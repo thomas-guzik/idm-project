@@ -2,11 +2,10 @@ package idm.analyzer
 
 import idm.qsv.Compute
 import idm.qsv.Function
-import idm.qsv.SumLines
-import java.util.Set
 import java.util.HashSet
 import idm.qsv.SumColumns
 import idm.qsv.ColumnIdentifier
+import idm.qsv.SumValuesInColumn
 
 enum FunctionName {
 	SUMLINES,
@@ -23,13 +22,9 @@ class AnalyzerCompute {
 	
 	new(Compute c) {
 		this.c = c
-		c.analyze()
+		this.c.analyze()
 	}
-	
-	def analyze() {
-		c.analyze()
-	}
-	
+		
 	def analyze(Compute c) {
 		variable = new ValueAnalyzer(c.variable).getValue()
 		c.function.analyzeFunction()
@@ -37,7 +32,7 @@ class AnalyzerCompute {
 	
 	def dispatch analyzeFunction(Function f) {}
 	
-	def dispatch analyzeFunction(SumLines f) {
+	def dispatch analyzeFunction(SumValuesInColumn f) {
 		addToTheGoodColumns(f.column)
 		functionName = FunctionName.SUMLINES
 	}

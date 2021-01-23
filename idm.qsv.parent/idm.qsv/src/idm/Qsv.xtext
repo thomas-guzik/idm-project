@@ -32,7 +32,7 @@ Update:
 	'update' 
 		':set' value=Value
 		':columns' columns=Column
-		(':lines' cond=Condition)?
+		(':condition' cond=Condition)?
 ;
 
 Compute:
@@ -41,11 +41,11 @@ Compute:
 ;
 
 Function:
-	SumLines | SumColumns
+	SumValuesInColumn | SumColumns
 ;
 
-SumLines:
-	':sumLines' column=ColumnIdentifier
+SumValuesInColumn:
+	':sumValuesInColumn' column=ColumnIdentifier
 ;
 
 SumColumns:

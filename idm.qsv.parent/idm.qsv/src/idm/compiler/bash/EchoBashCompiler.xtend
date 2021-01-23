@@ -6,27 +6,27 @@ import idm.analyzer.ValueType
 class EchoBashCompiler implements BashCompiler {
 
 	Echo echo
+	String colSep
 	String varName
 
-	new(Echo c) {
+	new(Echo c, String colSep) {
 		echo = c
+		this.colSep = colSep
 		varName = echo.variable.value.substring(1)
 	}
 
 	override String compile() {
 		var varType = BashCompilerHelper.getVariableType(varName)
-		println(varType)
 		if (varType === ValueType.VAR) {
 			return '''
 				echo "$v_«varName»"
 			'''
 		} else if(varType === ValueType.COL) {
-			println("ici")
 			return '''
 			n=0
 			echo "$v_«varName»" | tr ',' '\n' | while read c
 			do
-			echo "$n $c"
+			printf "$n«colSep»$c\n"
 			n=$((n + 1))
 			done
 			'''

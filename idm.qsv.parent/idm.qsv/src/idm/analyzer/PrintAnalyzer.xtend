@@ -19,7 +19,7 @@ class PrintAnalyzer {
 
 	new(Print print) {
 		this.print = print
-		print.analyze()
+		this.print.analyze()
 	}
 
 	def void analyze(Print print) {

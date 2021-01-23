@@ -17,7 +17,7 @@ class ConditionAnalyzer {
 	Set<String> colSelectedByNumber = new HashSet<String>()
 	Set<String> colSelectedByName = new HashSet<String>()
 	Set<Pair<ValueAnalyzer, OpComp>> varWithOp = new HashSet<Pair<ValueAnalyzer, OpComp>>()
-	
+
 	new(Condition c) {
 		condition = c
 		condition.analyze()
@@ -30,7 +30,7 @@ class ConditionAnalyzer {
 	def getColSelectedByName() {
 		return colSelectedByName
 	}
-	
+
 	def variableWithOperator() {
 		return varWithOp
 	}
@@ -59,14 +59,10 @@ class ConditionAnalyzer {
 
 	def void analyze(BinCond b) {
 		b.columnId.analyzeColumnIdentifier()
-		println("analyzer Value")
 		var analyzerValue = new ValueAnalyzer(b.compValue)
-		println("fin analyzer value")
-		
-		if(analyzerValue.getValueType() === ValueType.VAR) {
-			println("add in var Op")
+
+		if (analyzerValue.getValueType() === ValueType.VAR) {
 			varWithOp.add(new Pair<ValueAnalyzer, OpComp>(analyzerValue, b.operator))
-			println("fin var add")
 		}
 	}
 

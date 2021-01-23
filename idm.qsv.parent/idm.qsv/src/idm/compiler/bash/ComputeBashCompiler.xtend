@@ -2,13 +2,13 @@ package idm.compiler.bash
 
 import idm.qsv.Compute
 import idm.qsv.Function
-import idm.qsv.SumLines
 import idm.qsv.SumColumns
 import idm.analyzer.ValueType
 import idm.analyzer.AnalyzerCompute
 import idm.analyzer.ColumnSelectType
 import java.util.HashSet
 import idm.analyzer.FunctionName
+import idm.qsv.SumValuesInColumn
 
 class ComputeBashCompiler implements BashCompiler {
 
@@ -18,7 +18,7 @@ class ComputeBashCompiler implements BashCompiler {
 	HashSet<String> colNumber
 
 	AnalyzerCompute analyzer
-	
+
 	FunctionName functionName
 
 	new(Compute c) {
@@ -26,42 +26,32 @@ class ComputeBashCompiler implements BashCompiler {
 		analyzer = new AnalyzerCompute(compute)
 		varName = analyzer.getVariableName()
 		functionName = analyzer.getFunctionName()
-
 	}
 
 	override String compile() {
 
-		println("compute")
-		println(varName)
 		if (functionName === FunctionName.SUMCOL) {
-			println("summmm")
 			BashCompilerHelper.addVariable(varName, ValueType.COL)
 		} else {
 			BashCompilerHelper.addVariable(varName, ValueType.VAR)
 		}
 
 		var analyzer = new AnalyzerCompute(compute)
-		analyzer.analyze()
 		colName = analyzer.columnsName
-		println(colName)
 		colNumber = analyzer.columnsNumber
-		println("gencode")
 		return genCode()
 	}
 
 	def genCode() {
 		return '''
-		v_«varName»=""
-		«compute.function.genCode()»
+			v_«varName»=""
+			«compute.function.genCode()»
 		'''
 	}
 
-	def dispatch genCode(Function f) {
-		println("fc")
-	}
+	def dispatch genCode(Function f) {}
 
-	def dispatch genCode(SumLines f) {
-		println("sumline")
+	def dispatch genCode(SumValuesInColumn f) {
 		return '''
 			«genCut()»
 			type=""
@@ -85,7 +75,6 @@ class ComputeBashCompiler implements BashCompiler {
 	}
 
 	def dispatch genCode(SumColumns f) {
-		println("sumcol")
 		return '''
 		«genCut()»
 		nbCol=$(( $(echo "$nb_cut" | tr ',' '\n' | wc -l) -1))
@@ -110,7 +99,6 @@ class ComputeBashCompiler implements BashCompiler {
 	}
 
 	def genCut() {
-		println("genCut")
 		return '''
 			«IF colName.size !== 0»
 				header=$(echo "$file" | head -1)

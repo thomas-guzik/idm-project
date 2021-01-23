@@ -15,6 +15,7 @@ enum ValueType {
 	VAR
 
 }
+
 class ValueAnalyzer {
 	Value v
 
@@ -35,7 +36,6 @@ class ValueAnalyzer {
 	def dispatch getValue(BooleanValue v) { return v.truthy ? "1" : "0" }
 
 	def dispatch getValue(VariableIdentifier v) {
-		println('''«v.value.substring(1)»''')
 		return '''«v.value.substring(1)»'''
 	}
 

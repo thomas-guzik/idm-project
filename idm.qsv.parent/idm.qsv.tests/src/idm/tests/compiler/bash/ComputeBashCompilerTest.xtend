@@ -22,7 +22,7 @@ class ComputeBashCompilerTest {
 		val parseTree = parseHelper.parse('''
 			using "foo_numbers.csv" with column names: yes
 			compute $sumCol0
-				:sumLines col0
+				:sumValuesInColumn col0
 			echo $sumCol0
 		''')
 		val expectedResult = '''
@@ -42,7 +42,7 @@ class ComputeBashCompilerTest {
 		val parseTree = parseHelper.parse('''
 			using "foo_numbers_noheaders.csv" with column names: no
 			compute $sumCol0
-				:sumLines #0
+				:sumValuesInColumn #0
 			echo $sumCol0
 		''')
 		val expectedResult = '''
@@ -53,9 +53,7 @@ class ComputeBashCompilerTest {
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 
@@ -64,7 +62,7 @@ class ComputeBashCompilerTest {
 		val parseTree = parseHelper.parse('''
 			using "foo2.csv" with column names: yes
 			compute $sumf2
-				:sumLines f2
+				:sumValuesInColumn f2
 			echo $sumf2
 		''')
 		val expectedResult = '''
@@ -88,22 +86,20 @@ class ComputeBashCompilerTest {
 			echo $sumCol0Col1
 		''')
 		val expectedResult = '''
-			0 7
-			1 9
-			2 4
-			3 8
-			4 6
-			5 11
-			6 6
+			0	7
+			1	9
+			2	4
+			3	8
+			4	6
+			5	11
+			6	6
 		'''
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 
@@ -116,13 +112,13 @@ class ComputeBashCompilerTest {
 			echo $sumCol0Col1
 		''')
 		val expectedResult = '''
-			0 7
-			1 9
-			2 4
-			3 8
-			4 6
-			5 11
-			6 6
+			0	7
+			1	9
+			2	4
+			3	8
+			4	6
+			5	11
+			6	6
 		'''
 		Assertions.assertNotNull(parseTree)
 		val errors = parseTree.eResource.errors

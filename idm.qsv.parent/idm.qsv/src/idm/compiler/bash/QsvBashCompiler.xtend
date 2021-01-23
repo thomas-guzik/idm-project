@@ -78,7 +78,7 @@ class QsvBashCompiler implements BashCompiler {
 	}
 
 	def dispatch String compile(Echo echo) {
-		return new EchoBashCompiler(echo).compile()
+		return new EchoBashCompiler(echo, "\t").compile()
 	}
 	
 	def dispatch String compile(Insert insert) {

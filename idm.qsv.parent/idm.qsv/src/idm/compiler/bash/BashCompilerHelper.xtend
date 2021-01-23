@@ -4,8 +4,6 @@ import java.util.Set
 import idm.analyzer.ColumnSelectType
 import java.util.HashMap
 import idm.analyzer.ValueType
-import java.util.Set
-import java.util.List
 import java.util.HashSet
 
 class BashCompilerHelper {
@@ -27,12 +25,12 @@ class BashCompilerHelper {
 			nbCol=$(( $(echo "$index" | tr '«csvSep»' '\n' | wc -l) - 1))
 		'''
 	}
-	
+
 	def static String genHeader() {
 		return '''
-		«IF hasColumnName»
-		header=$(echo "$file" | head -1)
-		«ENDIF»
+			«IF hasColumnName»
+				header=$(echo "$file" | head -1)
+			«ENDIF»
 		'''
 	}
 
@@ -49,7 +47,6 @@ class BashCompilerHelper {
 	}
 
 	def static genInput(ColumnSelectType colSelectType) {
-		println("input")
 		var code = '''< <(echo "$file"'''
 
 		if (hasColumnName) {
@@ -65,19 +62,18 @@ class BashCompilerHelper {
 
 	def static genPrintf(String colSep) {
 		return '''
-		for(( i=0; i <= $nbCol; i++))
-		do
-		printf "«colSep»${c[$i]}"
-		done
-		echo ""
+			for(( i=0; i <= $nbCol; i++))
+			do
+			printf "«colSep»${c[$i]}"
+			done
+			echo ""
 		'''
-		
+
 	}
-	
+
 	def static genEcho(String colSep) {
-		return 
-		'''
-		$(eval echo '${c['$(seq -s ']}«colSep»${c[' 0 $nbCol)']}')
+		return '''
+			$(eval echo '${c['$(seq -s ']}«colSep»${c[' 0 $nbCol)']}')
 		'''
 	}
 

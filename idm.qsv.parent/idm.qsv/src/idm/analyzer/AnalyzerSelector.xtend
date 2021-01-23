@@ -6,25 +6,25 @@ import java.util.Set
 import idm.qsv.Lines
 
 class AnalyzerSelector {
-	
+
 	Selector selector
-	
+
 	Boolean withCondition
 	ColumnSelectType colSelectType
 	List<String> colSelected
 	Set<String> colNameInCond
 	Set<String> colNumberInCond
-	
-	new (Selector s) {
+
+	new(Selector s) {
 		selector = s
-		
+
 		colSelectType = ColumnSelectType.ALL
 		colSelected = newArrayList
 		withCondition = false
 		analyze()
 	}
-	
-	def analyze()  {
+
+	def analyze() {
 		var columnSelection = selector.getColumnSelection()
 
 		if (columnSelection !== null) {
@@ -38,9 +38,9 @@ class AnalyzerSelector {
 		if (selector.lineSelection !== null) {
 			selector.lineSelection.analyze()
 			withCondition = true
-		}	
+		}
 	}
-	
+
 	def void analyze(Lines l) {
 		if (l.cond !== null) {
 			println("analyze cond")
@@ -50,11 +50,11 @@ class AnalyzerSelector {
 			colNumberInCond = analyzerCond.colSelectedByNumber
 		}
 	}
-	
+
 	def getColSelectType() {
 		return colSelectType
 	}
-	
+
 	def getColSelected() {
 		return colSelected
 	}
@@ -62,11 +62,11 @@ class AnalyzerSelector {
 	def Boolean isWithCondition() {
 		return withCondition
 	}
-	
+
 	def getColNameInCondition() {
 		return colNameInCond
 	}
-	
+
 	def getColNumberInCondition() {
 		return colNumberInCond
 	}
