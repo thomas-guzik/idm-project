@@ -37,11 +37,11 @@ class CombiningActionsTests {
 		val parseTree = parseHelper.parse('''
 			using "foo_numbers.csv" with column names: yes
 			compute $sumCol0
-				:sumLines col0
+				:sumValuesInColumn col0
 			update
 				:set $sumCol0
 				:columns col0
-				:lines col0 = 1
+				:condition col0 = 1
 			print
 				:columns col1
 				:lines col0 = $sumCol0

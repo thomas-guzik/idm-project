@@ -15,6 +15,7 @@ import java.util.stream.IntStream
 import idm.qsv.Format
 import idm.qsv.SeparatorFormat
 import idm.compiler.python.MissingConcreteImplementationException
+import idm.qsv.PrettyFormat
 
 class PrintAction implements Action {
 
@@ -62,7 +63,10 @@ class PrintAction implements Action {
 	def dispatch String makePretty(SeparatorFormat format) {
 		val separator = format.separator
 		return csvData.toStringWithSeparator(separator)
-//		code += '''«PythonCompiler.PRETTY_PRINT_FUNCTION_NAME»(«printVariable»,"«separator»")'''
+	}
+
+	def dispatch String makePretty(PrettyFormat format) {
+		return csvData.toStringPretty()
 	}
 
 	private def select(Columns selection) {

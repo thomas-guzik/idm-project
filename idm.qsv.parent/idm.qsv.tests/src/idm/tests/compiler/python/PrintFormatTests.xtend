@@ -92,6 +92,40 @@ class PrintFormatTests {
 	}
 
 	@Test
+	def void printFormatPretty2() {
+		val parseTree = parseHelper.parse('''
+			using "foo1.csv" with column names: no
+			print
+				:columns #0, #2
+				:lines #1 = "v2"
+				:pretty
+		''')
+		val expectedResult = '''
+			   0   2
+			1  v1  v3
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printFormatPretty3() {
+		val parseTree = parseHelper.parse('''
+			using "test_variable2.csv" with column names: no
+			print
+				:pretty
+		''')
+		val expectedResult = '''
+			   0    1           2  3
+			0  a    b           c  d
+			1  1    10          v  vvvv
+			2  2    9           v  10
+			3  333  10          v  w
+			4  4    110fd54fez  v  0
+		'''
+		assertPythonCompilesAndRuns(parseTree, expectedResult)
+	}
+
+	@Test
 	def void printFormatDefault() {
 		val parseTree = parseHelper.parse('''
 			using "foo1.csv" with column names: no

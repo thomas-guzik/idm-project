@@ -20,6 +20,7 @@ class CsvData {
 	String separator
 	final String NEWLINE = "\n"
 	final String DEFAULT_PRINT_SEPARATOR = "\t"
+	final String PRETTY_SEPARATOR = "  "
 
 	new(List<String> data, boolean h, String s) {
 		header = h
@@ -100,6 +101,69 @@ class CsvData {
 
 		data += printedRows.map[row|row.join(separator)].join(NEWLINE)
 		return data
+	}
+
+	def toStringPretty() {
+		val printedColumns = new ArrayList<String>()
+		printedColumns.add("")
+		if (selectedColumns.isEmpty) {
+			printedColumns.addAll(columns)
+		} else {
+			selectedColumns.forEach[i|printedColumns.add(columns.get(i))]
+		}
+
+		val printed = new ArrayList<String>()
+
+		val printedRows = new ArrayList<List<String>>()
+		printed.add("")
+
+		IntStream.range(0, nbRows).filter[i|!filtered || selectedRows.contains(i)].forEach [ i |
+			val newRow = new ArrayList<String>()
+			printedRows.add(newRow)
+			newRow.add(i + "")
+
+			if (selectedColumns.isEmpty) {
+				newRow.addAll(table.get(i))
+			} else {
+				selectedColumns.forEach[columnIndex|newRow.add(table.get(i).get(columnIndex))]
+			}
+			printed.add("")
+		]
+
+		for (var columnIndex = 0; columnIndex < printedColumns.length; columnIndex++) {
+			val isLastColumn = columnIndex === printedColumns.length - 1
+			val column = printedColumns.get(columnIndex)
+			val widest = getWidestForColumn(columnIndex, printedColumns, printedRows)
+			val newHeader = printed.get(0) + (isLastColumn ? column : fitSpace(column, widest) + PRETTY_SEPARATOR)
+			printed.set(0, newHeader)
+			for (var rowIndex = 0; rowIndex < printedRows.length; rowIndex++) {
+				val row = printedRows.get(rowIndex)
+				val word = row.get(columnIndex)
+				val newRow = printed.get(rowIndex+1) + (isLastColumn ? word : fitSpace(word, widest) + PRETTY_SEPARATOR)
+				printed.set(rowIndex+1, newRow)
+			}
+		}
+
+		return printed.join(NEWLINE)
+	}
+	
+	private def Integer getWidestForColumn(int columnIndex, ArrayList<String> columns, List<List<String>> rows) {
+		val columnNameSize = wordSize(columns.get(columnIndex))
+		val columnContent = rows.map[row | row.get(columnIndex)]
+		val widestContent = columnContent.map[word | wordSize(word)].reduce[a, b | Integer.max(a, b)]
+		return Integer.max(columnNameSize, widestContent)
+	}
+
+	private def String fitSpace(String word, int spaceToFill) {
+		var newWord = word
+		while (wordSize(newWord) < spaceToFill) {
+			newWord += " "
+		}
+		return newWord
+	}
+
+	private def Integer wordSize(Object object) {
+		return object.toString().length
 	}
 
 	def void selectColumns(List<String> selected) {

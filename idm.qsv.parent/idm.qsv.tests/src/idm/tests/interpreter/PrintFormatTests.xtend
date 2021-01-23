@@ -21,6 +21,8 @@ class PrintFormatTests {
 	@Inject extension ValidationTestHelper
 
 	def void assertInterpretation(QuerySeparatedValues qsv, String expectedStdOut) {
+		val errors = qsv.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val outputResult = interpret(qsv)
 		Assertions.assertEquals(expectedStdOut, outputResult.getOutput)
 		Assertions.assertEquals("", outputResult.getError)
@@ -56,6 +58,82 @@ class PrintFormatTests {
 			-0-1-2
 			0-f1-f2-f3
 			1-v1-v2-v3
+		'''
+		assertInterpretation(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printFormatPretty() {
+		val parseTree = parseHelper.parse('''
+			using "foo1.csv" with column names: no
+			print :pretty
+		''')
+		val expectedResult = '''
+			   0   1   2
+			0  f1  f2  f3
+			1  v1  v2  v3
+		'''
+		assertInterpretation(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printFormatPretty2() {
+		val parseTree = parseHelper.parse('''
+			using "foo1.csv" with column names: no
+			print
+				:columns #0, #2
+				:lines #1 = "v2"
+				:pretty
+		''')
+		val expectedResult = '''
+			   0   2
+			1  v1  v3
+		'''
+		assertInterpretation(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printFormatPretty3() {
+		val parseTree = parseHelper.parse('''
+			using "test_variable2.csv" with column names: no
+			print
+				:pretty
+		''')
+		val expectedResult = '''
+			   0    1           2  3
+			0  a    b           c  d
+			1  1    10          v  vvvv
+			2  2    9           v  10
+			3  333  10          v  w
+			4  4    110fd54fez  v  0
+		'''
+		assertInterpretation(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printFormatDefault() {
+		val parseTree = parseHelper.parse('''
+			using "foo1.csv" with column names: no
+			print
+		''')
+		val expectedResult = '''
+				0	1	2
+			0	f1	f2	f3
+			1	v1	v2	v3
+		'''
+		assertInterpretation(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printFormatWithDashSeparatorAndHeaders() {
+		val parseTree = parseHelper.parse('''
+			using "foo2.csv" with column names: yes
+			print :separator "-"
+		''')
+		val expectedResult = '''
+			-f1-f2-f3
+			0-v1-v2-v3
+			1-v1-v7-v3
 		'''
 		assertInterpretation(parseTree, expectedResult)
 	}

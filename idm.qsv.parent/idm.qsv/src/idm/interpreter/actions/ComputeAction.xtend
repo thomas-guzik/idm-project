@@ -7,7 +7,7 @@ import idm.interpreter.csv.CsvData
 import idm.qsv.Compute
 import idm.qsv.Function
 import idm.qsv.SumColumns
-import idm.qsv.SumLines
+import idm.qsv.SumValuesInColumn
 
 class ComputeAction implements Action {
 
@@ -32,7 +32,7 @@ class ComputeAction implements Action {
 		throw new MissingConcreteImplementationException("Function")
 	}
 
-	private def dispatch interpret(SumLines sumLines, String variable) {
+	private def dispatch interpret(SumValuesInColumn sumLines, String variable) {
 		val column = sumLines.column.columnId
 		val result = csvData.sumLinesOfColumn(column)
 		QsvXtendInterpreter.storeValue(variable, result)

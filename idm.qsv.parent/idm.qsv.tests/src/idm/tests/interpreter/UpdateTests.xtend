@@ -100,7 +100,7 @@ class UpdateTests {
 			update
 				:set "v9"
 				:columns f3
-				:lines f2 = "v7"
+				:condition f2 = "v7"
 			print
 		''')
 		parseTree.assertNoErrors
@@ -120,7 +120,7 @@ class UpdateTests {
 			update
 				:set "v6"
 				:columns #2
-				:lines #0 = "v1"
+				:condition #0 = "v1"
 			print
 		''')
 		parseTree.assertNoErrors
