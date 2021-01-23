@@ -44,9 +44,9 @@ class UpdateTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   f1  f2  f3
-			0  v1  v8  v3
-			1  v1  v8  v3
+				f1	f2	f3
+			0	v1	v8	v3
+			1	v1	v8	v3
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -86,9 +86,9 @@ class UpdateTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   f1  f2  f3
-			0  v8  v8  v3
-			1  v8  v8  v3
+				f1	f2	f3
+			0	v8	v8	v3
+			1	v8	v8	v3
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -100,15 +100,15 @@ class UpdateTests {
 			update
 				:set "v9"
 				:columns f3
-				:lines f2 = "v7"
+				:condition f2 = "v7"
 			print
 		''')
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   f1  f2  f3
-			0  v1  v2  v3
-			1  v1  v7  v9
+				f1	f2	f3
+			0	v1	v2	v3
+			1	v1	v7	v9
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -120,16 +120,16 @@ class UpdateTests {
 			update
 				:set "v6"
 				:columns #2
-				:lines #0 = "v1"
+				:condition #0 = "v1"
 			print
 		''')
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			    0   1   2
-			0  f1  f2  f3
-			1  v1  v2  v6
-			2  v1  v7  v6
+				0	1	2
+			0	f1	f2	f3
+			1	v1	v2	v6
+			2	v1	v7	v6
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}

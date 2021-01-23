@@ -43,10 +43,10 @@ class InsertTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   f1  f2  f3
-			0  v1  v2  v3
-			1  v1  v7  v3
-			2  v8  v0  v5
+				f1	f2	f3
+			0	v1	v2	v3
+			1	v1	v7	v3
+			2	v8	v0	v5
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -62,11 +62,11 @@ class InsertTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			    0   1   2
-			0  f1  f2  f3
-			1  v1  v2  v3
-			2  v1  v7  v3
-			3  v4  v1  v0
+				0	1	2
+			0	f1	f2	f3
+			1	v1	v2	v3
+			2	v1	v7	v3
+			3	v4	v1	v0
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -82,12 +82,12 @@ class InsertTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   f1  f2  f3
-			0  v1  v2  v3
-			1  v1  v7  v3
-			2  v6  v5  v4
-			3  v8  v0  v5
-			4  v3  v9  v6
+				f1	f2	f3
+			0	v1	v2	v3
+			1	v1	v7	v3
+			2	v6	v5	v4
+			3	v8	v0	v5
+			4	v3	v9	v6
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -103,16 +103,16 @@ class InsertTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   col0  col1
-			0     4     3
-			1     2     7
-			2     1     3
-			3     3     5
-			4     5     1
-			5     1    10
-			6     5     1
-			7     7     2
-			8     4     8
+				col0	col1
+			0	4	3
+			1	2	7
+			2	1	3
+			3	3	5
+			4	5	1
+			5	1	10
+			6	5	1
+			7	7	2
+			8	4	8
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -128,11 +128,11 @@ class InsertTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   f1  f2  f3
-			0  v1   2  v3
-			1  v6   7  v4
-			2  v0   5  v6
-			3  v5   4  v9
+				f1	f2	f3
+			0	v1	2	v3
+			1	v6	7	v4
+			2	v0	5	v6
+			3	v5	4	v9
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -148,9 +148,9 @@ class InsertTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   f1  f2  f3  ef
-			0  v1   2  v3  ar
-			1  v6   7  v4  zt
+				f1	f2	f3	ef
+			0	v1	2	v3	ar
+			1	v6	7	v4	zt
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -166,9 +166,9 @@ class InsertTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   f1  f2  f3  ef  th  il
-			0  v1   2  v3  ar  gb  ol
-			1  v6   7  v4  zt  hn  pm
+				f1	f2	f3	ef	th	il
+			0	v1	2	v3	ar	gb	ol
+			1	v6	7	v4	zt	hn	pm
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -184,9 +184,9 @@ class InsertTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   f1  f2  f3  ef
-			0  v1   2  v3   8
-			1  v6   7  v4   6
+				f1	f2	f3	ef
+			0	v1	2	v3	8
+			1	v6	7	v4	6
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -202,14 +202,14 @@ class InsertTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   0   1  2
-			0  4   3  7
-			1  2   7  6
-			2  1   3  5
-			3  3   5  4
-			4  5   1  3
-			5  1  10  2
-			6  5   1  1
+				0	1	2
+			0	4	3	7
+			1	2	7	6
+			2	1	3	5
+			3	3	5	4
+			4	5	1	3
+			5	1	10	2
+			6	5	1	1
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -225,14 +225,14 @@ class InsertTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   0   1  2  3
-			0  4   3  7  6
-			1  2   7  6  8
-			2  1   3  5  1
-			3  3   5  4  3
-			4  5   1  3  5
-			5  1  10  2  7
-			6  5   1  1  9
+				0	1	2	3
+			0	4	3	7	6
+			1	2	7	6	8
+			2	1	3	5	1
+			3	3	5	4	3
+			4	5	1	3	5
+			5	1	10	2	7
+			6	5	1	1	9
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -248,9 +248,9 @@ class InsertTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   f1  f2  f3 ef
-			0  v1   2  v3  8
-			1  v6   7  v4  e
+				f1	f2	f3	ef
+			0	v1	2	v3	8
+			1	v6	7	v4	e
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}

@@ -42,7 +42,7 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Function"/>
-  <eClassifiers xsi:type="ecore:EClass" name="SumLines" eSuperTypes="#//Function">
+  <eClassifiers xsi:type="ecore:EClass" name="SumValuesInColumn" eSuperTypes="#//Function">
     <eStructuralFeatures xsi:type="ecore:EReference" name="column" eType="#//ColumnIdentifier"
         containment="true"/>
   </eClassifiers>

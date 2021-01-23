@@ -37,7 +37,7 @@ class ComputeTests {
 		val parseTree = parseHelper.parse('''
 			using "foo_numbers.csv" with column names: yes
 			compute $sumCol0
-				:sumLines col0
+				:sumValuesInColumn col0
 			echo $sumCol0
 		''')
 		parseTree.assertNoErrors
@@ -53,7 +53,7 @@ class ComputeTests {
 		val parseTree = parseHelper.parse('''
 			using "foo_numbers_noheaders.csv" with column names: no
 			compute $sumCol0
-				:sumLines #0
+				:sumValuesInColumn #0
 			echo $sumCol0
 		''')
 		parseTree.assertNoErrors
@@ -69,7 +69,7 @@ class ComputeTests {
 		val parseTree = parseHelper.parse('''
 			using "foo2.csv" with column names: yes
 			compute $sumf2
-				:sumLines f2
+				:sumValuesInColumn f2
 			echo $sumf2
 		''')
 		parseTree.assertNoErrors
@@ -147,7 +147,7 @@ class ComputeTests {
 		val parseTree = parseHelper.parse('''
 			using "foo_mix_int_str2.csv" with column names: yes
 			compute $sumf2
-				:sumLines f3
+				:sumValuesInColumn f3
 			echo $sumf2
 		''')
 		parseTree.assertNoErrors
