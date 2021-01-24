@@ -12,7 +12,7 @@ enum FunctionName {
 	SUMCOL
 }
 
-class AnalyzerCompute {
+class ComputeAnalyzer {
 	
 	Compute c
 	HashSet<String> colName = new HashSet<String>()

@@ -5,7 +5,7 @@ import java.util.List
 import java.util.Set
 import idm.qsv.Lines
 
-class AnalyzerSelector {
+class SelectorAnalyzer {
 
 	Selector selector
 

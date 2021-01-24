@@ -5,18 +5,18 @@ import idm.qsv.Lines
 import idm.qsv.LineRange
 import idm.qsv.Line
 import idm.qsv.Condition
-import idm.analyzer.AnalyzerSelector
+import idm.analyzer.SelectorAnalyzer
 
 class SelectorBashCompiler {
 
 	Selector selector
 	
-	AnalyzerSelector analyzer
+	SelectorAnalyzer analyzer
 
 	new(Selector s) {
 		println("selector")
 		selector = s
-		analyzer = new AnalyzerSelector(selector)
+		analyzer = new SelectorAnalyzer(selector)
 		println("analyzer")
 		println("fin analyze")
 	}

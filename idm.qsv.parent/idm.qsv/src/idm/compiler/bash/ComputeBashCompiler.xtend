@@ -4,11 +4,11 @@ import idm.qsv.Compute
 import idm.qsv.Function
 import idm.qsv.SumColumns
 import idm.analyzer.ValueType
-import idm.analyzer.AnalyzerCompute
 import idm.analyzer.ColumnSelectType
 import java.util.HashSet
 import idm.analyzer.FunctionName
 import idm.qsv.SumValuesInColumn
+import idm.analyzer.ComputeAnalyzer
 
 class ComputeBashCompiler implements BashCompiler {
 
@@ -17,13 +17,13 @@ class ComputeBashCompiler implements BashCompiler {
 	HashSet<String> colName
 	HashSet<String> colNumber
 
-	AnalyzerCompute analyzer
+	ComputeAnalyzer analyzer
 
 	FunctionName functionName
 
 	new(Compute c) {
 		compute = c
-		analyzer = new AnalyzerCompute(compute)
+		analyzer = new ComputeAnalyzer(compute)
 		varName = analyzer.getVariableName()
 		functionName = analyzer.getFunctionName()
 	}
@@ -36,7 +36,7 @@ class ComputeBashCompiler implements BashCompiler {
 			BashCompilerHelper.addVariable(varName, ValueType.VAR)
 		}
 
-		var analyzer = new AnalyzerCompute(compute)
+		var analyzer = new ComputeAnalyzer(compute)
 		colName = analyzer.columnsName
 		colNumber = analyzer.columnsNumber
 		return genCode()

@@ -318,7 +318,7 @@ class VariableBashCompilerTest {
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
-		println("************")
+		println("*************")
 		println(code)
 		val execution = cmpBash.run(code)
 		println(execution.output)
@@ -328,7 +328,7 @@ class VariableBashCompilerTest {
 				@Test
 	def void sumColumnsAndInsertColumnsFromVar() {
 		val parseTree = parseHelper.parse('''
-			using "test_variable.csv" with column names: no
+			using "test_variable.csv" with column names: yes
 			compute $col
 				:sumColumns a
 			insert :columns e $col
@@ -346,7 +346,7 @@ class VariableBashCompilerTest {
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
-		println("**************")
+		println("****************")
 		println(code)
 		val execution = cmpBash.run(code)
 		println(execution.output)

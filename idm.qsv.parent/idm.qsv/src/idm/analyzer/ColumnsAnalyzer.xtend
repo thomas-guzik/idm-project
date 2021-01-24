@@ -10,7 +10,7 @@ enum ColumnSelectType {
 	NUMBER
 }
 
-class AnalyzerColumns {
+class ColumnsAnalyzer {
 
 	Columns columns
 	List<String> cols

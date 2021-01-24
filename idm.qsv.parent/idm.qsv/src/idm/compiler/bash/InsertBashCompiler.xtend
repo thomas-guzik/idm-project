@@ -53,75 +53,50 @@ class InsertBashCompiler implements BashCompiler {
 	}
 
 	def dispatch String genCodeInsertion(ColumnInsertion c) {
-		// TODO Trouver un meilleur code
 		var code = ""
-		var list = new ArrayList<ArrayList<String>>()
 		for (d : c.descriptions) {
-			list.add(d.genCode())
-		}
-		for (var i = 0; i < list.size(); i++) {
 			code += '''
 				lastColIndex=$((lastColIndex + 1))
 				index="$index«csvSep»$lastColIndex"
+				add=$(echo -e "«d.genCode()»")
+				file=$(paste -d«csvSep» <(echo "$file") <(echo "$add"))
+				
 			'''
 		}
-		var newList = new ArrayList<ArrayList<String>>()
-		for (var i = 0; i < list.get(0).size(); i++) {
-			var subList = newArrayList
-			for (var j = 0; j < list.size(); j++) {
-				subList.add(list.get(j).get(i))
-			}
-			newList.add(subList)
-		}
-
-		var newnewList = new ArrayList<String>()
-
-		for (l : newList) {
-			newnewList.add(String.join(",", l))
-		}
-
-		return '''
-			«code»
-			add=$(echo -e "«String.join("\n", newnewList)»")
-			file=$(paste -d«csvSep» <(echo "$file") <(echo "$add"))
-		'''
+		return code
 	}
 
 	def genCode(ColumnDescription d) {
-		var list = new ArrayList<String>()
-		list = d.content.genCodeContentDescription()
-		var columnName = d.columnName
-		if (columnName !== null) {
-			list.add(0, columnName.value)
+		var code = ""
+		if (d.columnName !== null) {
+			code += d.columnName.value + '''\n'''
 		}
-		return list
+		code += d.content.genCodeContentDescription()
+		return code
 	}
 
 	def dispatch genCodeContentDescription(ContentDescription c) {}
 
 	def dispatch genCodeContentDescription(ContentList l) {
-		var list = new ArrayList<String>()
+		var code = ""
 		for (v : l.values) {
 			var analyzerValue = new ValueAnalyzer(v)
 			var valueType = analyzerValue.getValueType()
 			if (valueType == ValueType.VAR) {
-				list.add("$v_" + analyzerValue.value)
+				code += "$v_" + analyzerValue.value + '''\n'''
 			} else {
-				list.add(analyzerValue.value)
+				code += analyzerValue.value + '''\n'''
 			}
 		}
-		return list
+		return code
 	}
 
 	def dispatch genCodeContentDescription(VariableIdentifier v) {
 		var varName = v.value.substring(1)
-		var varType =BashCompilerHelper.getVariableType(v.value.substring(1))
-		var list = new ArrayList<String>()
-		if(varType === ValueType.COL) {
-			list.add("$v_"+varName)
-			return list
-		}
-		else {
+		var varType = BashCompilerHelper.getVariableType(v.value.substring(1))
+		if (varType === ValueType.COL) {
+			return '''$(echo "$v_«varName»" | tr ',' '\n')'''
+		} else {
 			throw new Exception("The variable is not a column")
 		}
 	}

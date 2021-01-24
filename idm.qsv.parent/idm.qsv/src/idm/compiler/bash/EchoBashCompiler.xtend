@@ -6,12 +6,10 @@ import idm.analyzer.ValueType
 class EchoBashCompiler implements BashCompiler {
 
 	Echo echo
-	String colSep
 	String varName
 
-	new(Echo c, String colSep) {
+	new(Echo c) {
 		echo = c
-		this.colSep = colSep
 		varName = echo.variable.value.substring(1)
 	}
 
@@ -26,7 +24,7 @@ class EchoBashCompiler implements BashCompiler {
 			n=0
 			echo "$v_«varName»" | tr ',' '\n' | while read c
 			do
-			printf "$n«colSep»$c\n"
+			printf "$n	$c\n"
 			n=$((n + 1))
 			done
 			'''
