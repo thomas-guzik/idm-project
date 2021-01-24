@@ -21,6 +21,8 @@ class UpdateTests {
 	@Inject extension ValidationTestHelper
 
 	def void assertInterpretation(QuerySeparatedValues qsv, String expectedStdOut) {
+		val errors = qsv.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val outputResult = interpret(qsv)
 		Assertions.assertEquals(expectedStdOut, outputResult.getOutput)
 		Assertions.assertEquals("", outputResult.getError)
@@ -100,7 +102,7 @@ class UpdateTests {
 			update
 				:set "v9"
 				:columns f3
-				:lines f2 = "v7"
+				:condition f2 = "v7"
 			print
 		''')
 		parseTree.assertNoErrors
@@ -120,7 +122,7 @@ class UpdateTests {
 			update
 				:set "v6"
 				:columns #2
-				:lines #0 = "v1"
+				:condition #0 = "v1"
 			print
 		''')
 		parseTree.assertNoErrors

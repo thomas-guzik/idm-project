@@ -35,6 +35,7 @@ class QsvXtendInterpreter {
 	static Map<String, String> valueStore
 	static Map<String, CsvData> csvDataStore
 
+
 	new(QuerySeparatedValues q) {
 		qsv = q
 		filesLocation = ""
@@ -60,7 +61,8 @@ class QsvXtendInterpreter {
 	private def dispatch void interpret(Header header) {
 		csvFileName = qsv.getHeader().getNameFile()
 		val hasColumnName = header.isHasColumnName()
-		csvData = new CsvData(csvFileName.getFileContent(), hasColumnName, ",")
+		val separator = header.csvSep === null ? "," : header.csvSep
+		csvData = new CsvData(csvFileName.getFileContent(), hasColumnName, separator)
 	}
 
 	private def dispatch void interpret(Statement statement) {

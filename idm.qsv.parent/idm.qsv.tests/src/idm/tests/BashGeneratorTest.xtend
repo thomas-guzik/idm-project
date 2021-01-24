@@ -16,11 +16,11 @@ import idm.provider.BashInjectorProvider
 class BashGeneratorTest {
 
 	@Inject extension CompilationTestHelper
-	
+
 	InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
-	
-	@Test def test() {
-		'''using foo.csv with column names: yes'''.assertCompilesTo('''hello bash''');
-	}
+
+//	@Test def test() {
+//		'''using foo.csv with column names: yes'''.assertCompilesTo('''hello bash''');
+//	}
 
 }

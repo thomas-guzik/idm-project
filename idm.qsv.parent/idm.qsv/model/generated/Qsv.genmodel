@@ -36,8 +36,8 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//Compute/function"/>
     </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//Function"/>
-    <genClasses ecoreClass="Qsv.ecore#//SumLines">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//SumLines/column"/>
+    <genClasses ecoreClass="Qsv.ecore#//SumValuesInColumn">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//SumValuesInColumn/column"/>
     </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//SumColumns">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//SumColumns/columns"/>
@@ -134,7 +134,9 @@
     <genClasses ecoreClass="Qsv.ecore#//SaveMethod">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Qsv.ecore#//SaveMethod/filename"/>
     </genClasses>
-    <genClasses ecoreClass="Qsv.ecore#//SaveCsv"/>
+    <genClasses ecoreClass="Qsv.ecore#//SaveCsv">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Qsv.ecore#//SaveCsv/separator"/>
+    </genClasses>
     <genClasses ecoreClass="Qsv.ecore#//SaveJson"/>
     <genClasses ecoreClass="Qsv.ecore#//Format"/>
     <genClasses ecoreClass="Qsv.ecore#//PrettyFormat"/>

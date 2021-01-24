@@ -19,8 +19,8 @@ class PythonGeneratorTest {
 	
 	InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
 	
-	@Test def test() {
-		'''using foo.csv with column names: yes'''.assertCompilesTo('''hello python''');
-	}
+//	@Test def test() {
+//		'''using foo.csv with column names: yes'''.assertCompilesTo('''hello python''');
+//	}
 
 }

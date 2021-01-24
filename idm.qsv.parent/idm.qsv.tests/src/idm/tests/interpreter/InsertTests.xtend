@@ -21,6 +21,8 @@ class InsertTests {
 	@Inject extension ValidationTestHelper
 
 	def void assertInterpretation(QuerySeparatedValues qsv, String expectedStdOut) {
+		val errors = qsv.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val outputResult = interpret(qsv)
 		Assertions.assertEquals(expectedStdOut, outputResult.getOutput)
 		Assertions.assertEquals("", outputResult.getError)

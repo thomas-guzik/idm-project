@@ -1,7 +1,7 @@
 package idm.generator;
 
 import com.google.common.collect.Iterators;
-import idm.compiler.bash.CompilerBashQsv;
+import idm.compiler.bash.QsvBashCompiler;
 import idm.qsv.QuerySeparatedValues;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.generator.AbstractGenerator;
@@ -14,7 +14,7 @@ public class BashGenerator extends AbstractGenerator {
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
     QuerySeparatedValues _last = IteratorExtensions.<QuerySeparatedValues>last(Iterators.<QuerySeparatedValues>filter(resource.getAllContents(), QuerySeparatedValues.class));
-    final CompilerBashQsv bashCompiler = new CompilerBashQsv(_last);
+    final QsvBashCompiler bashCompiler = new QsvBashCompiler(_last);
     fsa.generateFile("tmpfsa.sh", bashCompiler.compile());
   }
 }

@@ -13,13 +13,10 @@ import idm.qsv.MidPriority
 
 class LineFilters {
 
-	String code
 	CsvData csvData
-	extension ConcreteValues values
 
 	new(CsvData data) {
 		csvData = data
-		values = new ConcreteValues
 	}
 	
 	def void createFilter(Condition condition) {

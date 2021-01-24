@@ -1,8 +1,6 @@
 package idm.interpreter.actions
 
 import idm.compiler.python.MissingConcreteImplementationException
-import idm.interpreter.ConcreteValues
-import idm.interpreter.LineFilters
 import idm.interpreter.csv.CsvData
 import idm.qsv.Save
 import idm.qsv.SaveCsv
@@ -13,18 +11,12 @@ class SaveAction implements Action {
 
 	CsvData csvData
 	Save save
-		String originalFileName
-	
-
-	extension LineFilters lineFiltering
-	extension ConcreteValues values
+	String originalFileName
 
 	new(Save s, CsvData data, String originalFile) {
 		save = s
 		csvData = data
 		originalFileName = originalFile
-		lineFiltering = new LineFilters(csvData)
-		values = new ConcreteValues
 	}
 
 	override interpret() {
@@ -43,7 +35,11 @@ class SaveAction implements Action {
 
 	private def dispatch saveFile(SaveCsv csvMethod) {
 		val file = csvMethod.filename === null ? originalFileName : csvMethod.filename
-		csvData.saveTo(file)
+		var separator = ","
+		if (csvMethod.separator !== null) {
+			separator = csvMethod.separator.separator
+		}
+		csvData.saveTo(file, separator)
 	}
 
 	private def String nameToJson(String filename) {

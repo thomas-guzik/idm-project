@@ -21,6 +21,8 @@ class PrintOnlyTests {
 	@Inject extension ValidationTestHelper
 
 	def void assertInterpretation(QuerySeparatedValues qsv, String expectedStdOut) {
+		val errors = qsv.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val outputResult = interpret(qsv)
 		Assertions.assertEquals(expectedStdOut, outputResult.getOutput)
 		Assertions.assertEquals("", outputResult.getError)
@@ -567,5 +569,35 @@ class PrintOnlyTests {
 		'''
 
 		assertInterpretation(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printConditionBoolYes() {
+		val parseTree = parseHelper.parse('''
+			using "bool_with_header.csv" with column names: yes
+			print :lines a = yes
+		''')
+		val expectedResult = '''
+				a	b	c	d
+			0	1	1	1	1
+			2	1	1	1	0
+			3	1	0	0	0
+		'''
+		assertInterpretation(parseTree, expectedResult)
+	}
+
+	@Test
+	def void printConditionBoolNo() {
+		val parseTree = parseHelper.parse('''
+			using "bool_with_header.csv" with column names: yes
+			print :lines a = no
+		''')
+		val expectedResult = '''
+				a	b	c	d
+			1	0	1	0	1
+			4	0	1	1	0
+		'''
+		assertInterpretation(parseTree, expectedResult)
+
 	}
 }

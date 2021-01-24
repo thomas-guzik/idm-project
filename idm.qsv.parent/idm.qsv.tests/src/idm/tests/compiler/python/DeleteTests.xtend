@@ -21,6 +21,8 @@ class DeleteTests {
 	@Inject extension ValidationTestHelper
 
 	def void assertPythonCompilesAndRuns(QuerySeparatedValues qsv, String expectedStdOut) {
+		val errors = qsv.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val outputResult = pythonCompileAndRun(qsv)
 		Assertions.assertEquals(expectedStdOut, outputResult.getOutput)
 		Assertions.assertEquals("", outputResult.getError)
@@ -104,10 +106,10 @@ class DeleteTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   col0  col1
-			0     2     7
-			1     3     5
-			2     1    10
+				col0	col1
+			0	2	7
+			1	3	5
+			2	1	10
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -123,11 +125,11 @@ class DeleteTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   col0  col1
-			0     4     3
-			1     1     3
-			2     3     5
-			3     1    10
+				col0	col1
+			0	4	3
+			1	1	3
+			2	3	5
+			3	1	10
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -143,8 +145,8 @@ class DeleteTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   f1  f2  f3
-			0  v1  v7  v3
+				f1	f2	f3
+			0	v1	v7	v3
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -160,9 +162,9 @@ class DeleteTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			    0   1   2
-			0  f1  f2  f3
-			1  v1  v7  v3
+				0	1	2
+			0	f1	f2	f3
+			1	v1	v7	v3
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -178,9 +180,9 @@ class DeleteTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   f1  f3
-			0  v1  v3
-			1  v1  v3
+				f1	f3
+			0	v1	v3
+			1	v1	v3
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -196,9 +198,9 @@ class DeleteTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			   f2
-			0  v2
-			1  v7
+				f2
+			0	v2
+			1	v7
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -214,10 +216,10 @@ class DeleteTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			    0   2
-			0  f1  f3
-			1  v1  v3
-			2  v1  v3
+				0	2
+			0	f1	f3
+			1	v1	v3
+			2	v1	v3
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}
@@ -233,10 +235,10 @@ class DeleteTests {
 		parseTree.assertNoErrors
 
 		val expectedResult = '''
-			    1
-			0  f2
-			1  v2
-			2  v7
+				1
+			0	f2
+			1	v2
+			2	v7
 		'''
 		assertPythonCompilesAndRuns(parseTree, expectedResult)
 	}

@@ -1,5 +1,6 @@
 package idm.compiler.python
 
+import idm.qsv.BooleanValue
 import idm.qsv.Column
 import idm.qsv.ColumnIdentifier
 import idm.qsv.ColumnNameIdentifier
@@ -36,7 +37,7 @@ class ConcreteValues {
 	}
 
 	def dispatch String getPythonValue(VariableIdentifier id) {
-		return id.value.substring(1)
+		return "user_" + id.value.substring(1)
 	}
 
 	def dispatch String getPythonValue(Value value) {
@@ -49,6 +50,10 @@ class ConcreteValues {
 
 	def dispatch String getPythonValue(StringValue string) {
 		return '''"«string.value»"'''
+	}
+
+	def dispatch String getPythonValue(BooleanValue bool) {
+		return bool.truthy ? "1" : "0"
 	}
 
 	def dispatch String getPythonOperator(OpComp operator) {
@@ -80,7 +85,6 @@ class ConcreteValues {
 	}
 
 	def dispatch List<String> getPythonNames(Column column) {
-		println(column.class)
 		throw new MissingConcreteImplementationException("Column")
 	}
 

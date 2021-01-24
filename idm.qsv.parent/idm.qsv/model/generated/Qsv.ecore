@@ -42,7 +42,7 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Function"/>
-  <eClassifiers xsi:type="ecore:EClass" name="SumLines" eSuperTypes="#//Function">
+  <eClassifiers xsi:type="ecore:EClass" name="SumValuesInColumn" eSuperTypes="#//Function">
     <eStructuralFeatures xsi:type="ecore:EReference" name="column" eType="#//ColumnIdentifier"
         containment="true"/>
   </eClassifiers>
@@ -165,7 +165,10 @@
   <eClassifiers xsi:type="ecore:EClass" name="SaveMethod">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="filename" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SaveCsv" eSuperTypes="#//SaveMethod"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SaveCsv" eSuperTypes="#//SaveMethod">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="separator" eType="#//SeparatorFormat"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SaveJson" eSuperTypes="#//SaveMethod"/>
   <eClassifiers xsi:type="ecore:EClass" name="Format"/>
   <eClassifiers xsi:type="ecore:EClass" name="PrettyFormat" eSuperTypes="#//Format"/>

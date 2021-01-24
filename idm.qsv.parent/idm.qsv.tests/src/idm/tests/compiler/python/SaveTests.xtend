@@ -28,6 +28,8 @@ class SaveTests {
 	@Inject extension ValidationTestHelper
 
 	def void assertPythonCompilesAndRuns(QuerySeparatedValues qsv, String expectedStdOut) {
+		val errors = qsv.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val outputResult = pythonCompileAndRun(qsv)
 		Assertions.assertEquals(expectedStdOut, outputResult.getOutput)
 		Assertions.assertEquals("", outputResult.getError)
@@ -154,6 +156,31 @@ class SaveTests {
 
 		val expectedResult = '''
 		{"f1":{"0":"v1","1":"v1","2":"v8"},"f2":{"0":"v2","1":"v7","2":"v0"},"f3":{"0":"v3","1":"v3","2":"v5"}}'''
+		val result = pythonCompileAndRun(parseTree)
+		Assertions.assertEquals("", result.output.strip)
+		Assertions.assertEquals("", result.getError)
+
+		Assertions.assertEquals(expectedResult, getFileContent(filename))
+	}
+
+	@Test
+	def void saveToCsvWithDashSeparator() {
+		val filename = "foo3.csv"
+		val parseTree = parseHelper.parse('''
+			using "foo3.csv" with column names: yes
+			insert
+				:lines ("v8", "v0", "v5")
+			save
+				:csv
+				:separator "-"
+		''')
+		parseTree.assertNoErrors
+
+		val expectedResult = '''
+		f1-f2-f3
+		v1-v2-v3
+		v1-v7-v3
+		v8-v0-v5'''
 		val result = pythonCompileAndRun(parseTree)
 		Assertions.assertEquals("", result.output.strip)
 		Assertions.assertEquals("", result.getError)
