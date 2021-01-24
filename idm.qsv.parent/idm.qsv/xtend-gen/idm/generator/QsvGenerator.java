@@ -5,7 +5,8 @@ package idm.generator;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterators;
-import idm.compiler.bash.CompilerBashQsv;
+import idm.compiler.bash.BashCompiler;
+import idm.compiler.bash.QsvBashCompiler;
 import idm.compiler.python.PythonCompiler;
 import idm.interpreter.QsvXtendInterpreter;
 import idm.qsv.QuerySeparatedValues;
@@ -33,7 +34,7 @@ public class QsvGenerator extends AbstractGenerator {
     final QuerySeparatedValues qsv = IteratorExtensions.<QuerySeparatedValues>last(Iterators.<QuerySeparatedValues>filter(resource.getAllContents(), QuerySeparatedValues.class));
     boolean _equals = Objects.equal(QsvGenerator.target, "sh");
     if (_equals) {
-      final CompilerBashQsv bashCompiler = new CompilerBashQsv(qsv);
+      final BashCompiler bashCompiler = new QsvBashCompiler(qsv);
       fsa.generateFile(location, bashCompiler.compile());
       InputOutput.<String>println(("Saved generated code to: " + location));
     } else {
