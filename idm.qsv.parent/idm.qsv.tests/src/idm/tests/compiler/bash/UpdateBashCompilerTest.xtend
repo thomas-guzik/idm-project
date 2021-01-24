@@ -42,7 +42,7 @@ class UpdateBashCompilerTest {
 	def void updateOneColumnWithCondition() {
 		val result = parseHelper.parse('''
 			using "foo1.csv" with column names: no
-			update :set "w" :columns #1 :lines #1 = "f2"
+			update :set "w" :columns #1 :condition #1 = "f2"
 			print
 		''')
 		val expectedResult = '''

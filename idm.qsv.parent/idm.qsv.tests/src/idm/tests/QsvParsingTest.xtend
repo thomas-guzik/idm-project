@@ -127,7 +127,7 @@ class QsvParsingTest {
 		val result = parseHelper.parse('''
 			using "test.csv" with column names: no
 			compute $somevar
-				:sumLines #0
+				:sumValuesInColumn #0
 			echo $somevar
 		''')
 		Assertions.assertNotNull(result)
