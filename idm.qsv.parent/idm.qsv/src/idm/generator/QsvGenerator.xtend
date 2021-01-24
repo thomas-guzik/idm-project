@@ -3,14 +3,15 @@
  */
 package idm.generator
 
-import idm.compiler.bash.CompilerBashQsv
+import idm.compiler.bash.BashCompiler
+import idm.compiler.bash.QsvBashCompiler
 import idm.compiler.python.PythonCompiler
+import idm.interpreter.QsvXtendInterpreter
 import idm.qsv.QuerySeparatedValues
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
-import idm.interpreter.QsvXtendInterpreter
 
 /**
  * Generates code from your model files on save.
@@ -25,7 +26,7 @@ class QsvGenerator extends AbstractGenerator {
 		val location = resource.URI.trimFileExtension.path + "." + target
 		val qsv = resource.allContents.filter(QuerySeparatedValues).last
 		if (target == "sh") {
-			val CompilerBashQsv bashCompiler = new CompilerBashQsv(qsv)
+			val BashCompiler bashCompiler = new QsvBashCompiler(qsv)
 			fsa.generateFile(location, bashCompiler.compile())
 			println("Saved generated code to: " + location)
 		} else if (target == "py") {
