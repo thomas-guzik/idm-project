@@ -11,7 +11,10 @@ https://gitlab.istic.univ-rennes1.fr/17000402/idm-project
 
 Sur Docker :
 
-`docker build -t idm_test -f Dockerfile.test .`
+```
+docker build -t idm_test -f Dockerfile.test .
+docker run -t idm_test
+```
 
 Sans Docker
 
@@ -41,7 +44,10 @@ Les fonctionnalités testés par le benchmark sont :
 
 Sur Docker :
 
-`docker build -t idm_bench -f Dockerfile.bench .`
+```
+docker build -t idm_becnh -f Dockerfile.bench .
+docker run -t idm_bench
+```
 
 Sans docker :
 

@@ -8,5 +8,5 @@ RUN pip3 install pandas==1.1.4
 
 COPY . .
 
-RUN gradle test
+CMD "gradle" "test"
 
