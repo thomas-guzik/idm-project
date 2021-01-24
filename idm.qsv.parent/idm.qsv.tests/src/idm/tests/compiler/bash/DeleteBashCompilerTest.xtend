@@ -33,9 +33,7 @@ class DeleteBashCompilerTest {
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 	
@@ -77,9 +75,7 @@ class DeleteBashCompilerTest {
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 	

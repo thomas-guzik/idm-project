@@ -55,7 +55,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -76,7 +75,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -97,7 +95,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -119,12 +116,9 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
-		println(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 		Assertions.assertEquals("", execution.error)
 	}
@@ -143,7 +137,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -165,7 +158,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -186,7 +178,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -207,7 +198,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -228,12 +218,9 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 		Assertions.assertEquals("", execution.error)
 	}
@@ -254,7 +241,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -275,7 +261,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -297,10 +282,8 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
-		println(code)
 		val execution = cmpBash.run(code)
 		Assertions.assertEquals(expectedResult, execution.output)
 		Assertions.assertEquals("", execution.error)
@@ -319,7 +302,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -341,7 +323,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -362,7 +343,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -384,7 +364,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -406,7 +385,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -427,12 +405,9 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 		Assertions.assertEquals("", execution.error)
 	}
@@ -450,12 +425,9 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 		Assertions.assertEquals("", execution.error)
 	}
@@ -474,7 +446,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -496,7 +467,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -518,7 +488,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -540,7 +509,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -562,7 +530,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -584,7 +551,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -605,7 +571,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -629,7 +594,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -652,7 +616,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)
@@ -674,7 +637,6 @@ class PrintBashCompilerTest {
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
-		println(errors)
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(result)
 		val code = cmpBash.compile()
 		val execution = cmpBash.run(code)

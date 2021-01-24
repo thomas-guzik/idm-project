@@ -8,7 +8,6 @@ import idm.qsv.ContentList
 import idm.qsv.VariableIdentifier
 import idm.qsv.ColumnDescription
 import idm.qsv.ContentDescription
-import java.util.ArrayList
 import idm.analyzer.ValueType
 import idm.analyzer.ValueAnalyzer
 

@@ -43,9 +43,7 @@ class SelectorAnalyzer {
 
 	def void analyze(Lines l) {
 		if (l.cond !== null) {
-			println("analyze cond")
 			var analyzerCond = new ConditionAnalyzer(l.cond)
-			println("fin analyze cond")
 			colNameInCond = analyzerCond.colSelectedByName
 			colNumberInCond = analyzerCond.colSelectedByNumber
 		}

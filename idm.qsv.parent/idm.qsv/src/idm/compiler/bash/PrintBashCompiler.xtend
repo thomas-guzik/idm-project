@@ -35,10 +35,6 @@ class PrintBashCompiler implements BashCompiler {
 		formatType = analyzer.getFormatType()
 		colSep = analyzer.getSeparator()
 
-		if (colSep === "\t") {
-			println("tab")
-		}
-
 		if (print.selector !== null) {
 			c = new SelectorBashCompiler(print.selector)
 			colSelectType = c.colSelectType
@@ -72,7 +68,7 @@ class PrintBashCompiler implements BashCompiler {
 			«IF withCondition»fi«ENDIF»
 			n=$(( $n + 1 ))
 			done «BashCompilerHelper.genInput(colSelectType)»)
-			echo -e "$title\n$print"«IF formatType === formatType.PRETTY» | column -n -t -s "«colSep»"«ENDIF»
+			echo -e "$title\n$print"«IF formatType === FormatType.PRETTY» | column -n -t -s "«colSep»"«ENDIF»
 		'''
 	}
 
@@ -173,7 +169,6 @@ class PrintBashCompiler implements BashCompiler {
 			printf "«colSep»${c[$i]}"
 			done
 			printf "\n"
-			'''
+		'''
 	}
-
 }

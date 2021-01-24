@@ -35,9 +35,7 @@ class VariableBashCompilerTest {
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 
@@ -59,9 +57,7 @@ class VariableBashCompilerTest {
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 
@@ -82,10 +78,7 @@ class VariableBashCompilerTest {
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
-		println("**************")
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 
@@ -106,10 +99,7 @@ class VariableBashCompilerTest {
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
-		println("***")
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 
@@ -132,9 +122,7 @@ class VariableBashCompilerTest {
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 
@@ -157,10 +145,7 @@ class VariableBashCompilerTest {
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
-		println("********")
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 
@@ -181,10 +166,7 @@ class VariableBashCompilerTest {
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
-		println("********")
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 
@@ -207,10 +189,7 @@ class VariableBashCompilerTest {
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
-		println("********")
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 
@@ -233,10 +212,7 @@ class VariableBashCompilerTest {
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
-		println("****")
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 
@@ -261,10 +237,7 @@ class VariableBashCompilerTest {
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
-		println("********")
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 	
@@ -290,10 +263,7 @@ class VariableBashCompilerTest {
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
-		println("**********")
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 	
@@ -318,10 +288,7 @@ class VariableBashCompilerTest {
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
-		println("*************")
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 	
@@ -346,10 +313,7 @@ class VariableBashCompilerTest {
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 		val QsvBashCompiler cmpBash = new QsvBashCompiler(parseTree)
 		val code = cmpBash.compile()
-		println("****************")
-		println(code)
 		val execution = cmpBash.run(code)
-		println(execution.output)
 		Assertions.assertEquals(expectedResult, execution.output)
 	}
 	

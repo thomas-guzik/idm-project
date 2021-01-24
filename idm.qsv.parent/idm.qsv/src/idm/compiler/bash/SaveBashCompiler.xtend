@@ -18,7 +18,6 @@ class SaveBashCompiler implements BashCompiler {
 	}
 	
 	override compile() {
-		println("la")
 		return save.method.genCode()
 	}
 	
@@ -33,13 +32,11 @@ class SaveBashCompiler implements BashCompiler {
 			filename = s.filename
 		}
 		return '''
-		
 		echo "$file" > «filename»
 		'''
 	}
 	
 	def dispatch genCode(SaveJson s) {
-		println("ava ici")
 		var filename = ""
 		if(s.filename  === null) {
 			filename = nameFile+".json"
@@ -47,7 +44,6 @@ class SaveBashCompiler implements BashCompiler {
 		else {
 			filename = s.filename
 		}
-		println("casse")
 		var refVar = ""
 		if(hasColumnName) {
 			refVar = "$header"
@@ -56,7 +52,6 @@ class SaveBashCompiler implements BashCompiler {
 			refVar = "$index"
 		}
 		// "0":"v1","1":"v1","2":"v8"
-		println("ici")
 		return '''
 		«BashCompilerHelper.genNbCol»
 		«IF hasColumnName»

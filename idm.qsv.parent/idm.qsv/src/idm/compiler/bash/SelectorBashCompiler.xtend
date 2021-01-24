@@ -14,11 +14,8 @@ class SelectorBashCompiler {
 	SelectorAnalyzer analyzer
 
 	new(Selector s) {
-		println("selector")
 		selector = s
 		analyzer = new SelectorAnalyzer(selector)
-		println("analyzer")
-		println("fin analyze")
 	}
 	
 	def genCond() {

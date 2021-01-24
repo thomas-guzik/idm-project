@@ -23,9 +23,7 @@ class OpCompBashCompiler {
 		return op.genCodeOperator(t)
 	}
 
-	def dispatch genCodeOperator(OpComp op, ValueType t) {
-		println("maybe be here")
-	}
+	def dispatch genCodeOperator(OpComp op, ValueType t) {}
 
 	def dispatch genCodeOperator(CompareEqual op, ValueType t) {
 		if (t === ValueType.INT) {
@@ -64,7 +62,6 @@ class OpCompBashCompiler {
 	}
 
 	def dispatch genCodeOperator(CompareGreater op, ValueType t) {
-		println("greater op")
 		if (t === ValueType.INT) {
 			return "-gt"
 		} else if (t == ValueType.VAR) {
@@ -119,7 +116,6 @@ class OpCompBashCompiler {
 	}
 
 	def dispatch genOperatorString(CompareGreater op) {
-		println("is it here ?")
 		return "gt"
 	}
 
