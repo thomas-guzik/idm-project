@@ -146,9 +146,10 @@ def word_size(word):
 
 	private def dispatch compile(Header header) {
 		csvFileName = qsv.getHeader().getNameFile()
-		var Boolean hasColumnName = header.isHasColumnName()
-		var String code = ""
-		code += '''«csvDataVariable» = pd.read_csv("«csvFileName»", header=«hasColumnName? "'infer'" : "None"»)
+		val hasColumnName = header.isHasColumnName()
+		val readSeparator = header.csvSep === null ? "," : header.csvSep
+		var code = ""
+		code += '''«csvDataVariable» = pd.read_csv("«csvFileName»", header=«hasColumnName? "'infer'" : "None"», sep="«readSeparator»")
 '''
 		code += NEWLINE
 		code += '''«columnIndexVariable» = len(«csvDataVariable».columns)'''
