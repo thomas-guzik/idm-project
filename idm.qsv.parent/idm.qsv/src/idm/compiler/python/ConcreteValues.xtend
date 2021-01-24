@@ -85,7 +85,6 @@ class ConcreteValues {
 	}
 
 	def dispatch List<String> getPythonNames(Column column) {
-		println(column.class)
 		throw new MissingConcreteImplementationException("Column")
 	}
 

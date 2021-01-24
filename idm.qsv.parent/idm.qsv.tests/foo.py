@@ -76,15 +76,13 @@ def size_largest_word_of_column(column):
 def word_size(word):
     return len(str(word))
 
-my_data = pd.read_csv("foo2.csv", header=None, sep=",")
+my_data = pd.read_csv("foo_numbers.csv", header='infer', sep=",")
 
 column_index = len(my_data.columns)
-tmp17 = my_data
-printCols = [2,0]
-if my_data.columns.is_object():
-	printCols.sort(key=lambda x: my_data.columns.tolist().index(x))
-else:
-	printCols.sort()
+filter85 = my_data["col1"] < 5
+filter84 = filter85
+my_data = my_data.drop(my_data[filter84].index)
 
-tmp17 = tmp17[printCols]
-print_data_separator(tmp17, "\t")
+my_data.reset_index(drop=True, inplace=True)
+tmp72 = my_data
+print_data_separator(tmp72, "\t")
