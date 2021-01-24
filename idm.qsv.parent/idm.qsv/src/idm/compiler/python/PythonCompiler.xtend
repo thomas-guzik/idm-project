@@ -122,7 +122,7 @@ def word_size(word):
 	def PythonCompilerOutput compileAndRun() throws IOException {
 		csvDataVariable = "my_data"
 		var pythonCode = compile()
-		println(pythonCode)
+//		println(pythonCode)
 		var String PYTHON_OUTPUT = "foo.py"
 		return writeToFileAndExecute(PYTHON_OUTPUT, pythonCode)
 	}

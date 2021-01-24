@@ -1,5 +1,6 @@
 package idm.compiler.python
 
+import idm.qsv.BooleanValue
 import idm.qsv.Column
 import idm.qsv.ColumnIdentifier
 import idm.qsv.ColumnNameIdentifier
@@ -49,6 +50,10 @@ class ConcreteValues {
 
 	def dispatch String getPythonValue(StringValue string) {
 		return '''"«string.value»"'''
+	}
+
+	def dispatch String getPythonValue(BooleanValue bool) {
+		return bool.truthy ? "1" : "0"
 	}
 
 	def dispatch String getPythonOperator(OpComp operator) {

@@ -1,6 +1,7 @@
 package idm.interpreter
 
 import idm.compiler.python.MissingConcreteImplementationException
+import idm.qsv.BooleanValue
 import idm.qsv.Column
 import idm.qsv.ColumnIdentifier
 import idm.qsv.ColumnNameIdentifier
@@ -8,6 +9,10 @@ import idm.qsv.ColumnNames
 import idm.qsv.ColumnNumberIdentifier
 import idm.qsv.ColumnNumbers
 import idm.qsv.CompareEqual
+import idm.qsv.CompareGreater
+import idm.qsv.CompareGreaterOrEqual
+import idm.qsv.CompareLower
+import idm.qsv.CompareLowerOrEqual
 import idm.qsv.CompareNotEqual
 import idm.qsv.ContentDescription
 import idm.qsv.ContentList
@@ -17,10 +22,6 @@ import idm.qsv.StringValue
 import idm.qsv.Value
 import idm.qsv.VariableIdentifier
 import java.util.List
-import idm.qsv.CompareLower
-import idm.qsv.CompareGreater
-import idm.qsv.CompareLowerOrEqual
-import idm.qsv.CompareGreaterOrEqual
 
 class ConcreteValues {
 
@@ -46,6 +47,10 @@ class ConcreteValues {
 
 	def dispatch Object getValue(IntegerValue integer) {
 		return integer.value
+	}
+
+	def dispatch Object getValue(BooleanValue bool) {
+		return bool.truthy ? 1 : 0
 	}
 
 	def dispatch Object getValue(StringValue string) {
