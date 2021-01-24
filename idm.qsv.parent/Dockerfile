@@ -10,5 +10,5 @@ RUN pip3 install pandas==1.1.4
 
 RUN gradle shadowJar
 
-ENTRYPOINT ["./run-generator.sh"]
+RUN python benchmark.py
 

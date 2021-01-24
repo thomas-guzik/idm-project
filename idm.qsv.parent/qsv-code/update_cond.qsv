@@ -1,0 +1,3 @@
+
+using "big.csv" with column names: yes
+:set "w" :columns #1 :condition #1 > 500

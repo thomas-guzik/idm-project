@@ -1,0 +1,3 @@
+
+using "big.csv" with column names: yes
+delete :lines a > 500

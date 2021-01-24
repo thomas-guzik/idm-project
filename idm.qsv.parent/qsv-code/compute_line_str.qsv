@@ -1,0 +1,4 @@
+
+using "big_str.csv" with column names: yes
+	compute $sumCol0
+	    :sumColumns f2,f3,f4,f5,f6g2,g3,g4,g5,g6h2,h3,h4,h5,h6i2,i3,i4,i5,i6j2,j3,j4,j5,j6

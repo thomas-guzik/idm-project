@@ -1,0 +1,4 @@
+
+using "big.csv" with column names: yes
+	compute $sumCol0
+	    :sumValuesInColumn col0
