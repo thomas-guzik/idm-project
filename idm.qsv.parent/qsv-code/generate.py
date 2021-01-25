@@ -10,19 +10,19 @@ for l in alphabet:
     for i in range(1,11):
         colname.append(l+str(i))
 
-# csv = ",".join(colname)
-# csv += "\n"
+csv = ",".join(colname)
+csv += "\n"
 
-# l = []
-# for i in range(0,10000):
-#     for j in range(0,len(colname)):
-#         csv += str(random.randint(1,1000))
-#         if j != len(colname)-1:
-#             csv += ","
-#     csv += "\n"
+l = []
+for i in range(0,10000):
+    for j in range(0,len(colname)):
+        csv += str(random.randint(1,1000))
+        if j != len(colname)-1:
+            csv += ","
+    csv += "\n"
 
-# with open("big.csv", "w") as f:
-#     f.write(csv)
+with open("big.csv", "w") as f:
+    f.write(csv)
 
 csv_str = ",".join(colname)
 csv_str = "\n"
